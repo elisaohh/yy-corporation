@@ -34,9 +34,10 @@ npm.cmd run dev
 
 ### 모션 속도 조절
 
-- **히어로** `src/components/home/HeroFloat.tsx` (문구 · 병 위치 · 물방울 위치는 `src/data/home.ts`의 `hero`)
-  - 로딩 진행선 `duration: 0.85`, 화면 걷힘 `0.8`, 떠다니는 폭 `gsap.utils.random(-16, -26)` 등 숫자를 바꾼다.
-  - 피펫 불투명도: 공정 모션 `ProcessMotion.tsx`의 `PIPETTE_OPACITY`, 히어로 병은 `scripts/build-float-bottles.mjs`의 `PIPETTE_OPACITY` 후 스크립트 실행
+- **히어로** `src/components/home/HeroFloat.tsx` (문구는 `src/data/home.ts`의 `hero`)
+  - 로딩 진행선 `duration: 0.85`, 화면 걷힘 `0.8`, 물방울 떠다니는 폭 `gsap.utils.random(4, 8)`, 마우스 반응 `nx * 22` 등 숫자를 바꾼다.
+  - 사진 최대 폭 `MAX_W`, 제목 크기 `md:text-[clamp(52px,7.4vw,122px)]`
+- **피펫 불투명도** 공정 모션 `ProcessMotion.tsx`의 `PIPETTE_OPACITY`
 - **공정 모션** `src/components/home/ProcessMotion.tsx`
   - `window.innerHeight * (desktop ? 3.4 : 2.6)` → 고정 구간 길이(화면 수). 크면 느려진다.
   - `scrub: 1.4` → 클수록 스크롤을 더 부드럽게(늦게) 따라온다.
@@ -51,7 +52,7 @@ npm.cmd run dev
 | 제품 사진 (`자료/03_제품/제품사진/코드_01.png` …) | `node scripts/build-product-images.mjs` |
 | 공정 모션 병 이미지 (`자료/01_기준유리병/사진/YS-SRRR30-04*.png`) | `node scripts/build-process-images.mjs` |
 | 스포이드 캡 · 피펫 분리 | `node scripts/build-dropper-parts.mjs` |
-| 히어로 떠다니는 병 | `node scripts/build-float-bottles.mjs` |
+| 히어로 사진 (`자료/07_히어로/히어로_병_물방울.webp`) → 병 층 + 물방울 분리 | `node scripts/build-hero-layers.mjs` |
 
 공정 장면에 쓰는 파일 이름은 `scripts/build-process-images.mjs` 위쪽 `scenes` 목록에서 바꾼다.
 

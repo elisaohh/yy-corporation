@@ -1,0 +1,120 @@
+{
+  "source": "자료/07_히어로/히어로_병_물방울.webp",
+  "width": 1358,
+  "height": 1159,
+  "base": "/assets/hero/hero-base.webp",
+  "drops": [
+    {
+      "src": "/assets/hero/hero-drop-1.webp",
+      "x": 34.83,
+      "y": 14.75,
+      "w": 14.95,
+      "h": 18.55,
+      "area": 24828
+    },
+    {
+      "src": "/assets/hero/hero-drop-2.webp",
+      "x": 2.95,
+      "y": 56.43,
+      "w": 15.98,
+      "h": 14.58,
+      "area": 20470
+    },
+    {
+      "src": "/assets/hero/hero-drop-3.webp",
+      "x": 72.39,
+      "y": 17,
+      "w": 12.59,
+      "h": 8.97,
+      "area": 9962
+    },
+    {
+      "src": "/assets/hero/hero-drop-4.webp",
+      "x": 77.84,
+      "y": 77.91,
+      "w": 9.72,
+      "h": 11.3,
+      "area": 9654
+    },
+    {
+      "src": "/assets/hero/hero-drop-5.webp",
+      "x": 26.44,
+      "y": 11.3,
+      "w": 6.11,
+      "h": 6.47,
+      "area": 3535
+    },
+    {
+      "src": "/assets/hero/hero-drop-6.webp",
+      "x": 70.25,
+      "y": 33.74,
+      "w": 4.79,
+      "h": 5.44,
+      "area": 2131
+    },
+    {
+      "src": "/assets/hero/hero-drop-7.webp",
+      "x": 18.92,
+      "y": 70.84,
+      "w": 4.49,
+      "h": 5.09,
+      "area": 1841
+    },
+    {
+      "src": "/assets/hero/hero-drop-8.webp",
+      "x": 25.33,
+      "y": 19.76,
+      "w": 4.27,
+      "h": 4.75,
+      "area": 1561
+    },
+    {
+      "src": "/assets/hero/hero-drop-9.webp",
+      "x": 80.27,
+      "y": 25.88,
+      "w": 3.98,
+      "h": 4.23,
+      "area": 1245
+    },
+    {
+      "src": "/assets/hero/hero-drop-10.webp",
+      "x": 63.03,
+      "y": 67.56,
+      "w": 3.61,
+      "h": 4.23,
+      "area": 1070
+    },
+    {
+      "src": "/assets/hero/hero-drop-11.webp",
+      "x": 68.48,
+      "y": 44.78,
+      "w": 2.72,
+      "h": 3.19,
+      "area": 495
+    },
+    {
+      "src": "/assets/hero/hero-drop-12.webp",
+      "x": 32.18,
+      "y": 88.61,
+      "w": 2.72,
+      "h": 3.19,
+      "area": 481
+    },
+    {
+      "src": "/assets/hero/hero-drop-13.webp",
+      "x": 29.6,
+      "y": 86.63,
+      "w": 2.65,
+      "h": 3.11,
+      "area": 440
+    },
+    {
+      "src": "/assets/hero/hero-drop-14.webp",
+      "x": 27.91,
+      "y": 31.58,
+      "w": 2.5,
+      "h": 3.02,
+      "area": 393
+    }
+  ]
+}

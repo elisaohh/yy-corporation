@@ -25,7 +25,6 @@
   /* Type */
   --font-en: var(--font-inter), "Helvetica Neue", Arial, sans-serif;
   --font-kr: var(--font-pretendard), "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
-  --font-serif: var(--font-display-serif), "Times New Roman", serif;
 
   /* Breakpoints: 모바일 ≤767 / 태블릿 768–1199 / 데스크톱 ≥1200 */
   --breakpoint-md: 48rem;
