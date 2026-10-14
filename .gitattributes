@@ -1,0 +1,13 @@
+* text=auto eol=lf
+# 원본 브랜드·자료 파일은 바이트 그대로 보존
+LOGO/** -text
+public/assets/brand/** -text
+*.xlsx binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.avif binary
+*.woff2 binary
+*.mp4 binary
+*.glb binary
