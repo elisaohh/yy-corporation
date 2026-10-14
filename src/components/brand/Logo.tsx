@@ -3,6 +3,7 @@ import {
   logoPlacement,
   logos,
   monoCharcoalSrc,
+  monoWhiteSrc,
   type LogoPlacement,
   type LogoTone,
   type LogoVariant,
@@ -13,7 +14,7 @@ interface LogoProps {
   placement?: LogoPlacement;
   /** 배정표 대신 특정 로고를 쓸 때 */
   variant?: LogoVariant;
-  /** 색 버전 — 기본은 공식 키컬러. monoCharcoal은 비교용 파생 시안(미승인) */
+  /** 색 버전 — 로고 자리는 항상 공식 키컬러. 단색은 반투명 그래픽 요소 전용 */
   tone?: LogoTone;
   /** 배정표의 높이 대신 CSS로 크기를 지정할 때 사용 (예: "h-7 md:h-[34px]") */
   className?: string;
@@ -37,7 +38,8 @@ export function Logo({
   const slot = logoPlacement[placement];
   const key = variant ?? slot.variant;
   const asset = logos[key];
-  const src = tone === "monoCharcoal" ? monoCharcoalSrc[key] : asset.src;
+  const src =
+    tone === "monoCharcoal" ? monoCharcoalSrc[key] : tone === "monoWhite" ? monoWhiteSrc[key] : asset.src;
   const height = slot.height;
   const width = Math.round((asset.width / asset.height) * height);
 

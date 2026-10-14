@@ -38,7 +38,7 @@
   /* Layout */
   --gutter: clamp(24px, 5vw, 96px);
   --content-max: 1440px;
-  --header-h: 60px;
+  --header-h: 56px;
 
   /* Motion */
   --ease-yy-out: cubic-bezier(0.22, 1, 0.36, 1);
@@ -51,7 +51,7 @@
 
 @media (min-width: 48rem) {
   :root {
-    --header-h: 76px;
+    --header-h: 68px;
   }
 }
 

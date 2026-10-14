@@ -72,9 +72,9 @@ export const logos: Record<LogoVariant, LogoAsset> = {
 
 /** 화면 위치별 로고 배정. 배치를 바꿀 때는 이 표만 수정한다. */
 export const logoPlacement = {
-  headerDesktop: { variant: "basicCorp", height: 34 },
-  headerMobile: { variant: "basicCorp", height: 28 },
-  mobileMenu: { variant: "basicCorp", height: 30 },
+  headerDesktop: { variant: "basicCorp", height: 30 },
+  headerMobile: { variant: "basicCorp", height: 26 },
+  mobileMenu: { variant: "basicCorp", height: 28 },
   homeIntro: { variant: "verticalCorporation", height: 120 },
   loader: { variant: "verticalCorporation", height: 72 },
   footer: { variant: "horizontalCorporation", height: 36 },
@@ -86,19 +86,30 @@ export type LogoPlacement = keyof typeof logoPlacement;
 export const logoAlt = "YY CORPORATION";
 
 /**
- * 로고 색 버전.
- * - official: 공식 키컬러 원본 (최종)
- * - monoCharcoal: 흰 배경 가독성 비교용 "파생 시안". 원본 사본에서 fill 값 두 개만
- *   #2b2b2a(디자인 토큰 charcoal)로 바꿨고 형태는 동일하다. 승인 전에는 사이트에 적용하지 않는다.
+ * 로고 색 버전 (2026-10-14 결정)
+ * - official: 공식 키컬러. 헤더·메뉴·인트로·푸터 등 "로고로서" 쓰는 모든 자리에 사용한다.
+ * - monoCharcoal / monoWhite: 원본 사본에서 fill 값 두 개만 바꾼 파생본(형태 동일).
+ *   로고 자리에는 쓰지 않고, 이후 디자인 단계에서 반투명 그래픽 요소로만 활용한다.
+ *   (예: 밝은 섹션 배경의 차콜 반투명, 차콜 섹션의 흰색 반투명)
  */
-export type LogoTone = "official" | "monoCharcoal";
+export type LogoTone = "official" | "monoCharcoal" | "monoWhite";
 
-export const logoTones: Record<LogoTone, { status: "final" | "draft"; label: string }> = {
-  official: { status: "final", label: "공식 키컬러" },
-  monoCharcoal: { status: "draft", label: "차콜 단색 파생 시안 (미승인)" },
+export const logoTones: Record<LogoTone, { status: "final" | "graphic"; label: string }> = {
+  official: { status: "final", label: "공식 키컬러 · 로고 사용" },
+  monoCharcoal: { status: "graphic", label: "차콜 단색 · 반투명 그래픽 전용" },
+  monoWhite: { status: "graphic", label: "흰색 단색 · 반투명 그래픽 전용" },
 };
 
 const derivedDir = "/assets/brand/derived";
+
+export const monoWhiteSrc: Record<LogoVariant, string> = {
+  horizontalCorporation: `${derivedDir}/yy-logo-horizontal-corporation--mono-white.svg`,
+  horizontalKorean: `${derivedDir}/yy-logo-horizontal-korean--mono-white.svg`,
+  basicCorp: `${derivedDir}/yy-logo-basic-corp--mono-white.svg`,
+  verticalCorporation: `${derivedDir}/yy-logo-vertical-corporation--mono-white.svg`,
+  verticalKorean: `${derivedDir}/yy-logo-vertical-korean--mono-white.svg`,
+  verticalCorp: `${derivedDir}/yy-logo-vertical-corp--mono-white.svg`,
+};
 
 export const monoCharcoalSrc: Record<LogoVariant, string> = {
   horizontalCorporation: `${derivedDir}/yy-logo-horizontal-corporation--mono-charcoal.svg`,

@@ -12,7 +12,6 @@ export const metadata: Metadata = { title: "Logo check" };
  * 3) 현재 위치별 배정
  */
 const variants = Object.keys(logos) as LogoVariant[];
-const tones: LogoTone[] = ["official", "monoCharcoal"];
 
 const placementLabels: Record<keyof typeof logoPlacement, string> = {
   headerDesktop: "PC 헤더",
@@ -24,7 +23,7 @@ const placementLabels: Record<keyof typeof logoPlacement, string> = {
 };
 
 function ToneBadge({ tone }: { tone: LogoTone }) {
-  const draft = logoTones[tone].status === "draft";
+  const draft = logoTones[tone].status !== "final";
   return (
     <span
       className={`inline-flex w-fit items-center border px-1.5 py-[3px] text-[11px] leading-none font-medium ${
@@ -45,13 +44,13 @@ function MockHeader({ tone, size }: { tone: LogoTone; size: "desktop" | "mobile"
       <div aria-hidden="true" className="absolute inset-0 bg-[repeating-linear-gradient(90deg,#f4f3f1_0_24px,#ffffff_24px_48px)]" />
       <div
         className={`relative flex items-center justify-between border-b border-stone/70 bg-paper/80 text-charcoal backdrop-blur-md ${
-          desktop ? "h-[76px] px-10" : "h-[60px] px-6"
+          desktop ? "h-[68px] px-10" : "h-14 px-6"
         }`}
       >
         <Logo
           placement={desktop ? "headerDesktop" : "headerMobile"}
           tone={tone}
-          className={desktop ? "h-[34px] w-auto" : "h-7 w-auto"}
+          className={desktop ? "h-[30px] w-auto" : "h-[26px] w-auto"}
         />
         {desktop ? (
           <ul className="flex items-center gap-8">
@@ -84,7 +83,7 @@ export default function LogoCheckPage() {
       <section data-header-theme="light" className="container-yy pb-10">
         <h1 className="font-en text-[clamp(28px,3vw,40px)] font-light tracking-[0.06em] uppercase">Logo check</h1>
         <p className="mt-3 max-w-[60ch] text-ash">
-          내부 검토용 페이지입니다. 차콜 단색은 원본 사본에서 색상 값 두 개만 바꾼 파생 시안이며, 승인 전에는 사이트에 적용하지 않습니다.
+          내부 검토용 페이지입니다. 로고 자리에는 공식 키컬러만 씁니다. 흰색·차콜 단색은 원본 사본에서 색상 값 두 개만 바꾼 파생본이며, 디자인 단계에서 반투명 그래픽 요소로만 활용합니다.
         </p>
         <dl className="mt-6 flex flex-wrap gap-x-8 gap-y-2 text-[13px]">
           <div className="flex items-center gap-2">
@@ -108,38 +107,39 @@ export default function LogoCheckPage() {
       {/* 1. 헤더 크기 비교 */}
       <section data-header-theme="light" className="container-yy pb-16">
         <h2 className="font-en text-[20px] font-light tracking-[0.08em] uppercase">Header size</h2>
-        <p className="mt-2 text-[14px] text-ash">실제 헤더와 같은 높이 · 반투명 흰 바탕 · 로고 높이(PC 34px, 모바일 28px)</p>
+        <p className="mt-2 text-[14px] text-ash">실제 헤더와 같은 높이 · 반투명 흰 바탕 · 로고 높이(PC 30px, 모바일 26px)</p>
 
-        <div className="mt-8 grid gap-10">
-          {tones.map((tone) => (
-            <div key={tone} className="grid gap-4">
-              <ToneBadge tone={tone} />
-              <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_375px]">
-                <div>
-                  <p className="mb-2 font-en text-[11px] tracking-[0.12em] text-ash uppercase">PC · 76px</p>
-                  <MockHeader tone={tone} size="desktop" />
-                </div>
-                <div>
-                  <p className="mb-2 font-en text-[11px] tracking-[0.12em] text-ash uppercase">Mobile · 60px</p>
-                  <MockHeader tone={tone} size="mobile" />
-                </div>
-              </div>
+        <div className="mt-8 grid gap-4">
+          <ToneBadge tone="official" />
+          <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_375px]">
+            <div>
+              <p className="mb-2 font-en text-[11px] tracking-[0.12em] text-ash uppercase">PC · 68px</p>
+              <MockHeader tone="official" size="desktop" />
             </div>
-          ))}
+            <div>
+              <p className="mb-2 font-en text-[11px] tracking-[0.12em] text-ash uppercase">Mobile · 56px</p>
+              <MockHeader tone="official" size="mobile" />
+            </div>
+          </div>
         </div>
+      </section>
 
-        <div className="mt-12 grid gap-6 md:grid-cols-2">
-          {tones.map((tone) => (
-            <div key={tone} className="grid gap-4 border border-stone p-6">
-              <ToneBadge tone={tone} />
-              <Logo placement="footer" tone={tone} />
-              <p className="text-[13px] text-ash">푸터 크기 · 가로(1) yy corporation · 36px</p>
-            </div>
-          ))}
+      {/* 1-2. 단색 반투명 그래픽 활용 예시 */}
+      <section data-header-theme="light" className="container-yy pb-16">
+        <h2 className="font-en text-[20px] font-light tracking-[0.08em] uppercase">Graphic use</h2>
+        <p className="mt-2 text-[14px] text-ash">로고 자리가 아닌 배경 그래픽 예시 — 실제 사용 위치와 불투명도는 디자인 단계에서 결정</p>
+        <div className="mt-8 grid gap-6 md:grid-cols-2">
+          <div className="relative grid min-h-64 place-items-center overflow-hidden bg-mist">
+            <Logo variant="verticalCorp" tone="monoCharcoal" decorative className="h-48 w-auto opacity-[0.06]" />
+            <span className="absolute left-5 top-5"><ToneBadge tone="monoCharcoal" /></span>
+            <span className="absolute bottom-5 left-5 text-[13px] text-ash">밝은 섹션 · 차콜 6%</span>
+          </div>
+          <div data-header-theme="dark" className="relative grid min-h-64 place-items-center overflow-hidden bg-intro">
+            <Logo variant="verticalCorp" tone="monoWhite" decorative className="h-48 w-auto opacity-[0.08]" />
+            <span className="absolute left-5 top-5"><ToneBadge tone="monoWhite" /></span>
+            <span className="absolute bottom-5 left-5 text-[13px] text-on-dark-sub">차콜 섹션 · 흰색 8%</span>
+          </div>
         </div>
-        <p className="mt-4 text-[13px] text-ash">
-          차콜 바탕(HOME 인트로 · CTA · 차콜 구간의 헤더)에서는 공식 키컬러를 그대로 씁니다. 차콜 단색은 차콜 바탕에서 보이지 않으므로 비교 대상이 아닙니다.
-        </p>
       </section>
 
       {/* 2. 공식 6종 */}
@@ -154,10 +154,8 @@ export default function LogoCheckPage() {
               <figure key={variant} className="flex flex-col items-start gap-6 py-6">
                 <Logo variant={variant} className="h-16 w-auto" />
                 <Logo variant={variant} className="h-7 w-auto" />
-                {surface === "paper" && <Logo variant={variant} tone="monoCharcoal" className="h-7 w-auto" />}
                 <figcaption className={`text-[13px] ${surface === "intro" ? "text-on-dark-sub" : "text-ash"}`}>
                   {logos[variant].description} · {logos[variant].original}
-                  {surface === "paper" && " · 아래 줄은 차콜 단색 시안"}
                 </figcaption>
               </figure>
             ))}

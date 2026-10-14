@@ -105,7 +105,7 @@ export function Header() {
       >
         <div className="container-yy flex h-[var(--header-h)] items-center justify-between">
           <Link href="/" aria-label="YY CORPORATION 홈" className="-m-2 inline-flex p-2">
-            <Logo placement="headerDesktop" decorative priority className="h-7 w-auto md:h-[34px]" />
+            <Logo placement="headerDesktop" decorative priority className="h-[26px] w-auto md:h-[30px]" />
           </Link>
 
           <nav aria-label="주요 메뉴" className="hidden md:block">

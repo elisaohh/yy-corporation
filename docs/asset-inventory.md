@@ -19,7 +19,10 @@
 
 | 파일 (public/assets/brand/derived/) | 기준 원본 | 변경 내용 | 상태 |
 |---|---|---|---|
-| yy-logo-*--mono-charcoal.svg (6개) | 위 6개 사본 | 스타일의 fill 값 2개 → #2b2b2a. path·viewBox 동일 | draft · `/logo-check` 비교용 |
+| yy-logo-*--mono-charcoal.svg (6개) | 위 6개 사본 | 스타일의 fill 값 2개 → #2b2b2a. path·viewBox 동일 | 반투명 그래픽 전용 |
+| yy-logo-*--mono-white.svg (6개) | 위 6개 사본 | 스타일의 fill 값 2개 → #ffffff. path·viewBox 동일 | 반투명 그래픽 전용 |
+
+로고 자리(헤더·메뉴·인트로·로더·푸터)에는 공식 키컬러만 사용한다.
 - 색상: 심볼 `#ffc844`, 워드마크 `#f7af22`. 투명 배경. 단색(차콜/흰색) 버전 없음.
 
 ## 이미지 · 영상 · 3D
