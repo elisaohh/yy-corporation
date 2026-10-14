@@ -60,6 +60,13 @@ export const assets = {
   phCapB: placeholder("/assets/placeholders/shape-cap-b.svg", "임시 이미지 — 캡 형태 B"),
   phViewTop: placeholder("/assets/placeholders/shape-view-top.svg", "임시 이미지 — 입구 방향 시점"),
   phViewBottom: placeholder("/assets/placeholders/shape-view-bottom.svg", "임시 이미지 — 바닥 방향 시점"),
+
+  /* ── HOME FIND / DRESS / MATCH / DELIVER 이미지 (임시) ──
+     최종: 실사에 가까운 3D 제품 + 절제된 그래픽 (기획서 부록 B3) */
+  svcFind: placeholder("/assets/placeholders/shape-bottle-b.svg", "임시 이미지 — 다양한 용기 (FIND)"),
+  svcDress: placeholder("/assets/placeholders/shape-bottle-a.svg", "임시 이미지 — 코팅·인쇄된 용기 (DRESS)"),
+  svcMatch: placeholder("/assets/placeholders/shape-dropper-a.svg", "임시 이미지 — 캡·스포이드 조합 (MATCH)"),
+  svcDeliver: placeholder("/assets/placeholders/shape-pack.svg", "임시 이미지 — 완성 패키징 배열 (DELIVER)"),
 } satisfies Record<string, MediaAsset>;
 
 export type AssetId = keyof typeof assets;

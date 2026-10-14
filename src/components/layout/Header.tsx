@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Logo } from "@/components/brand/Logo";
+import { HEADER_THEME_EVENT } from "@/components/layout/headerEvents";
 import { MobileMenu } from "@/components/layout/MobileMenu";
 import { isActivePath, mainNav } from "@/data/navigation";
 
@@ -73,9 +74,11 @@ export function Header() {
     detectTheme();
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
+    window.addEventListener(HEADER_THEME_EVENT, detectTheme);
     return () => {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
+      window.removeEventListener(HEADER_THEME_EVENT, detectTheme);
     };
   }, [update, detectTheme]);
 

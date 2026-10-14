@@ -295,6 +295,20 @@
   animation-delay: var(--stagger, 0ms);
 }
 
+/* 스크롤 등장 (components/motion/Reveal) */
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity var(--dur-reveal) var(--ease-yy-out),
+    transform var(--dur-reveal) var(--ease-yy-out);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.reveal[data-shown] {
+  opacity: 1;
+  transform: none;
+}
+
 /* 페이지 진입 페이드 (기획서 2.0 §3.2, 0.3–0.5초) */
 @keyframes page-in {
   from {
