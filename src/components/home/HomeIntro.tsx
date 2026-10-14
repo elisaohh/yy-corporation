@@ -1,17 +1,17 @@
-import { IntroBrand } from "@/components/home/IntroBrand";
+import { HeroFloat } from "@/components/home/HeroFloat";
 import { Pending } from "@/components/ui/Pending";
 import { siteConfig } from "@/config/site";
 import { assets } from "@/data/assets";
 
 /**
  * ① HOME 인트로 — 소스는 siteConfig.heroMode로 바꾼다.
- *   brand : 자동 재생 브랜드 인트로 (현재 — IntroBrand)
+ *   float : 떠다니는 병 · 물방울 히어로 (현재 — HeroFloat)
  *   poster: 정지 포스터
  *   video : 영상 인트로 (공장 영상 등 공개 권한 확인 후)
  *   three : 실시간 3D
  */
 export function HomeIntro() {
-  if (siteConfig.heroMode === "brand") return <IntroBrand />;
+  if (siteConfig.heroMode === "float") return <HeroFloat />;
   return (
     <section
       data-header-theme="dark"

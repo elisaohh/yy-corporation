@@ -20,6 +20,9 @@ gsap.registerPlugin(ScrollTrigger);
  * - 후가공 이미지는 생성 예시 — 안내 문구를 표시한다.
  * - 체결: 스포이드 · 캡이 병 위에서 수직으로 내려와 목에 결합(살짝 눌렸다 자리 잡음).
  */
+/** 유리 피펫 불투명도 — 낮을수록 유리처럼 비친다(2026-10-15 요청) */
+const PIPETTE_OPACITY = 0.5;
+
 /** 확장 시 실제 제품 위치(무대 폭 대비 %) */
 const EXPAND_X = [-205, -105, 105, 205];
 
@@ -175,7 +178,7 @@ export function ProcessMotion() {
             <div
               aria-hidden="true"
               className="absolute inset-0"
-              style={{ maskImage: PIPETTE_MASK, WebkitMaskImage: PIPETTE_MASK }}
+              style={{ maskImage: PIPETTE_MASK, WebkitMaskImage: PIPETTE_MASK, opacity: PIPETTE_OPACITY }}
             >
               <AssetImage id={processScene.dropperPipette} data-drop="" decorative className="absolute inset-0 size-full object-contain" style={{ opacity: 0 }} />
             </div>

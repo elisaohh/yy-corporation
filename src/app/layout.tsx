@@ -4,7 +4,7 @@ import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { TopButton } from "@/components/layout/TopButton";
 import { siteConfig } from "@/config/site";
-import { inter, pretendard } from "@/lib/fonts";
+import { displaySerif, inter, pretendard } from "@/lib/fonts";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -24,7 +24,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="ko" className={`${inter.variable} ${pretendard.variable}`}>
+    <html lang="ko" className={`${inter.variable} ${pretendard.variable} ${displaySerif.variable}`}>
       <body>
         <a href="#main" className="skip-link">
           본문 바로가기

@@ -1,4 +1,4 @@
-import { Inter } from "next/font/google";
+import { Inter, Instrument_Serif } from "next/font/google";
 import localFont from "next/font/local";
 
 /** 영문 제목·메뉴 — Inter (가변) */
@@ -6,6 +6,14 @@ export const inter = Inter({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-inter",
+});
+
+/** 영문 대형 제목(히어로) — 사용자 시안의 고대비 세리프 */
+export const displaySerif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  display: "swap",
+  variable: "--font-display-serif",
 });
 
 /**

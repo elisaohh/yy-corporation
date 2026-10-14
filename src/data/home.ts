@@ -7,22 +7,34 @@ import type { Copy } from "./content";
  * status: final(확정) / draft(임시 초안 — 교체 예정) / missing(미정)
  */
 
-/* ── ① 브랜드 인트로 (자동 재생 약 5초, 스크롤하면 즉시 마지막 장면) ── */
-export const intro = {
-  /** I-3 굵은 단어 리듬 */
-  words: ["FIND", "DRESS", "MATCH", "DELIVER"],
-  /** I-6 대형 단어 — 사용자 지정(우선 GLASS) */
-  heroWord: "GLASS",
-  /** I-1 어두운 제품 비주얼 — 공장 사진 공개 권한 확인 전 대체 자료(유리 접사) */
-  darkVisual: "heroMacroDark" as AssetId,
-  /** I-6 제품 비주얼 — 실제 제품 렌더(전용 제품 비주얼 이미지가 오면 교체) */
-  productRow: [
-    "YS-SRRR30-04_04",
-    "YS-SRRR20-01_01",
-    "YS-SRRR50-02_04",
-    "YS-SRRR30-02_01",
-    "YS-SRRR20-01_04",
-  ] as AssetId[],
+/* ── ① 히어로 — 2026-10-15 사용자 시안 기준 (떠다니는 병 · 물방울, Bryhel식 로딩 공개) ── */
+export const hero = {
+  eyebrow: "COSMETIC PACKAGING PARTNER",
+  titleLines: ["From Bottle", "to Brand."],
+  subLines: ["병 하나, 처음부터 끝까지.", "브랜드에 맞는 패키징을 함께 만들어갑니다."],
+  cta: { label: "Explore our work", href: "/products" },
+  source: "사용자 제공 히어로 시안(2026-10-15)",
+  /** 떠다니는 병 — 왼쪽부터. 위치 · 크기 · 기울기는 시각 영역 대비 % */
+  bottles: [
+    { id: "floatCoating" as AssetId, left: 4, top: 12, height: 50, rotate: -24, depth: 0.6 },
+    { id: "floatClear" as AssetId, left: 33, top: 28, height: 64, rotate: -17, depth: 1 },
+    { id: "floatEtching" as AssetId, left: 68, top: 8, height: 48, rotate: -27, depth: 0.45 },
+  ],
+  /** 물방울 — x/y(%) · 크기(시각 영역 폭 대비 %) · 가로세로비 · 기울기 */
+  drops: [
+    { x: 22, y: 6, size: 4.2, ratio: 1, rotate: 0 },
+    { x: 15, y: 16, size: 2.6, ratio: 1, rotate: 0 },
+    { x: 40, y: 8, size: 12, ratio: 0.62, rotate: -50 },
+    { x: 78, y: 4, size: 10, ratio: 0.55, rotate: 28 },
+    { x: 86, y: 18, size: 2.8, ratio: 1, rotate: 0 },
+    { x: 70, y: 32, size: 2.2, ratio: 1, rotate: 0 },
+    { x: 2, y: 58, size: 11, ratio: 0.8, rotate: 18 },
+    { x: 14, y: 72, size: 3.2, ratio: 1, rotate: 0 },
+    { x: 56, y: 68, size: 9, ratio: 0.7, rotate: 36 },
+    { x: 82, y: 76, size: 7.5, ratio: 0.6, rotate: -22 },
+    { x: 66, y: 60, size: 2.4, ratio: 1, rotate: 0 },
+    { x: 30, y: 88, size: 1.8, ratio: 1, rotate: 0 },
+  ],
 };
 
 /* ── ② 회사 소개 ── */
