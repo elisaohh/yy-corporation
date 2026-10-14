@@ -14,13 +14,15 @@ const SWIPE_THRESHOLD = 40;
 
 /**
  * 상세 이미지 갤러리 — 큰 이미지 + 이전/다음 + 카운터(1 / N) + 가로 썸네일 (기획서 2.0 부록 D).
- * - 데스크톱(정밀 포인터): 이미지 위에서 커서 주변 2배 확대
+ * - 데스크톱(정밀 포인터): 이미지를 "클릭"하면 2배 확대, 확대 중에는 커서를 따라 이동,
+ *   다시 클릭하거나 이미지 밖으로 나가거나 ESC를 누르면 원래 크기. 버튼·썸네일 위에서는 확대되지 않는다.
  * - 모바일: 한 손가락 스와이프로 넘기기, 두 손가락 핀치는 브라우저 기본 확대를 그대로 허용
  * - 키보드: 이미지 영역에 포커스 후 ← → 로 이동
  */
 export function ProductGallery({ images, productName }: ProductGalleryProps) {
   const [index, setIndex] = useState(0);
-  const [zoom, setZoom] = useState<{ x: number; y: number } | null>(null);
+  const [zoomed, setZoomed] = useState(false);
+  const [origin, setOrigin] = useState({ x: 50, y: 50 });
   const [canZoom, setCanZoom] = useState(false);
   const touchStart = useRef<{ x: number; y: number } | null>(null);
   const total = images.length;
@@ -35,21 +37,33 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
   }, []);
 
   const go = (next: number) => {
-    setZoom(null);
+    setZoomed(false);
     setIndex(Math.max(0, Math.min(total - 1, next)));
   };
 
-  const onMove = (event: MouseEvent<HTMLDivElement>) => {
-    if (!canZoom) return;
+  const pointToOrigin = (event: MouseEvent<HTMLDivElement>) => {
     const rect = event.currentTarget.getBoundingClientRect();
-    setZoom({
+    setOrigin({
       x: ((event.clientX - rect.left) / rect.width) * 100,
       y: ((event.clientY - rect.top) / rect.height) * 100,
     });
   };
 
+  const onSurfaceClick = (event: MouseEvent<HTMLDivElement>) => {
+    if (!canZoom) return;
+    pointToOrigin(event);
+    setZoomed((value) => !value);
+  };
+
+  const onSurfaceMove = (event: MouseEvent<HTMLDivElement>) => {
+    if (zoomed) pointToOrigin(event);
+  };
+
   const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === "ArrowLeft") {
+    if (event.key === "Escape" && zoomed) {
+      event.preventDefault();
+      setZoomed(false);
+    } else if (event.key === "ArrowLeft") {
       event.preventDefault();
       go(index - 1);
     } else if (event.key === "ArrowRight") {
@@ -84,8 +98,6 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
         tabIndex={0}
         onKeyDown={onKeyDown}
         className="relative aspect-[4/5] overflow-hidden bg-card outline-offset-4 [touch-action:pan-y_pinch-zoom] lg:aspect-square lg:max-h-[calc(100svh-var(--header-h)-200px)] lg:min-h-[420px] lg:w-full"
-        onMouseMove={onMove}
-        onMouseLeave={() => setZoom(null)}
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
       >
@@ -93,28 +105,35 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
           key={current}
           id={current}
           priority={index === 0}
-          className={`fade-in absolute inset-0 size-full object-contain transition-transform duration-300 ease-[var(--ease-yy-out)] ${
-            canZoom ? "cursor-zoom-in" : ""
-          }`}
+          className="fade-in pointer-events-none absolute inset-0 size-full object-contain transition-transform duration-300 ease-[var(--ease-yy-out)]"
           style={{
-            transform: zoom ? "scale(2)" : "scale(1)",
-            transformOrigin: zoom ? `${zoom.x}% ${zoom.y}%` : "50% 50%",
+            transform: zoomed ? "scale(2)" : "scale(1)",
+            transformOrigin: `${origin.x}% ${origin.y}%`,
           }}
         />
 
+        {/* 확대 전용 영역 — 컨트롤(z-10)보다 아래에 있어 버튼 위에서는 반응하지 않는다 */}
+        <div
+          aria-hidden="true"
+          onClick={onSurfaceClick}
+          onMouseMove={onSurfaceMove}
+          onMouseLeave={() => setZoomed(false)}
+          className={`absolute inset-0 ${canZoom ? (zoomed ? "cursor-zoom-out" : "cursor-zoom-in") : ""}`}
+        />
+
         {isPlaceholderAsset(current) && (
-          <span className="absolute left-4 top-4">
+          <span className="pointer-events-none absolute left-4 top-4 z-10">
             <Pending kind="temporary" label="임시 이미지" />
           </span>
         )}
 
-        <p className="absolute bottom-4 left-4 font-en text-[12px] tracking-[0.08em] tabular-nums text-ash" aria-live="polite">
+        <p className="pointer-events-none absolute bottom-4 left-4 z-10 font-en text-[12px] tracking-[0.08em] tabular-nums text-ash" aria-live="polite">
           <span className="sr-only">{getAsset(current).alt}, </span>
           {index + 1} / {total}
         </p>
 
         {total > 1 && (
-          <div className="absolute bottom-3 right-3 flex gap-2">
+          <div className="absolute bottom-3 right-3 z-10 flex gap-2">
             <GalleryArrow direction="prev" disabled={index === 0} onClick={() => go(index - 1)} />
             <GalleryArrow direction="next" disabled={index === total - 1} onClick={() => go(index + 1)} />
           </div>

@@ -182,7 +182,7 @@
     letter-spacing: 0.12em;
   }
 
-  /* 주 버튼: 차콜 → 호버 시 1225C 면이 왼쪽부터 채워짐 */
+  /* 주 버튼: 차콜 → 호버 시 1225C 면이 가운데에서 원형으로 퍼짐 */
   .btn-primary {
     background: var(--color-charcoal);
     color: var(--color-paper);
@@ -194,17 +194,22 @@
     inset: 0;
     z-index: -1;
     background: var(--color-point-1225);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 500ms var(--ease-yy-out);
+    clip-path: circle(0% at 50% 50%);
+    opacity: 0.6;
+    transition:
+      clip-path 550ms var(--ease-yy-out),
+      opacity 400ms var(--ease-yy-out);
   }
   .btn-primary:hover:not(:disabled),
   .btn-inverse:hover:not(:disabled) {
     color: var(--color-charcoal);
+    transition-delay: 60ms;
   }
   .btn-primary:hover:not(:disabled)::before,
   .btn-inverse:hover:not(:disabled)::before {
-    transform: scaleX(1);
+    /* 71%면 모서리까지 닿는다 — 여유를 두고 76% */
+    clip-path: circle(76% at 50% 50%);
+    opacity: 1;
   }
   .btn-primary:disabled::before {
     display: none;
@@ -271,6 +276,23 @@
 
 .fade-in {
   animation: fade-in var(--dur-base) var(--ease-yy-out) both;
+}
+
+/* 카드 등장: 살짝 아래에서 떠오르며 순서대로 (지연은 --stagger로 지정) */
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.card-in {
+  animation: card-in 560ms var(--ease-yy-out) both;
+  animation-delay: var(--stagger, 0ms);
 }
 
 /* 페이지 진입 페이드 (기획서 2.0 §3.2, 0.3–0.5초) */
