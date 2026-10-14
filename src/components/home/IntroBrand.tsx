@@ -12,12 +12,10 @@ import { intro } from "@/data/home";
  *   → I-4 FIND · DRESS · MATCH · DELIVER 굵은 단어 리듬 → I-5 가운데 세로 틈이 열리며
  *   → I-6 제품 비주얼 + 대형 단어 GLASS (이 장면이 첫 화면으로 유지된다)
  *
- * - 스크롤을 막지 않는다. 재생 중 스크롤 · 터치 · 키 입력이 있으면 즉시 마지막 장면으로 건너뛴다.
- * - 같은 세션에서 다시 오면 마지막 장면부터, 모션 줄이기 설정이면 마지막 장면만 보여 준다.
+ * - 페이지에 들어올 때마다 재생한다. 스크롤을 막지 않으며, 재생 중 휠 · 터치 · 이동 키 입력이 있으면 즉시 마지막 장면으로.
+ * - 새로고침으로 화면 중간 위치가 복원된 경우(인트로가 화면 밖)와 모션 줄이기 설정이면 마지막 장면만 보여 준다.
  * - I-1은 공장 사진 공개 권한 확인 전까지 유리 접사(기준병 사진 반전)로 대체한다.
  */
-
-const SEEN_KEY = "yy-intro-seen";
 
 export function IntroBrand() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -83,9 +81,6 @@ export function IntroBrand() {
       const finish = () => {
         tl.progress(1);
         setTheme("light");
-        try {
-          sessionStorage.setItem(SEEN_KEY, "1");
-        } catch {}
         removeSkip();
       };
 
@@ -97,16 +92,12 @@ export function IntroBrand() {
         window.removeEventListener("wheel", onSkip);
         window.removeEventListener("touchmove", onSkip);
         window.removeEventListener("keydown", onSkip);
-        window.removeEventListener("scroll", onSkip);
       };
 
-      let seen = false;
-      try {
-        seen = sessionStorage.getItem(SEEN_KEY) === "1";
-      } catch {}
       const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const offscreen = window.scrollY > window.innerHeight * 0.5; // 새로고침으로 아래 위치가 복원된 경우
 
-      if (seen || reduce || window.scrollY > 10) {
+      if (reduce || offscreen) {
         finish();
         return;
       }
@@ -114,7 +105,6 @@ export function IntroBrand() {
       window.addEventListener("wheel", onSkip, { passive: true });
       window.addEventListener("touchmove", onSkip, { passive: true });
       window.addEventListener("keydown", onSkip);
-      window.addEventListener("scroll", onSkip, { passive: true });
       tl.eventCallback("onComplete", finish);
       tl.play(0);
 
@@ -139,14 +129,14 @@ export function IntroBrand() {
         <p
           data-hero-word
           aria-hidden="true"
-          className="absolute inset-x-0 top-[44%] -translate-y-1/2 text-center font-en text-[clamp(120px,31vw,520px)] leading-none font-extrabold tracking-[-0.06em] text-charcoal"
+          className="absolute inset-x-0 top-[36%] -translate-y-1/2 text-center font-en text-[clamp(120px,31vw,520px)] leading-none font-extrabold tracking-[-0.06em] text-charcoal"
           style={{ opacity: 0 }}
         >
           {intro.heroWord}
         </p>
         <div
           data-row
-          className="absolute inset-x-0 bottom-[7svh] flex items-end justify-center gap-[0.5vw] px-[var(--gutter)]"
+          className="absolute inset-x-0 bottom-[5svh] flex items-end justify-center gap-[0.5vw] px-[var(--gutter)]"
         >
           {intro.productRow.map((id) => (
             <AssetImage
@@ -154,7 +144,7 @@ export function IntroBrand() {
               id={id}
               decorative
               priority
-              className="h-[clamp(180px,44svh,520px)] w-auto min-w-0 max-w-[24%] object-contain mix-blend-multiply"
+              className="h-[clamp(220px,54svh,640px)] w-auto min-w-0 max-w-[26%] object-contain mix-blend-multiply"
               style={{ opacity: 0 }}
             />
           ))}

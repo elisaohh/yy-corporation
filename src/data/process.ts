@@ -46,7 +46,7 @@ export const finishingProcesses: FinishingProcess[] = [
       { ko: "검사", en: "Quality Control" },
       { ko: "포장", en: "Packaging & Delivery" },
     ],
-    exampleImage: "/assets/hero/finish-coating.webp",
+    exampleImage: "/assets/hero/proc-coating.webp",
   },
   {
     key: "printing",
@@ -63,7 +63,7 @@ export const finishingProcesses: FinishingProcess[] = [
       { ko: "품질 검사", en: "Quality Inspection / QC" },
       { ko: "포장 및 출하", en: "Packaging & Logistics" },
     ],
-    exampleImage: "/assets/hero/finish-printing.webp",
+    exampleImage: "/assets/hero/proc-printing.webp",
   },
   {
     key: "etching",
@@ -80,7 +80,7 @@ export const finishingProcesses: FinishingProcess[] = [
       { ko: "검사", en: "Quality Inspection" },
       { ko: "적재 및 후속 공정 이동", en: "Stacking & Transfer" },
     ],
-    exampleImage: "/assets/hero/finish-etching.webp",
+    exampleImage: "/assets/hero/proc-etching.webp",
   },
   {
     key: "labeling",
@@ -97,7 +97,7 @@ export const finishingProcesses: FinishingProcess[] = [
       { ko: "품질 검사", en: "Quality Control / QC" },
       { ko: "적재 및 포장", en: "Packaging & Transport" },
     ],
-    exampleImage: "/assets/hero/finish-label.webp",
+    exampleImage: "/assets/hero/proc-label.webp",
   },
 ];
 

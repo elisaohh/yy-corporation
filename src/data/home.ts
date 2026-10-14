@@ -54,17 +54,15 @@ export const servicesSource = "YY NOTES Vol.01 회사 소개";
 
 /* ── ③ 공정 모션 ── */
 export const processScene = {
-  /** 기준병(투명) — 스포이드 포함 사진. 스포이드 없는 병이 오면 bottleOnly로 교체 */
-  base: "heroBottleClear" as AssetId,
-  /** 표면 효과 레이어 — 같은 캔버스 · 같은 바닥선(scripts/build-hero-images.mjs) */
-  layers: ["finishCoating", "finishPrinting", "finishEtching", "finishLabel"] as AssetId[],
-  /** 스포이드 · 캡 · 피펫 단독 — 기준병 캡과 같은 캔버스 좌표로 정렬됨 */
-  dropper: "dropperPart" as AssetId,
-  /**
-   * 스포이드 없는 병 — 아직 미제공. 받기 전까지 체결 장면은 "스포이드가 옆에서 다가와 병의 캡 자리에
-   * 맞물리며 합쳐지는" 표현으로 대신한다(병 형태를 임의로 만들지 않음). 받으면 이 값을 채워 실제 체결로 바꾼다.
-   */
-  bottleOnly: null as AssetId | null,
+  /** 기준병 YS-SRRR30-04 · 30ml (스포이드 없는 상태) */
+  base: "procClear" as AssetId,
+  /** 표면 효과 — 코팅 · 인쇄(코팅 후 인쇄로 대체, 단독 이미지 미제공) · 부식 · 라벨 */
+  layers: ["procCoating", "procPrinting", "procEtching", "procLabel"] as AssetId[],
+  /** 위에서 수직으로 내려와 체결되는 스포이드 — 캡(불투명)과 피펫(유리, multiply) */
+  dropperCap: "dropperCap" as AssetId,
+  dropperPipette: "dropperPipette" as AssetId,
+  /** 라벨이 피펫을 가리는 구간(캔버스 높이 대비 %) — proc-label 실측 */
+  labelBand: { top: 41.25, bottom: 86.25 },
   /** 체결 후 함께 등장하는 실제 제품 (기준병 양옆) */
   expandTo: ["YS-SRRR15-01_02", "YS-SRRR30-02_01", "YS-SRRR30-04_01", "YS-SRRR50-02_01"] as AssetId[],
 };

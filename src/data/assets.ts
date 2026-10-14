@@ -30,6 +30,11 @@ export interface MediaAsset {
   note?: string;
 }
 
+/** 공정 모션 캔버스 이미지(900×1600) */
+function proc(src: string, alt: string): MediaAsset {
+  return { kind: "image", src, alt, width: 900, height: 1600, status: "final", note: "기준병 YS-SRRR30-04 · 같은 캔버스 좌표" };
+}
+
 /** 후가공 생성 예시 이미지 — 실제 작업 사례로 표시하지 않는다 */
 function generated(src: string, alt: string): MediaAsset {
   return { kind: "image", src, alt, width: 900, height: 1600, status: "final", note: "생성 예시 — 실제 작업 사례 아님" };
@@ -56,38 +61,23 @@ const baseAssets = {
     note: "세로 화면 전용 구도",
   },
 
-  /* ── HOME 인트로 장면 (scripts/build-hero-images.mjs) — 900×1600 흰 바탕, multiply 합성 ── */
-  heroBottleClear: {
-    kind: "image",
-    src: "/assets/hero/bottle-clear.webp",
-    alt: "투명한 30ml 원통형 세럼 유리병",
-    width: 900,
-    height: 1600,
-    status: "final",
-    note: "기준병 고해상도 사진 (자료: YS-SRRR30-01.png — 제품 코드 확인 필요)",
-  },
-  dropperPart: {
-    kind: "image",
-    src: "/assets/hero/dropper.webp",
-    alt: "흰색 스포이드 캡과 유리 피펫",
-    width: 900,
-    height: 1600,
-    status: "final",
-    note: "드로퍼 피펫.png — 기준병 캡 위치와 같은 캔버스 좌표로 정렬",
-  },
+  /* ── HOME 인트로 · 공정 모션 (scripts/build-*.mjs) — 900×1600 흰 바탕 캔버스, 같은 좌표에 정렬 ── */
   heroMacroDark: {
     kind: "image",
     src: "/assets/hero/macro-glass-dark.webp",
     alt: "어두운 배경 속 유리 표면의 반사광",
-    width: 960,
+    width: 993,
     height: 1720,
     status: "final",
-    note: "기준병 사진 몸통 접사 반전 — 공장 사진 공개 권한 확인 전 대체 자료",
+    note: "기준병(YS-SRRR30-04) 몸통 접사 반전 — 공장 사진 공개 권한 확인 전 대체 자료",
   },
-  finishCoating: generated("/assets/hero/finish-coating.webp", "코팅 효과 예시 — 생성 이미지"),
-  finishPrinting: generated("/assets/hero/finish-printing.webp", "인쇄 효과 예시 — 생성 이미지"),
-  finishEtching: generated("/assets/hero/finish-etching.webp", "부식 효과 예시 — 생성 이미지"),
-  finishLabel: generated("/assets/hero/finish-label.webp", "라벨 효과 예시 — 생성 이미지"),
+  procClear: proc("/assets/hero/proc-clear.webp", "스포이드를 끼우기 전의 투명한 30ml 유리병"),
+  procCoating: generated("/assets/hero/proc-coating.webp", "코팅 효과 예시 — 생성 이미지"),
+  procPrinting: generated("/assets/hero/proc-printing.webp", "인쇄 효과 예시(코팅 위 인쇄) — 생성 이미지"),
+  procEtching: generated("/assets/hero/proc-etching.webp", "부식 효과 예시 — 생성 이미지"),
+  procLabel: generated("/assets/hero/proc-label.webp", "라벨 효과 예시 — 생성 이미지"),
+  dropperCap: proc("/assets/hero/dropper-cap.webp", "흰색 스포이드 캡과 고무 벌브"),
+  dropperPipette: proc("/assets/hero/dropper-pipette.webp", "유리 피펫"),
 } satisfies Record<string, MediaAsset>;
 
 export const assets: Record<string, MediaAsset> = { ...baseAssets, ...productImageAssets };

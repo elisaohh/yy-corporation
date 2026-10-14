@@ -16,10 +16,16 @@ gsap.registerPlugin(ScrollTrigger);
  * 유리 위로 하이라이트가 흐른다. 코팅 → 인쇄 → 부식 → 라벨을 한 번의 연속 모션으로 보여 준 뒤
  * 스포이드 · 캡이 맞물리고, 완성된 병이 실제 제품들 사이로 확장된다.
  *
- * - 각 공정은 독립된 긴 화면이 아니라 스크롤 약 0.4화면씩.
+ * - 각 공정은 독립된 긴 화면이 아니라 스크롤 약 0.45화면씩, 공정 사이 짧은 머무름.
  * - 후가공 이미지는 생성 예시 — 안내 문구를 표시한다.
- * - 스포이드 없는 병 이미지를 받기 전까지 체결은 "옆에서 다가와 캡 자리에 맞물림"으로 표현한다.
+ * - 체결: 스포이드 · 캡이 병 위에서 수직으로 내려와 목에 결합(살짝 눌렸다 자리 잡음).
  */
+/** 확장 시 실제 제품 위치(무대 폭 대비 %) */
+const EXPAND_X = [-205, -105, 105, 205];
+
+/** 라벨 구간(캔버스 높이 %)에서 피펫을 가리는 마스크 */
+const PIPETTE_MASK = `linear-gradient(to bottom, #000 0%, #000 ${processScene.labelBand.top}%, transparent ${processScene.labelBand.top}%, transparent ${processScene.labelBand.bottom}%, #000 ${processScene.labelBand.bottom}%)`;
+
 export function ProcessMotion() {
   const sectionRef = useRef<HTMLElement>(null);
   const steps = finishingProcesses;
@@ -42,17 +48,20 @@ export function ProcessMotion() {
         const layers = q("[data-layer]");
         const gate = q("[data-gate]")[0];
         const gateTag = q("[data-gate-tag]");
-        const dropper = q("[data-dropper]")[0];
+        const drop = q("[data-drop]");
         const pulse = q("[data-pulse]")[0];
         const items = q("[data-step]");
         const bar = q("[data-bar]")[0];
         const panel = q("[data-panel]")[0];
         const expand = q("[data-expand]");
 
+        expand.forEach((el, i) => gsap.set(el, { xPercent: EXPAND_X[i] ?? 0 }));
+
         if (context.conditions?.reduce) {
-          // 모션 줄이기: 마지막 표면(라벨)과 목록만 정지 상태로
+          // 모션 줄이기: 라벨 표면 + 체결된 스포이드, 목록만 정지 상태로
           gsap.set(layers, { clipPath: "inset(0% 0% 0% 0%)" });
-          gsap.set([gate, dropper, pulse, ...expand], { autoAlpha: 0 });
+          gsap.set([gate, pulse, ...expand], { autoAlpha: 0 });
+          gsap.set(drop, { autoAlpha: 1, yPercent: 0 });
           return;
         }
 
@@ -60,20 +69,20 @@ export function ProcessMotion() {
         gsap.set(layers, { clipPath: "inset(0% 82% 0% 0%)" });
         gsap.set(gate, { left: "18%", autoAlpha: 0 });
         gsap.set(gateTag, { autoAlpha: 0 });
-        gsap.set(dropper, { xPercent: 70, yPercent: -4, autoAlpha: 0 });
-        gsap.set(pulse, { scale: 0.4, autoAlpha: 0 });
+        gsap.set(drop, { yPercent: -42, autoAlpha: 0 });
+        gsap.set(pulse, { scale: 0.5, autoAlpha: 0 });
         gsap.set(items, { color: "var(--color-ash)" });
         gsap.set(bar, { scaleY: 0, transformOrigin: "top center" });
-        gsap.set(expand, { autoAlpha: 0, y: 40 });
+        gsap.set(expand, { autoAlpha: 0, y: 50 });
 
         const tl = gsap.timeline({
           defaults: { ease: "none" },
           scrollTrigger: {
             trigger: section,
             start: "top top",
-            end: () => `+=${window.innerHeight * (desktop ? 2.2 : 1.7)}`,
+            end: () => `+=${window.innerHeight * (desktop ? 3.4 : 2.6)}`,
             pin: true,
-            scrub: 0.8,
+            scrub: 1.4, // 스크롤보다 약간 늦게 따라와 움직임이 부드럽다
             anticipatePin: 1,
             invalidateOnRefresh: true,
           },
@@ -82,41 +91,40 @@ export function ProcessMotion() {
         if (process.env.NODE_ENV === "development") (window as unknown as Record<string, unknown>).__yyProcess = tl;
 
         // 병 등장
-        tl.from(stage, { y: 50, autoAlpha: 0, duration: 0.5, ease: "power2.out" }, 0).from(panel, { y: 30, autoAlpha: 0, duration: 0.5 }, 0.1);
+        tl.from(stage, { y: 70, autoAlpha: 0, duration: 0.8, ease: "power3.out" }, 0).from(panel, { y: 30, autoAlpha: 0, duration: 0.8, ease: "power2.out" }, 0.15);
 
-        // 공정 게이트 4회 통과
-        const SWEEP = 0.75;
+        // 공정 게이트 4회 통과 — 공정마다 짧은 머무름을 두어 표면 변화를 읽을 수 있게
+        const SWEEP = 1.15;
+        const STEP = 1.5;
         layers.forEach((layer, i) => {
-          const at = 0.7 + i * 0.85;
-          tl.set(gate, { left: "18%" }, at)
-            .to(gate, { autoAlpha: 1, duration: 0.08 }, at)
-            .to(gateTag[i], { autoAlpha: 1, duration: 0.1 }, at)
-            .to(gate, { left: "82%", duration: SWEEP, ease: "power1.inOut" }, at)
-            .to(layer, { clipPath: "inset(0% 18% 0% 0%)", duration: SWEEP, ease: "power1.inOut" }, at)
+          const at = 1.1 + i * STEP;
+          tl.set(gate, { left: "18%" }, at - 0.2)
+            .to(gate, { autoAlpha: 1, duration: 0.2, ease: "power1.out" }, at - 0.2)
+            .to(gateTag[i], { autoAlpha: 1, duration: 0.2 }, at - 0.15)
+            .to(gate, { left: "82%", duration: SWEEP, ease: "sine.inOut" }, at)
+            .to(layer, { clipPath: "inset(0% 18% 0% 0%)", duration: SWEEP, ease: "sine.inOut" }, at)
             .set(layer, { clipPath: "inset(0% 0% 0% 0%)" }, at + SWEEP)
-            .to(gate, { autoAlpha: 0, duration: 0.08 }, at + SWEEP - 0.04)
-            .to(gateTag[i], { autoAlpha: 0, duration: 0.08 }, at + SWEEP - 0.04)
-            .to(items[i], { color: "var(--color-charcoal)", duration: 0.1 }, at)
-            .to(bar, { scaleY: (i + 1) / (steps.length + 1), duration: SWEEP }, at);
-          if (i > 0) tl.to(items[i - 1], { color: "var(--color-ash)", duration: 0.1 }, at);
-          // 이전 표면은 새 표면이 다 덮은 뒤 숨김(겹침 방지)
-          if (i > 0) tl.set(layers[i - 1], { autoAlpha: 0 }, at + SWEEP);
+            .to([gate, gateTag[i]], { autoAlpha: 0, duration: 0.2, ease: "power1.in" }, at + SWEEP - 0.1)
+            .to(items[i], { color: "var(--color-charcoal)", duration: 0.35 }, at)
+            .to(bar, { scaleY: (i + 1) / (steps.length + 1), duration: SWEEP, ease: "sine.inOut" }, at);
+          if (i > 0) tl.to(items[i - 1], { color: "var(--color-ash)", duration: 0.35 }, at);
+          if (i > 0) tl.set(layers[i - 1], { autoAlpha: 0 }, at + SWEEP); // 이전 표면은 새 표면이 다 덮은 뒤 숨김
         });
 
-        // 부자재 체결 — 스포이드가 옆에서 다가와 캡 자리에 맞물림
-        const match = 0.7 + steps.length * 0.85 + 0.1;
-        tl.to(items[steps.length - 1], { color: "var(--color-ash)", duration: 0.1 }, match)
-          .to(items[steps.length], { color: "var(--color-charcoal)", duration: 0.1 }, match)
-          .to(bar, { scaleY: 1, duration: 0.6 }, match)
-          .to(dropper, { autoAlpha: 1, xPercent: 34, duration: 0.35, ease: "power2.out" }, match)
-          .to(dropper, { xPercent: 0, yPercent: 0, duration: 0.35, ease: "power3.inOut" }, match + 0.4)
-          .to(pulse, { autoAlpha: 1, scale: 1, duration: 0.12 }, match + 0.72)
-          .to(pulse, { autoAlpha: 0, scale: 1.6, duration: 0.25 }, match + 0.84)
-          .to(dropper, { autoAlpha: 0, duration: 0.2 }, match + 0.8);
+        // 부자재 체결 — 스포이드 · 캡이 병 위에서 수직으로 내려와 목에 결합
+        const match = 1.1 + steps.length * STEP;
+        tl.to(items[steps.length - 1], { color: "var(--color-ash)", duration: 0.35 }, match)
+          .to(items[steps.length], { color: "var(--color-charcoal)", duration: 0.35 }, match)
+          .to(bar, { scaleY: 1, duration: 1.2, ease: "sine.inOut" }, match)
+          .to(drop, { autoAlpha: 1, duration: 0.35, ease: "power1.out" }, match)
+          .to(drop, { yPercent: 0.9, duration: 1.3, ease: "power2.inOut" }, match + 0.15)
+          .to(drop, { yPercent: 0, duration: 0.35, ease: "power2.out" }, match + 1.45)
+          .to(pulse, { autoAlpha: 1, scale: 1, duration: 0.2, ease: "power1.out" }, match + 1.35)
+          .to(pulse, { autoAlpha: 0, scale: 1.7, duration: 0.5, ease: "power1.in" }, match + 1.55);
 
         // 완성된 병 → 실제 제품들로 확장
-        const grow = match + 1.15;
-        tl.to(panel, { autoAlpha: 0, y: -20, duration: 0.35 }, grow)
+        const grow = match + 2.2;
+        tl.to(panel, { autoAlpha: 0, y: -20, duration: 0.5 }, grow)
           .to(
             wrap,
             {
@@ -125,13 +133,13 @@ export function ProcessMotion() {
                 return window.innerWidth / 2 - (r.left + r.width / 2 - (gsap.getProperty(wrap, "x") as number));
               },
               scale: desktop ? 0.7 : 0.62,
-              duration: 0.7,
+              duration: 1.1,
               ease: "power2.inOut",
             },
             grow,
           )
-          .to(expand, { autoAlpha: 1, y: 0, duration: 0.6, stagger: 0.06, ease: "power2.out" }, grow + 0.3)
-          .to({}, { duration: 0.35 });
+          .to(expand, { autoAlpha: 1, y: 0, duration: 0.9, stagger: 0.12, ease: "power2.out" }, grow + 0.45)
+          .to({}, { duration: 0.6 });
       },
       section,
     );
@@ -146,13 +154,13 @@ export function ProcessMotion() {
         <div data-stage-wrap className="relative flex h-full min-h-0 items-center justify-center lg:col-span-6">
           <div data-stage className="relative aspect-[9/16] h-[min(100%,72svh,760px)] max-w-full">
             {/* 실제 제품 확장 — 기준병 양옆 */}
-            {processScene.expandTo.map((id, i) => (
+            {processScene.expandTo.map((id) => (
               <div
                 key={id}
                 data-expand
                 aria-hidden="true"
-                className="absolute inset-x-0 bottom-[8%] flex h-[56%] items-end justify-center"
-                style={{ transform: `translateX(${[-205, -105, 105, 205][i]}%)`, opacity: 0 }}
+                className="absolute inset-x-0 bottom-[8%] flex h-[66%] items-end justify-center"
+                style={{ opacity: 0 }}
               >
                 <AssetImage id={id} decorative className="h-full w-full object-contain object-bottom mix-blend-multiply" />
               </div>
@@ -163,12 +171,19 @@ export function ProcessMotion() {
               <AssetImage key={id} id={id} data-layer="" decorative className="absolute inset-0 size-full object-contain" />
             ))}
 
-            {/* 체결되는 스포이드 — 기준병 캡과 같은 캔버스 좌표 */}
-            <AssetImage id={processScene.dropper} data-dropper="" decorative className="absolute inset-0 size-full object-contain mix-blend-multiply" style={{ opacity: 0 }} />
+            {/* 체결되는 스포이드 — 같은 캔버스 좌표. 피펫은 라벨 구간에서 가려진다(마스크는 움직이지 않는 바깥 상자에) */}
+            <div
+              aria-hidden="true"
+              className="absolute inset-0"
+              style={{ maskImage: PIPETTE_MASK, WebkitMaskImage: PIPETTE_MASK }}
+            >
+              <AssetImage id={processScene.dropperPipette} data-drop="" decorative className="absolute inset-0 size-full object-contain" style={{ opacity: 0 }} />
+            </div>
+            <AssetImage id={processScene.dropperCap} data-drop="" decorative className="absolute inset-0 size-full object-contain" style={{ opacity: 0 }} />
             <span
               data-pulse
               aria-hidden="true"
-              className="absolute left-1/2 top-[17%] size-[38%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,200,68,0.55),rgba(255,200,68,0)_65%)]"
+              className="absolute left-1/2 top-[34%] size-[44%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,200,68,0.55),rgba(255,200,68,0)_65%)]"
               style={{ opacity: 0 }}
             />
 
