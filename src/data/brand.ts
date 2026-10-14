@@ -4,6 +4,7 @@
  * 로고를 교체할 때는 사본 파일을 바꾸거나 아래 src만 수정한다. 컴포넌트에 경로를 직접 쓰지 않는다.
  *
  * 색상은 원본 그대로(심볼 #ffc844, 워드마크 #f7af22)이며 형태·비율·색을 변경하지 않는다.
+ * 원본 6개는 /LOGO 와 public/assets/brand/ 에 그대로 보존한다(덮어쓰기 금지).
  */
 
 export type LogoVariant =
@@ -83,3 +84,33 @@ export type LogoPlacement = keyof typeof logoPlacement;
 
 /** 로고 대체 텍스트 */
 export const logoAlt = "YY CORPORATION";
+
+/**
+ * 로고 색 버전.
+ * - official: 공식 키컬러 원본 (최종)
+ * - monoCharcoal: 흰 배경 가독성 비교용 "파생 시안". 원본 사본에서 fill 값 두 개만
+ *   #2b2b2a(디자인 토큰 charcoal)로 바꿨고 형태는 동일하다. 승인 전에는 사이트에 적용하지 않는다.
+ */
+export type LogoTone = "official" | "monoCharcoal";
+
+export const logoTones: Record<LogoTone, { status: "final" | "draft"; label: string }> = {
+  official: { status: "final", label: "공식 키컬러" },
+  monoCharcoal: { status: "draft", label: "차콜 단색 파생 시안 (미승인)" },
+};
+
+const derivedDir = "/assets/brand/derived";
+
+export const monoCharcoalSrc: Record<LogoVariant, string> = {
+  horizontalCorporation: `${derivedDir}/yy-logo-horizontal-corporation--mono-charcoal.svg`,
+  horizontalKorean: `${derivedDir}/yy-logo-horizontal-korean--mono-charcoal.svg`,
+  basicCorp: `${derivedDir}/yy-logo-basic-corp--mono-charcoal.svg`,
+  verticalCorporation: `${derivedDir}/yy-logo-vertical-corporation--mono-charcoal.svg`,
+  verticalKorean: `${derivedDir}/yy-logo-vertical-korean--mono-charcoal.svg`,
+  verticalCorp: `${derivedDir}/yy-logo-vertical-corp--mono-charcoal.svg`,
+};
+
+/** 공식 SVG에서 확인한 브랜드 색 (잠정 — 브랜드 가이드 확인 전) */
+export const brandColorsFromLogo = {
+  symbol: "#FFC844", // PANTONE 1225 C 대응 추정 · 기존 잠정값 #FFC845
+  wordmark: "#F7AF22", // PANTONE 4008 C 대응 추정 · 기존 잠정값 #F3AF22
+} as const;

@@ -16,7 +16,8 @@ const SCROLL_DELTA = 6;
 
 /**
  * 공통 헤더 — 기획서 2.0 §3.1, 부록 C.
- * - 바탕은 항상 투명. 헤더 아래 구역의 data-header-theme(dark/light)에 따라 글자색만 전환.
+ * - 바탕은 옅은 반투명 + 블러(2026-10-14 결정, 기획서의 '투명 헤더'에서 변경).
+ *   헤더 아래 구역의 data-header-theme(dark/light)에 따라 바탕 톤과 글자색을 함께 전환.
  * - 아래로 스크롤하면 숨김, 위로 스크롤하면 재등장.
  * - 현재 페이지는 메뉴 글자 위 4px 점(헤더 글자색과 같은 색).
  */
@@ -95,8 +96,10 @@ export function Header() {
         ref={headerRef}
         data-header-state={isDark ? "dark" : "light"}
         onFocusCapture={() => setHidden(false)}
-        className={`fixed inset-x-0 top-0 z-50 transition-[transform,color] duration-300 ease-[var(--ease-yy-out)] ${
-          isDark ? "text-on-dark" : "text-charcoal"
+        className={`fixed inset-x-0 top-0 z-50 border-b backdrop-blur-md backdrop-saturate-150 transition-[transform,color,background-color,border-color] duration-300 ease-[var(--ease-yy-out)] ${
+          isDark
+            ? "border-on-dark/10 bg-intro/70 text-on-dark"
+            : "border-stone/70 bg-paper/80 text-charcoal"
         } ${isHidden ? "-translate-y-full" : "translate-y-0"}`}
         style={{ paddingTop: "env(safe-area-inset-top, 0px)" }}
       >

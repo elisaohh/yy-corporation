@@ -3,7 +3,9 @@
 /*
  * YY CORPORATION 디자인 토큰 — 설계서 "Clear Glass" v0.2.1
  * 색·타이포·간격·모션을 이곳에서만 정의한다.
- * PANTONE 두 색은 잠정값(브랜드 원본 색상 데이터 확인 전).
+ * PANTONE 두 색은 공식 SVG 로고의 색상값을 우선 기준으로 쓰는 잠정값이다(브랜드 가이드 확인 전).
+ *   1225C  #FFC844 (로고 심볼)    — 이전 잠정값 #FFC845
+ *   4008C  #F7AF22 (로고 워드마크) — 이전 잠정값 #F3AF22
  */
 @theme {
   /* Color */
@@ -17,8 +19,8 @@
   --color-outro: #2e2e2d;
   --color-on-dark: #ffffff;
   --color-on-dark-sub: #b9b6b1;
-  --color-point-1225: #ffc845; /* 잠정 — 면 전용 */
-  --color-point-4008: #f3af22; /* 잠정 — 선 전용 */
+  --color-point-1225: #ffc844; /* 잠정 · 공식 로고 심볼 색 — 면 전용 */
+  --color-point-4008: #f7af22; /* 잠정 · 공식 로고 워드마크 색 — 선 전용 */
 
   /* Type */
   --font-en: var(--font-inter), "Helvetica Neue", Arial, sans-serif;

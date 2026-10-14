@@ -14,6 +14,12 @@
 | assets/brand/yy-logo-vertical-corp.svg | 세로 로고(3).svg | 예비 | final |
 
 - 사본은 원본과 바이트 단위로 동일(`cmp` 확인). `.gitattributes`에서 줄바꿈 변환을 막았다.
+
+### 파생 시안 (미승인 — 사이트 미적용)
+
+| 파일 (public/assets/brand/derived/) | 기준 원본 | 변경 내용 | 상태 |
+|---|---|---|---|
+| yy-logo-*--mono-charcoal.svg (6개) | 위 6개 사본 | 스타일의 fill 값 2개 → #2b2b2a. path·viewBox 동일 | draft · `/logo-check` 비교용 |
 - 색상: 심볼 `#ffc844`, 워드마크 `#f7af22`. 투명 배경. 단색(차콜/흰색) 버전 없음.
 
 ## 이미지 · 영상 · 3D
