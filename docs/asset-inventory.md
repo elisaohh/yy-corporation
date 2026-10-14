@@ -31,7 +31,14 @@
 |---|---|---|---|
 | heroPoster | HOME 인트로 정지 포스터 (PC) | missing | 기준 30ml 세럼병 원본 사진 |
 | heroPosterMobile | HOME 인트로 정지 포스터 (모바일 세로) | missing | 같음 |
-| (제품 이미지) | PRODUCT 목록·상세 | missing | 제품별 사진 · 코드 · 규격 |
+| phBottleA · phBottleB · phDropperA · phDropperB · phCapA · phCapB · phViewTop · phViewBottom | PRODUCT 목록·상세 기능 검증 | placeholder | 회색 도형 SVG(`public/assets/placeholders/`). 실제 제품 아님 |
+| (제품 이미지) | PRODUCT 목록·상세 | missing | 제품별 사진(대표 · 측면 · 후면 · 입구 · 바닥) · 코드 · 규격 |
+
+### 임시 제품 데이터 (`src/data/products.ts`)
+
+- `sample-01`–`sample-14`: 기능 검증용. 유리용기 6 · 드로퍼 5 · 캡 3, ACCESSORIES 0(빈 카테고리 안내 확인용).
+- 제품명은 "임시 제품 NN", 코드 · 용량 · 사이즈 · MOQ · 재질은 모두 비어 있음(화면 "—").
+- 실제 제품 자료가 오면 배열 전체를 교체한다.
 | (공정 사진) | PROCESS | missing | 공정별 사진 · 공식 명칭 |
 | (3D 모델) | HOME · PROCESS | missing | 사진 기반 제작 예정 |
 

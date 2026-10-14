@@ -24,6 +24,9 @@ export const siteConfig = {
    */
   showPlaceholderLabels: true,
 
+  /** 모바일 제품 목록 열 수 — 실제 사진 확인 후 1 또는 2로 결정 (설계서 v0.2) */
+  productMobileColumns: 2 as 1 | 2,
+
   theme: {
     intro: "dark",
     outro: "charcoal",

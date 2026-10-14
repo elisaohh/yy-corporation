@@ -25,6 +25,11 @@ export interface MediaAsset {
   note?: string;
 }
 
+/** 4:5 비율 임시 이미지 항목 */
+function placeholder(src: string, alt: string): MediaAsset {
+  return { kind: "image", src, alt, width: 800, height: 1000, status: "placeholder", note: "기능 검증용" };
+}
+
 export const assets = {
   /** HOME 인트로 정지 포스터 — 기준 유리병 원본 사진 제공 후 제작 */
   heroPoster: {
@@ -45,6 +50,20 @@ export const assets = {
     status: "placeholder",
     note: "세로 화면 전용 구도",
   },
+
+  /* ── 기능 검증용 임시 이미지 (실제 제품 아님 · 회색 도형) ── */
+  phBottleA: placeholder("/assets/placeholders/shape-bottle-a.svg", "임시 이미지 — 용기 형태 A"),
+  phBottleB: placeholder("/assets/placeholders/shape-bottle-b.svg", "임시 이미지 — 용기 형태 B"),
+  phDropperA: placeholder("/assets/placeholders/shape-dropper-a.svg", "임시 이미지 — 드로퍼 형태 A"),
+  phDropperB: placeholder("/assets/placeholders/shape-dropper-b.svg", "임시 이미지 — 드로퍼 형태 B"),
+  phCapA: placeholder("/assets/placeholders/shape-cap-a.svg", "임시 이미지 — 캡 형태 A"),
+  phCapB: placeholder("/assets/placeholders/shape-cap-b.svg", "임시 이미지 — 캡 형태 B"),
+  phViewTop: placeholder("/assets/placeholders/shape-view-top.svg", "임시 이미지 — 입구 방향 시점"),
+  phViewBottom: placeholder("/assets/placeholders/shape-view-bottom.svg", "임시 이미지 — 바닥 방향 시점"),
 } satisfies Record<string, MediaAsset>;
 
 export type AssetId = keyof typeof assets;
+
+export function getAsset(id: AssetId): MediaAsset {
+  return assets[id];
+}

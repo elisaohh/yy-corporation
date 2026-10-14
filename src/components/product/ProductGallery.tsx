@@ -1,0 +1,162 @@
+"use client";
+
+import { useEffect, useRef, useState, type KeyboardEvent, type MouseEvent, type TouchEvent } from "react";
+import { AssetImage, isPlaceholderAsset } from "@/components/media/AssetImage";
+import { Pending } from "@/components/ui/Pending";
+import { getAsset, type AssetId } from "@/data/assets";
+
+interface ProductGalleryProps {
+  images: AssetId[];
+  productName: string;
+}
+
+const SWIPE_THRESHOLD = 40;
+
+/**
+ * 상세 이미지 갤러리 — 큰 이미지 + 이전/다음 + 카운터(1 / N) + 가로 썸네일 (기획서 2.0 부록 D).
+ * - 데스크톱(정밀 포인터): 이미지 위에서 커서 주변 2배 확대
+ * - 모바일: 한 손가락 스와이프로 넘기기, 두 손가락 핀치는 브라우저 기본 확대를 그대로 허용
+ * - 키보드: 이미지 영역에 포커스 후 ← → 로 이동
+ */
+export function ProductGallery({ images, productName }: ProductGalleryProps) {
+  const [index, setIndex] = useState(0);
+  const [zoom, setZoom] = useState<{ x: number; y: number } | null>(null);
+  const [canZoom, setCanZoom] = useState(false);
+  const touchStart = useRef<{ x: number; y: number } | null>(null);
+  const total = images.length;
+  const current = images[index];
+
+  useEffect(() => {
+    const media = window.matchMedia("(hover: hover) and (pointer: fine)");
+    const update = () => setCanZoom(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+
+  const go = (next: number) => {
+    setZoom(null);
+    setIndex(Math.max(0, Math.min(total - 1, next)));
+  };
+
+  const onMove = (event: MouseEvent<HTMLDivElement>) => {
+    if (!canZoom) return;
+    const rect = event.currentTarget.getBoundingClientRect();
+    setZoom({
+      x: ((event.clientX - rect.left) / rect.width) * 100,
+      y: ((event.clientY - rect.top) / rect.height) * 100,
+    });
+  };
+
+  const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      go(index - 1);
+    } else if (event.key === "ArrowRight") {
+      event.preventDefault();
+      go(index + 1);
+    }
+  };
+
+  const onTouchStart = (event: TouchEvent<HTMLDivElement>) => {
+    touchStart.current = event.touches.length === 1 ? { x: event.touches[0].clientX, y: event.touches[0].clientY } : null;
+  };
+
+  const onTouchEnd = (event: TouchEvent<HTMLDivElement>) => {
+    const start = touchStart.current;
+    touchStart.current = null;
+    if (!start || event.changedTouches.length !== 1) return;
+    const dx = event.changedTouches[0].clientX - start.x;
+    const dy = event.changedTouches[0].clientY - start.y;
+    if (Math.abs(dx) > SWIPE_THRESHOLD && Math.abs(dx) > Math.abs(dy)) go(index + (dx < 0 ? 1 : -1));
+  };
+
+  if (total === 0) {
+    return <div className="aspect-[4/5] bg-card" aria-label="제품 이미지 준비 중" />;
+  }
+
+  return (
+    <div className="grid gap-4">
+      <div
+        role="group"
+        aria-roledescription="carousel"
+        aria-label={`${productName} 이미지`}
+        tabIndex={0}
+        onKeyDown={onKeyDown}
+        className="relative aspect-[4/5] overflow-hidden bg-card outline-offset-4 [touch-action:pan-y_pinch-zoom] lg:aspect-square lg:max-h-[calc(100svh-var(--header-h)-200px)] lg:min-h-[420px] lg:w-full"
+        onMouseMove={onMove}
+        onMouseLeave={() => setZoom(null)}
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
+      >
+        <AssetImage
+          key={current}
+          id={current}
+          priority={index === 0}
+          className={`fade-in absolute inset-0 size-full object-contain transition-transform duration-300 ease-[var(--ease-yy-out)] ${
+            canZoom ? "cursor-zoom-in" : ""
+          }`}
+          style={{
+            transform: zoom ? "scale(2)" : "scale(1)",
+            transformOrigin: zoom ? `${zoom.x}% ${zoom.y}%` : "50% 50%",
+          }}
+        />
+
+        {isPlaceholderAsset(current) && (
+          <span className="absolute left-4 top-4">
+            <Pending kind="temporary" label="임시 이미지" />
+          </span>
+        )}
+
+        <p className="absolute bottom-4 left-4 font-en text-[12px] tracking-[0.08em] tabular-nums text-ash" aria-live="polite">
+          <span className="sr-only">{getAsset(current).alt}, </span>
+          {index + 1} / {total}
+        </p>
+
+        {total > 1 && (
+          <div className="absolute bottom-3 right-3 flex gap-2">
+            <GalleryArrow direction="prev" disabled={index === 0} onClick={() => go(index - 1)} />
+            <GalleryArrow direction="next" disabled={index === total - 1} onClick={() => go(index + 1)} />
+          </div>
+        )}
+      </div>
+
+      {total > 1 && (
+        <ul className="flex gap-3 overflow-x-auto pb-1 [scrollbar-width:thin]" aria-label="썸네일">
+          {images.map((id, i) => (
+            <li key={`${id}-${i}`} className="shrink-0">
+              <button
+                type="button"
+                onClick={() => go(i)}
+                aria-label={`이미지 ${i + 1} 보기`}
+                aria-current={i === index ? "true" : undefined}
+                className={`block size-[72px] overflow-hidden bg-card transition-shadow duration-200 md:size-20 ${
+                  i === index ? "shadow-[inset_0_0_0_1.5px_var(--color-charcoal)]" : "shadow-[inset_0_0_0_1px_var(--color-stone)] hover:shadow-[inset_0_0_0_1px_var(--color-ash)]"
+                }`}
+              >
+                <AssetImage id={id} decorative className="size-full object-contain p-1" />
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+function GalleryArrow({ direction, disabled, onClick }: { direction: "prev" | "next"; disabled: boolean; onClick: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      aria-label={direction === "prev" ? "이전 이미지" : "다음 이미지"}
+      className="inline-flex size-11 items-center justify-center rounded-full border border-stone bg-paper/90 text-charcoal transition-colors duration-200 hover:border-charcoal disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-stone"
+    >
+      <span
+        aria-hidden="true"
+        className={`block size-2.5 border-l-[1.5px] border-t-[1.5px] border-current ${direction === "prev" ? "ml-1 -rotate-45" : "mr-1 rotate-[135deg]"}`}
+      />
+    </button>
+  );
+}
