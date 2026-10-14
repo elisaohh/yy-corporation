@@ -93,6 +93,11 @@ export function Header() {
   const isDark = theme === "dark" && !menuOpen;
   const isHidden = hidden && !menuOpen;
 
+  // 헤더 아래에 붙는 고정 요소(PROCESS 탭 등)가 헤더와 함께 올라가도록 html 데이터 속성으로 알린다
+  useEffect(() => {
+    document.documentElement.toggleAttribute("data-header-hidden", isHidden);
+  }, [isHidden]);
+
   return (
     <>
       <header

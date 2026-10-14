@@ -55,6 +55,14 @@
   }
 }
 
+/* 헤더가 스크롤로 숨으면 0 — 헤더 아래 고정 요소가 top: var(--header-offset)을 쓴다 */
+:root {
+  --header-offset: var(--header-h);
+}
+:root[data-header-hidden] {
+  --header-offset: 0px;
+}
+
 @layer base {
   html,
   body {

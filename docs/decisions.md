@@ -105,3 +105,5 @@
 | 2026-10-15 | 히어로 구성 | 윗줄(COSMETIC PACKAGING PARTNER / 병 하나, 처음부터 끝까지.) → 가운데 사진 → 아래 한 줄 대형 제목 FROM BOTTLE TO BRAND(모바일 두 줄) → 제품 보기 버튼. 로딩(로고 + 진행선) 유지 |
 | 2026-10-15 | HOME 사용자 수정 | 공정 모션: 실제 제품 확장 제거 → MATCH 후 다음 섹션으로, 게이트 빛 부드럽게, 고정 4.4/3.6화면 · scrub 0.8. PRODUCT 섹션 소개 문구 사용자 작성 |
 | 2026-10-15 | ABOUT 구현 | 인트로(공식 세로 로고 크게 → 스크롤 시 축소) · OUR STORY(문장 순차 등장) · OUR VISION(자간 모임) · CORE VALUES 01–04 · EXPERTISE(SOURCING/FINISHING/MATCHING/DELIVERY, 스크롤 활성 강조) · 회사 정보 · CTA. 문구는 엑셀 ABOUT 시트(고객 작성) · YY NOTES에서만 발췌(data/about.ts). 엑셀의 '플라스틱 용기'는 제외. 사진 없음 |
+| 2026-10-15 | 작업 사진 사용 | 사용자 결정: 자료/02_후가공/작업사진 15장을 PROCESS "On Site" 갤러리에 사용(공정별 사례가 아니라 관리 현장을 보여 주는 용도, 사진에 공정명 미표기). 웹 사본 public/assets/site(scripts/build-site-photos.mjs). 시설 소유 관계 미확인 → "자사 공장" 표현 금지. 배포 전 작업자 얼굴 · 타사 상호 노출 확인 권장 |
+| 2026-10-15 | PROCESS 구현 | 큰 타이틀 + 소개(엑셀 ABOUT ② 문장) → 4공정(헤더 아래 고정 탭, 스크롤 활성 · 클릭 이동, 생성 예시 이미지 + 엑셀 단계) → On Site 갤러리(메인 + 썸네일) → CTA. 공정 2–3문장 설명은 미제공이라 '확인 필요'. 추가 공정 미노출 |

@@ -23,7 +23,9 @@ npm.cmd run dev
 
 | 바꾸고 싶은 것 | 파일 |
 |---|---|
-| HOME 문구 (회사 소개, CTA, 슬로건, 인트로 단어 · GLASS) | `src/data/home.ts` |
+| HOME 문구 (회사 소개, CTA, 슬로건, 히어로) | `src/data/home.ts` |
+| ABOUT 문구 | `src/data/about.ts` |
+| PROCESS 소개 · 현장 문구 · 공정 설명 | `src/data/process.ts` |
 | 제품 목록 · 규격 · 이름 | `src/data/products.ts` |
 | 회사 정보 (주소 · 전화 · 이메일) | `src/data/company.ts` |
 | 공정 이름 · 설명 · 단계 | `src/data/process.ts` |
@@ -52,6 +54,7 @@ npm.cmd run dev
 | 제품 사진 (`자료/03_제품/제품사진/코드_01.png` …) | `node scripts/build-product-images.mjs` |
 | 공정 모션 병 이미지 (`자료/01_기준유리병/사진/YS-SRRR30-04*.png`) | `node scripts/build-process-images.mjs` |
 | 스포이드 캡 · 피펫 분리 | `node scripts/build-dropper-parts.mjs` |
+| 현장 사진 (`자료/02_후가공/작업사진/`) — 순서는 스크립트의 `ORDER` | `node scripts/build-site-photos.mjs` |
 | 히어로 사진 (`자료/07_히어로/히어로_병_물방울.webp`) → 병 층 + 물방울 분리 | `node scripts/build-hero-layers.mjs` |
 
 공정 장면에 쓰는 파일 이름은 `scripts/build-process-images.mjs` 위쪽 `scenes` 목록에서 바꾼다.

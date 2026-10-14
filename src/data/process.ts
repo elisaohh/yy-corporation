@@ -110,3 +110,22 @@ export const additionalProcesses = {
 
 /** 생성 예시 이미지 안내 문구 */
 export const exampleNotice = "후가공 이미지는 이해를 돕기 위한 생성 예시이며, 실제 작업 사례가 아닙니다.";
+
+/** PROCESS 페이지 머리말 — 엑셀 ABOUT 시트 ② 회사 소개(정밀 후가공) 문장 */
+export const processIntro = {
+  title: "Process",
+  lead: "코팅, 실크스크린, 박, 형압 등 브랜드의 아이덴티티와 감성을 살리는 후가공을 통합 관리합니다.",
+  source: "엑셀 ABOUT 시트 ② 회사 소개",
+};
+
+/**
+ * 현장 사진 — 자료/02_후가공/작업사진 (2026-10-15 사용자 결정으로 사용).
+ * 공정별 사례가 아니라 "생산 · 검사 · 출고를 관리하는 현장"을 보여 주는 용도. 사진마다 공정 이름을 붙이지 않는다.
+ * 시설 소유 관계가 확인되지 않았으므로 "자사 공장"으로 읽히는 문구를 쓰지 않는다.
+ */
+export const onSite = {
+  label: "On Site",
+  title: { text: "생산부터 출고까지, 현장에서 함께 관리합니다", status: "draft" as const },
+  /** 엑셀 ABOUT 시트 ⑤ 사업부 소개 — 서비스 특징 */
+  body: "국내외 협력 생산망을 기반으로 안정적인 납기와 공급을 지원합니다.",
+};
