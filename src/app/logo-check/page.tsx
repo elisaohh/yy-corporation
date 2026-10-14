@@ -18,6 +18,7 @@ const placementLabels: Record<keyof typeof logoPlacement, string> = {
   headerMobile: "모바일 헤더",
   mobileMenu: "모바일 메뉴",
   homeIntro: "HOME 인트로",
+  aboutIntro: "ABOUT 인트로",
   loader: "로더",
   footer: "푸터",
 };

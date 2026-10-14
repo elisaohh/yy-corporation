@@ -103,3 +103,5 @@
 | 2026-10-15 | 히어로 재정비 | 시안을 그대로 따라 한 배치 · 세리프 제목 철회. 원래 방향(Inter 대문자 굵은 제목 + Pretendard, 흰 바탕 · 차콜) 복귀. Instrument Serif 제거 |
 | 2026-10-15 | 히어로 사진 | 사용자 제공 사진(자료/07_히어로/히어로_병_물방울.webp, 병 3개 · 물방울) 사용. scripts/build-hero-layers.mjs로 병 층과 떠 있는 물방울 14개로 분리 → 물방울은 사진 속 그대로 따로 떠다님(multiply 합성). SVG 물방울 · 합성 병(float-*.webp)은 히어로에서 미사용 |
 | 2026-10-15 | 히어로 구성 | 윗줄(COSMETIC PACKAGING PARTNER / 병 하나, 처음부터 끝까지.) → 가운데 사진 → 아래 한 줄 대형 제목 FROM BOTTLE TO BRAND(모바일 두 줄) → 제품 보기 버튼. 로딩(로고 + 진행선) 유지 |
+| 2026-10-15 | HOME 사용자 수정 | 공정 모션: 실제 제품 확장 제거 → MATCH 후 다음 섹션으로, 게이트 빛 부드럽게, 고정 4.4/3.6화면 · scrub 0.8. PRODUCT 섹션 소개 문구 사용자 작성 |
+| 2026-10-15 | ABOUT 구현 | 인트로(공식 세로 로고 크게 → 스크롤 시 축소) · OUR STORY(문장 순차 등장) · OUR VISION(자간 모임) · CORE VALUES 01–04 · EXPERTISE(SOURCING/FINISHING/MATCHING/DELIVERY, 스크롤 활성 강조) · 회사 정보 · CTA. 문구는 엑셀 ABOUT 시트(고객 작성) · YY NOTES에서만 발췌(data/about.ts). 엑셀의 '플라스틱 용기'는 제외. 사진 없음 |

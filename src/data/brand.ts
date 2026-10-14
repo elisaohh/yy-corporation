@@ -76,6 +76,7 @@ export const logoPlacement = {
   headerMobile: { variant: "basicCorp", height: 26 },
   mobileMenu: { variant: "basicCorp", height: 28 },
   homeIntro: { variant: "verticalCorporation", height: 120 },
+  aboutIntro: { variant: "verticalCorporation", height: 200 },
   loader: { variant: "verticalCorporation", height: 72 },
   footer: { variant: "horizontalCorporation", height: 36 },
 } as const satisfies Record<string, { variant: LogoVariant; height: number }>;
