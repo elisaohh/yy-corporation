@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Reveal } from "@/components/motion/Reveal";
 import { ProductCard } from "@/components/product/ProductCard";
-import { Pending } from "@/components/ui/Pending";
 import { products } from "@/data/products";
 
 /**
@@ -17,9 +16,11 @@ export function ProductCollection() {
             <h2 id="collection-title" className="font-en text-[clamp(40px,5.4vw,80px)] leading-none font-extrabold tracking-[-0.04em] uppercase">
               Product
             </h2>
-            <p className="mt-4 flex flex-wrap items-center gap-2 text-[15px] text-ash">
-              컬렉션 소개 문구 <Pending />
-            </p>
+            <p className="mt-4 max-w-[520px] text-[15px] leading-relaxed text-ash">
+  하나의 용기에서 시작되는 다양한 가능성.
+  <br />
+  브랜드의 개성을 담아낸 제품들을 만나보세요.
+</p>
           </div>
           <Link href="/products" className="link-en">
             VIEW ALL PRODUCTS →
