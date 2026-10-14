@@ -14,6 +14,7 @@ interface ProductCardProps {
 /**
  * 제품 카드 — Card(#F5F5F3) 바탕, 테두리·그림자 없음, 이미지 4:5 contain.
  * 호버 시 두 번째 사진으로 크로스페이드 + 미세 확대 (기획서 2.0 부록 D).
+ * 흰 배경 제품 사진은 multiply 혼합으로 카드 바탕에 자연스럽게 섞는다(원본 파일은 그대로).
  */
 export function ProductCard({ product, fromCategory, linkRef }: ProductCardProps) {
   const [primary, secondary] = product.images;
@@ -26,7 +27,7 @@ export function ProductCard({ product, fromCategory, linkRef }: ProductCardProps
           <AssetImage
             id={primary}
             decorative
-            className={`absolute inset-0 size-full object-contain transition-[opacity,transform] duration-500 ease-[var(--ease-yy-out)] group-hover:scale-[1.02] ${
+            className={`absolute inset-0 size-full object-contain mix-blend-multiply transition-[opacity,transform] duration-500 ease-[var(--ease-yy-out)] group-hover:scale-[1.02] ${
               secondary ? "group-hover:opacity-0" : ""
             }`}
           />
@@ -35,7 +36,7 @@ export function ProductCard({ product, fromCategory, linkRef }: ProductCardProps
           <AssetImage
             id={secondary}
             decorative
-            className="absolute inset-0 size-full scale-[1.02] object-contain opacity-0 transition-[opacity,transform] duration-500 ease-[var(--ease-yy-out)] group-hover:scale-100 group-hover:opacity-100"
+            className="absolute inset-0 size-full scale-[1.02] object-contain mix-blend-multiply opacity-0 transition-[opacity,transform] duration-500 ease-[var(--ease-yy-out)] group-hover:scale-100 group-hover:opacity-100"
           />
         )}
         {product.isPlaceholder && (

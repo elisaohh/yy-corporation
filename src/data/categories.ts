@@ -11,7 +11,10 @@ export interface ProductCategory {
   label: string;
   /** 국문 이름 */
   labelKo: string;
-  /** 탭에 노출할지 여부 — 준비 중인 카테고리를 숨길 때 사용 */
+  /**
+   * 탭에 노출할지 여부. 단, 제품이 하나도 없는 카테고리는 이 값과 상관없이 자동으로 숨겨지고
+   * 제품이 추가되면 자동으로 나타난다(ProductCatalog).
+   */
   visible: boolean;
 }
 

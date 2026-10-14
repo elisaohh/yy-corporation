@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { productCategories } from "@/data/categories";
+import { hasProducts } from "@/data/products";
 
 /**
  * 뒤로가기 화살표 — 떠나온 카테고리 탭의 제품 목록으로 돌아간다.
@@ -10,7 +11,7 @@ import { productCategories } from "@/data/categories";
  */
 export function BackToProducts() {
   const from = useSearchParams().get("from");
-  const valid = from && productCategories.some((category) => category.slug === from);
+  const valid = from && productCategories.some((category) => category.slug === from) && hasProducts(from);
   return <BackArrow href={valid ? `/products?category=${from}` : "/products"} />;
 }
 

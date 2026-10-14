@@ -2,12 +2,12 @@ import Link from "next/link";
 import { Reveal } from "@/components/motion/Reveal";
 import { ProductCard } from "@/components/product/ProductCard";
 import { Pending } from "@/components/ui/Pending";
-import { featuredProductIds } from "@/data/home";
+import { featuredProductIds, featuredSelectionConfirmed } from "@/data/home";
 import { getProductById, type Product } from "@/data/products";
 
 /**
  * ⑤ 대표 제품 쇼케이스 — 2–3개를 크게, 비대칭 배치 (부록 B4).
- * 카드는 PRODUCT 목록과 같은 컴포넌트를 쓴다. 지금은 기능 검증용 임시 제품을 가리킨다.
+ * 카드는 PRODUCT 목록과 같은 컴포넌트를 쓴다. 대표 제품은 회사 지정 전까지 임시 선정.
  */
 export function Showcase() {
   const featured = featuredProductIds.map(getProductById).filter((p): p is Product => Boolean(p)).slice(0, 3);
@@ -22,8 +22,9 @@ export function Showcase() {
             <h2 id="showcase-title" className="font-en text-[clamp(26px,3vw,40px)] leading-[1.15] font-light tracking-[0.08em] uppercase">
               Product
             </h2>
-            <p className="mt-3 text-[15px] text-ash">
+            <p className="mt-3 flex flex-wrap items-center gap-2 text-[15px] text-ash">
               대표 제품 소개 문구 <Pending />
+              {!featuredSelectionConfirmed && <Pending kind="temporary" label="대표 제품 임시 선정" />}
             </p>
           </div>
           <Link href="/products" className="link-en">

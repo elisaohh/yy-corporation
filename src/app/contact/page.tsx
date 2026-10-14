@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { InquiryForm } from "@/components/contact/InquiryForm";
 import { Pending } from "@/components/ui/Pending";
-import { company } from "@/data/company";
+import { company, companyStatus } from "@/data/company";
 import { contactCopy } from "@/data/content";
 
 export const metadata: Metadata = { title: "Contact" };
@@ -12,14 +12,15 @@ export const metadata: Metadata = { title: "Contact" };
  * 지도는 검증된 주소와 연동 수단이 생기기 전까지 자리표시자로 둔다(가짜 위치 금지).
  */
 export default function ContactPage() {
-  const info: { label: string; value: string | null }[] = [
+  // 값이 없는 항목(팩스 · 상담 시간)은 표시하지 않는다
+  const info = [
     { label: "회사명", value: company.legalName },
     { label: "주소", value: company.address },
     { label: "대표전화", value: company.phone },
     { label: "팩스", value: company.fax },
     { label: "이메일", value: company.email },
     { label: "상담 시간", value: company.hours },
-  ];
+  ].filter((row): row is { label: string; value: string } => Boolean(row.value));
 
   return (
     <section data-header-theme="light" className="container-yy pb-32 pt-[calc(var(--header-h)+56px)] md:pt-[calc(var(--header-h)+96px)]">
@@ -63,10 +64,15 @@ export default function ContactPage() {
               {info.map((row) => (
                 <div key={row.label} className="grid grid-cols-[88px_minmax(0,1fr)] items-baseline gap-4 border-b border-stone py-3 text-[14px]">
                   <dt className="text-ash">{row.label}</dt>
-                  <dd className="min-w-0">{row.value ?? <Pending />}</dd>
+                  <dd className="min-w-0">{row.value}</dd>
                 </div>
               ))}
             </dl>
+            {companyStatus !== "confirmed" && (
+              <p className="mt-4">
+                <Pending label="기존 사이트 기준 · 최신 확인 필요" />
+              </p>
+            )}
           </div>
         </aside>
       </div>

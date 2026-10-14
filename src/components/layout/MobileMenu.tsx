@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef, type RefObject } from "react";
 import { Logo } from "@/components/brand/Logo";
 import { Pending } from "@/components/ui/Pending";
-import { company } from "@/data/company";
+import { company, companyStatus } from "@/data/company";
 import { isActivePath, mainNav } from "@/data/navigation";
 
 interface MobileMenuProps {
@@ -157,6 +157,11 @@ export function MobileMenu({ open, onClose, returnFocusRef, pathname }: MobileMe
               <dd>{row.value ?? <Pending />}</dd>
             </div>
           ))}
+          {companyStatus !== "confirmed" && (
+            <div className="pt-1">
+              <Pending label="기존 사이트 기준 · 최신 확인 필요" />
+            </div>
+          )}
         </dl>
       </div>
     </div>

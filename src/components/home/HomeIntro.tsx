@@ -3,7 +3,8 @@ import { siteConfig } from "@/config/site";
 import { assets } from "@/data/assets";
 
 /**
- * ① 시네마틱 인트로 — 차콜 바탕, 빛으로 드러나는 30ml 원통형 세럼 유리병 (기획서 2.0 부록 B1).
+ * ① 시네마틱 인트로 — 차콜 바탕, 빛으로 드러나는 원통형 세럼 유리병 (기획서 2.0 부록 B1).
+ * 기준 병: YS-SRRR20-01 · 20ml (data/reference.ts — 기획서의 30ml 표기에서 변경, 2026-10-14 결정).
  *
  * 소스는 siteConfig.heroMode로 바꾼다.
  *   poster: 정지 포스터 (현재 — 기준 유리병 원본 사진 제공 전이라 자리표시자)

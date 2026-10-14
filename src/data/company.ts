@@ -1,11 +1,16 @@
 /**
- * 회사 정보.
- * 콘텐츠 제작 가이드(엑셀) CONTACT 시트가 비어 있어 모든 값이 미확정이다.
- * 확인된 값만 채우고, null인 항목은 화면에 "확인 필요"로 표시된다. 임의 값을 넣지 않는다.
+ * 회사 정보 — 기존 사이트 푸터 캡처(자료/04_회사정보/회사정보.png)에서 옮긴 값.
+ *
+ * ⚠ 최신 정보로 확인되기 전까지 "확정된 공식 정보"로 취급하지 않는다(2026-10-14 결정).
+ *   화면에는 companyStatus가 "unverified"인 동안 "기존 사이트 기준 · 최신 확인 필요" 표시가 붙는다.
+ *   최신 정보를 확인하면 값을 고치고 companyStatus를 "confirmed"로 바꾼다.
+ * 비어 있는 항목(null)은 자료에 없던 값이다. 임의로 채우지 않는다.
  */
 
 export interface CompanyInfo {
   legalName: string | null;
+  representative: string | null;
+  businessNumber: string | null;
   address: string | null;
   phone: string | null;
   fax: string | null;
@@ -16,12 +21,19 @@ export interface CompanyInfo {
   instagram: string | null;
 }
 
+export type CompanyStatus = "unverified" | "confirmed";
+
+export const companyStatus: CompanyStatus = "unverified";
+export const companySource = "기존 사이트 푸터 캡처 (자료/04_회사정보/회사정보.png)";
+
 export const company: CompanyInfo = {
-  legalName: null,
-  address: null,
-  phone: null,
+  legalName: "와이와이 코퍼레이션",
+  representative: "강말숙",
+  businessNumber: "108-47-00497",
+  address: "서울특별시 강서구 강서로 499 대하빌딩 4층",
+  phone: "02-3665-0497",
   fax: null,
-  email: null,
+  email: "sales@yycorp.co.kr",
   hours: null,
   summary: null,
   instagram: null,

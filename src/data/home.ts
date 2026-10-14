@@ -40,9 +40,10 @@ export const servicesSource = "YY NOTES Vol.01 회사 소개";
 
 /**
  * ⑤ 대표 제품 2–3개.
- * 현재는 기능 검증용 임시 제품을 가리킨다. 실제 대표 제품이 정해지면 id만 바꾼다.
+ * 회사가 대표 제품을 아직 지정하지 않아 임시로 선정했다(기준병 + 형태가 다른 2종). 지정되면 id만 바꾼다.
  */
-export const featuredProductIds = ["sample-01", "sample-07", "sample-12"];
+export const featuredProductIds = ["ys-srrr20-01", "ys-srrr30-04", "ys-srrr50-02"];
+export const featuredSelectionConfirmed = false;
 
 /** ⑥ 마지막 CTA — 문구 미확정 (기획서 부록 B5: 예시를 확정 카피로 취급하지 말 것) */
 export const cta = {

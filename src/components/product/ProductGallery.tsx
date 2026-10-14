@@ -105,7 +105,7 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
           key={current}
           id={current}
           priority={index === 0}
-          className="fade-in pointer-events-none absolute inset-0 size-full object-contain transition-transform duration-300 ease-[var(--ease-yy-out)]"
+          className="fade-in pointer-events-none absolute inset-0 size-full object-contain mix-blend-multiply transition-transform duration-300 ease-[var(--ease-yy-out)]"
           style={{
             transform: zoomed ? "scale(2)" : "scale(1)",
             transformOrigin: `${origin.x}% ${origin.y}%`,
@@ -153,7 +153,7 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
                   i === index ? "shadow-[inset_0_0_0_1.5px_var(--color-charcoal)]" : "shadow-[inset_0_0_0_1px_var(--color-stone)] hover:shadow-[inset_0_0_0_1px_var(--color-ash)]"
                 }`}
               >
-                <AssetImage id={id} decorative className="size-full object-contain p-1" />
+                <AssetImage id={id} decorative thumb className="size-full object-contain p-1 mix-blend-multiply" />
               </button>
             </li>
           ))}
