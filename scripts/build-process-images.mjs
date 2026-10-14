@@ -22,7 +22,7 @@ const scenes = {
   coating: "YS-SRRR30-04 코팅.png",
   printing: "YS-SRRR30-04 코팅 후 인쇄.png", // 인쇄 단독 이미지 미제공 — 코팅 후 인쇄로 대체
   etching: "YS-SRRR30-04 부식.png",
-  label: "YS-SRRR30-04 라벨.png",
+  label: "YS-SRRR30-04 부식 후 라벨.png", // 2026-10-14 사용자 지정: 라벨 장면 = 부식 후 라벨
 };
 
 /** 행별 폭에서 몸통 최대 폭의 97%에 처음 도달하는 행 */
