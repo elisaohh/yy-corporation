@@ -1,3 +1,4 @@
+import { IntroSequence } from "@/components/home/IntroSequence";
 import { Pending } from "@/components/ui/Pending";
 import { siteConfig } from "@/config/site";
 import { assets } from "@/data/assets";
@@ -13,6 +14,7 @@ import { assets } from "@/data/assets";
  * 600vh 고정 스크롤 연출은 모션 단계에서 이 컴포넌트 안에 추가한다.
  */
 export function HomeIntro() {
+  if (siteConfig.heroMode === "sequence") return <IntroSequence />;
   return (
     <section
       data-header-theme="dark"
@@ -21,8 +23,7 @@ export function HomeIntro() {
       aria-label="인트로"
       className="relative h-[100svh] min-h-[560px] overflow-hidden bg-intro text-on-dark"
     >
-      {siteConfig.heroMode === "poster" && <IntroPoster />}
-      {siteConfig.heroMode !== "poster" && <IntroPending mode={siteConfig.heroMode} />}
+      {siteConfig.heroMode === "poster" ? <IntroPoster /> : <IntroPending mode={siteConfig.heroMode} />}
 
       <p className="absolute bottom-8 left-[var(--gutter)] flex flex-wrap items-center gap-2 text-[13px] text-on-dark-sub md:bottom-10">
         <Pending kind="temporary" label="인트로 임시 화면" />

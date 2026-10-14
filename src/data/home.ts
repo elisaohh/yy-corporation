@@ -26,14 +26,36 @@ export interface Service {
   line: string;
   /** 하는 일 */
   scope: string;
-  image: AssetId;
+  /** 패널에 나란히 놓을 이미지 (제품 렌더 · 생성 예시 · 임시 도형). 공장 사진은 권한 확인 전 사용 금지 */
+  images: AssetId[];
+  /** 생성 예시 이미지가 포함되면 안내 문구 표시 */
+  generatedExample?: boolean;
 }
 
 export const services: Service[] = [
-  { key: "find", name: "FIND", line: "딱 맞는 병을 찾아요", scope: "프리몰드 소싱", image: "svcFind" },
-  { key: "dress", name: "DRESS", line: "브랜드의 옷을 입혀요", scope: "코팅 · 인쇄 후가공", image: "svcDress" },
-  { key: "match", name: "MATCH", line: "캡과 드롭퍼, 짝을 맞춰요", scope: "부자재 매칭", image: "svcMatch" },
-  { key: "deliver", name: "DELIVER", line: "문 앞까지 책임져요", scope: "발주 · 입출고 · 납품", image: "svcDeliver" },
+  {
+    key: "find",
+    name: "FIND",
+    line: "딱 맞는 병을 찾아요",
+    scope: "프리몰드 소싱",
+    images: ["YS-SRRR15-01_02", "YS-SRRR30-04_02", "YS-SRRR50-02_02"],
+  },
+  {
+    key: "dress",
+    name: "DRESS",
+    line: "브랜드의 옷을 입혀요",
+    scope: "코팅 · 인쇄 후가공",
+    images: ["finishCoating", "finishPrinting", "finishEtching", "finishLabel"],
+    generatedExample: true,
+  },
+  {
+    key: "match",
+    name: "MATCH",
+    line: "캡과 드롭퍼, 짝을 맞춰요",
+    scope: "부자재 매칭",
+    images: ["YS-SRRR20-01_03"],
+  },
+  { key: "deliver", name: "DELIVER", line: "문 앞까지 책임져요", scope: "발주 · 입출고 · 납품", images: ["svcDeliver"] },
 ];
 
 export const servicesSource = "YY NOTES Vol.01 회사 소개";

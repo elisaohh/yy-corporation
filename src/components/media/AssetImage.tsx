@@ -1,7 +1,7 @@
 import type { CSSProperties } from "react";
 import { getAsset, type AssetId } from "@/data/assets";
 
-interface AssetImageProps {
+interface AssetImageProps extends Partial<Record<`data-${string}`, string>> {
   id: AssetId;
   className?: string;
   /** 첫 화면 이미지만 true */
@@ -18,7 +18,7 @@ interface AssetImageProps {
  * 경로가 아직 없는 자산(src: null)은 같은 비율의 빈 자리만 남긴다.
  * 실제 사진으로 교체해도 컴포넌트는 그대로 둔다.
  */
-export function AssetImage({ id, className = "", priority, decorative, thumb, style }: AssetImageProps) {
+export function AssetImage({ id, className = "", priority, decorative, thumb, style, ...data }: AssetImageProps) {
   const asset = getAsset(id);
 
   if (!asset.src) {
@@ -38,6 +38,7 @@ export function AssetImage({ id, className = "", priority, decorative, thumb, st
       draggable={false}
       className={className}
       style={style}
+      {...data}
     />
   );
 }

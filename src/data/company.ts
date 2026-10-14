@@ -1,9 +1,9 @@
 /**
  * 회사 정보 — 기존 사이트 푸터 캡처(자료/04_회사정보/회사정보.png)에서 옮긴 값.
  *
- * ⚠ 최신 정보로 확인되기 전까지 "확정된 공식 정보"로 취급하지 않는다(2026-10-14 결정).
- *   화면에는 companyStatus가 "unverified"인 동안 "기존 사이트 기준 · 최신 확인 필요" 표시가 붙는다.
- *   최신 정보를 확인하면 값을 고치고 companyStatus를 "confirmed"로 바꾼다.
+ * 2026-10-14 사용자 확인: 현재도 정확한 정보 → 확정(confirmed).
+ *   정보가 바뀌면 값을 고친다. 다시 확인이 필요해지면 companyStatus를 "unverified"로 돌리면
+ *   화면에 "최신 확인 필요" 표시가 다시 붙는다.
  * 비어 있는 항목(null)은 자료에 없던 값이다. 임의로 채우지 않는다.
  */
 
@@ -23,7 +23,7 @@ export interface CompanyInfo {
 
 export type CompanyStatus = "unverified" | "confirmed";
 
-export const companyStatus: CompanyStatus = "unverified";
+export const companyStatus: CompanyStatus = "confirmed";
 export const companySource = "기존 사이트 푸터 캡처 (자료/04_회사정보/회사정보.png)";
 
 export const company: CompanyInfo = {

@@ -52,19 +52,51 @@ function glassBottle(code: string, spec: Partial<Product> = {}): Product {
   };
 }
 
+/**
+ * 규격 출처: 자료/03_제품/제품규격/제품규격.txt (머리글 없는 표)
+ *   열: 코드 · 형태 · 제품명 · 용량 · (의미 미확인 값 1.25/2.0 — 표시하지 않음) · 넥 · 가로×세로
+ * MOQ · 재질은 SRRR20-01만 확인(자료/01_기준유리병/치수).
+ */
+const SPEC_SOURCE = "자료/03_제품/제품규격/제품규격.txt";
+
 export const products: Product[] = [
-  glassBottle("YS-SRRR15-01"),
+  glassBottle("YS-SRRR15-01", {
+    name: "Y1 라운드 RR 15ml (OL15)",
+    capacity: "15ml",
+    dimensions: "31.5 × 64.0 (가로 × 세로)",
+    neck: "Ø18",
+    specSource: SPEC_SOURCE,
+  }),
   glassBottle("YS-SRRR20-01", {
+    name: "Y1 라운드 RR 20ml",
     capacity: "20ml",
     dimensions: "33.7 × 68.7 (가로 × 세로)",
     moq: "5,000",
     material: "유리",
-    neck: "18파이",
-    specSource: "자료/01_기준유리병/치수/기준유리병 치수.txt",
+    neck: "Ø18",
+    specSource: `${SPEC_SOURCE} · 자료/01_기준유리병/치수`,
   }),
-  glassBottle("YS-SRRR30-02"),
-  glassBottle("YS-SRRR30-04"),
-  glassBottle("YS-SRRR50-02"),
+  glassBottle("YS-SRRR30-02", {
+    name: "Y1 라운드 RR 30ml",
+    capacity: "30ml",
+    dimensions: "38.0 × 71.3 (가로 × 세로)",
+    neck: "Ø18",
+    specSource: SPEC_SOURCE,
+  }),
+  glassBottle("YS-SRRR30-04", {
+    name: "Y1 단 라운드 RR 30ml",
+    capacity: "30ml",
+    dimensions: "38.0 × 74.4 (가로 × 세로)",
+    neck: "Ø18",
+    specSource: SPEC_SOURCE,
+  }),
+  glassBottle("YS-SRRR50-02", {
+    name: "Y1 라운드 RR 50ml",
+    capacity: "50ml",
+    dimensions: "38.0 × 99.2 (가로 × 세로)",
+    neck: "Ø18",
+    specSource: SPEC_SOURCE,
+  }),
 ];
 
 export function getProduct(slug: string): Product | undefined {

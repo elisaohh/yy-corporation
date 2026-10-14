@@ -35,6 +35,11 @@ function placeholder(src: string, alt: string): MediaAsset {
   return { kind: "image", src, alt, width: 800, height: 1000, status: "placeholder", note: "임시" };
 }
 
+/** 후가공 생성 예시 이미지 — 실제 작업 사례로 표시하지 않는다 */
+function generated(src: string, alt: string): MediaAsset {
+  return { kind: "image", src, alt, width: 900, height: 1600, status: "final", note: "생성 예시 — 실제 작업 사례 아님" };
+}
+
 const baseAssets = {
   /** HOME 인트로 정지 포스터 — 기준 유리병(YS-SRRR20-01, 20ml) 기반으로 제작 예정 */
   heroPoster: {
@@ -55,6 +60,21 @@ const baseAssets = {
     status: "placeholder",
     note: "세로 화면 전용 구도",
   },
+
+  /* ── HOME 인트로 장면 (scripts/build-hero-images.mjs) — 900×1600 흰 바탕, multiply 합성 ── */
+  heroBottleClear: {
+    kind: "image",
+    src: "/assets/hero/bottle-clear.webp",
+    alt: "투명한 20ml 원통형 세럼 유리병 YS-SRRR20-01",
+    width: 900,
+    height: 1600,
+    status: "final",
+    note: "기준병 고해상도 사진",
+  },
+  finishCoating: generated("/assets/hero/finish-coating.webp", "코팅 효과 예시 — 생성 이미지"),
+  finishPrinting: generated("/assets/hero/finish-printing.webp", "인쇄 효과 예시 — 생성 이미지"),
+  finishEtching: generated("/assets/hero/finish-etching.webp", "부식 효과 예시 — 생성 이미지"),
+  finishLabel: generated("/assets/hero/finish-label.webp", "라벨 효과 예시 — 생성 이미지"),
 
   /* ── HOME FIND / DRESS / MATCH / DELIVER 이미지 (임시) ──
      최종: 실사에 가까운 3D 제품 + 절제된 그래픽 (기획서 부록 B3).

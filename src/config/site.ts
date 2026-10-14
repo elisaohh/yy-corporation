@@ -3,8 +3,8 @@
  * 기획서 2.0 §6.2 기준.
  */
 
-/** HOME 인트로 소스. 'poster'는 3D/영상 자산이 준비되기 전의 정지 이미지 단계. */
-export type HeroMode = "poster" | "video" | "three";
+/** HOME 인트로 소스. sequence = 사진 기반 스크롤 시퀀스(현재), poster = 정지 이미지, video = 영상, three = 실시간 3D */
+export type HeroMode = "sequence" | "poster" | "video" | "three";
 
 export const siteConfig = {
   name: "YY CORPORATION",
@@ -12,7 +12,7 @@ export const siteConfig = {
   description: "YY CORPORATION 화장품 패키징 기업 웹사이트 프로토타입",
   locale: "ko_KR",
 
-  heroMode: "poster" as HeroMode,
+  heroMode: "sequence" as HeroMode,
   enableHeavy3DOnMobile: false,
 
   /** 문의 폼은 실제 전송 없이 화면만 동작하는 데모 상태로 유지한다. */
