@@ -2,11 +2,81 @@ import type { AssetId } from "./assets";
 import type { Copy } from "./content";
 
 /**
- * HOME 문구 · 구성 데이터 (기획서 2.0 부록 B).
+ * HOME 문구 · 구성 데이터 — 2026-10-14 HOME 개편안(사용자 승인) 기준.
+ * 순서: 브랜드 인트로 → 회사 소개(FIND·DRESS·MATCH·DELIVER 통합) → 공정 모션 → PRODUCT 컬렉션 → 슬로건 → CTA
  * status: final(확정) / draft(임시 초안 — 교체 예정) / missing(미정)
  */
 
-/** ③ 슬로건 — 순서대로 등장 */
+/* ── ① 브랜드 인트로 (자동 재생 약 5초, 스크롤하면 즉시 마지막 장면) ── */
+export const intro = {
+  /** I-3 굵은 단어 리듬 */
+  words: ["FIND", "DRESS", "MATCH", "DELIVER"],
+  /** I-6 대형 단어 — 사용자 지정(우선 GLASS) */
+  heroWord: "GLASS",
+  /** I-1 어두운 제품 비주얼 — 공장 사진 공개 권한 확인 전 대체 자료(유리 접사) */
+  darkVisual: "heroMacroDark" as AssetId,
+  /** I-6 제품 비주얼 — 실제 제품 렌더(전용 제품 비주얼 이미지가 오면 교체) */
+  productRow: [
+    "YS-SRRR30-04_04",
+    "YS-SRRR20-01_01",
+    "YS-SRRR50-02_04",
+    "YS-SRRR30-02_01",
+    "YS-SRRR20-01_04",
+  ] as AssetId[],
+};
+
+/* ── ② 회사 소개 ── */
+export const companyIntro = {
+  /** 출처: 콘텐츠 제작 가이드(엑셀) MAIN 시트 '회사 소개 요약' — 회사 제공 문구 */
+  title: "브랜드의 성공을 담는 패키징",
+  body: "화장품 용기 턴키 패키징 전문기업으로 글로벌 생산 네트워크를 통한 가격 경쟁력과 품질을 제공합니다.",
+  source: "엑셀 MAIN 시트 '회사 소개 요약'",
+};
+
+/** FIND → DRESS → MATCH → DELIVER (문구 출처: YY NOTES Vol.01 회사 소개) */
+export interface Service {
+  key: string;
+  name: string;
+  /** 한글 한 줄 */
+  line: string;
+  /** 하는 일 */
+  scope: string;
+}
+
+export const services: Service[] = [
+  { key: "find", name: "FIND", line: "딱 맞는 병을 찾아요", scope: "프리몰드 소싱" },
+  { key: "dress", name: "DRESS", line: "브랜드의 옷을 입혀요", scope: "코팅 · 인쇄 후가공" },
+  { key: "match", name: "MATCH", line: "캡과 드롭퍼, 짝을 맞춰요", scope: "부자재 매칭" },
+  { key: "deliver", name: "DELIVER", line: "문 앞까지 책임져요", scope: "발주 · 입출고 · 납품" },
+];
+
+export const servicesSource = "YY NOTES Vol.01 회사 소개";
+
+/* ── ③ 공정 모션 ── */
+export const processScene = {
+  /** 기준병(투명) — 스포이드 포함 사진. 스포이드 없는 병이 오면 bottleOnly로 교체 */
+  base: "heroBottleClear" as AssetId,
+  /** 표면 효과 레이어 — 같은 캔버스 · 같은 바닥선(scripts/build-hero-images.mjs) */
+  layers: ["finishCoating", "finishPrinting", "finishEtching", "finishLabel"] as AssetId[],
+  /** 스포이드 · 캡 · 피펫 단독 — 기준병 캡과 같은 캔버스 좌표로 정렬됨 */
+  dropper: "dropperPart" as AssetId,
+  /**
+   * 스포이드 없는 병 — 아직 미제공. 받기 전까지 체결 장면은 "스포이드가 옆에서 다가와 병의 캡 자리에
+   * 맞물리며 합쳐지는" 표현으로 대신한다(병 형태를 임의로 만들지 않음). 받으면 이 값을 채워 실제 체결로 바꾼다.
+   */
+  bottleOnly: null as AssetId | null,
+  /** 체결 후 함께 등장하는 실제 제품 (기준병 양옆) */
+  expandTo: ["YS-SRRR15-01_02", "YS-SRRR30-02_01", "YS-SRRR30-04_01", "YS-SRRR50-02_01"] as AssetId[],
+};
+
+/* ── ⑥ 마지막 CTA — 문구 미확정 (기획서 부록 B5: 예시를 확정 카피로 취급하지 말 것) ── */
+export const cta = {
+  title: { text: "LET'S CREATE TOGETHER.", status: "draft", source: "기획서 2.0 §4.1.6 초안" } as Copy,
+  sub: { text: "브랜드에 어울리는 패키징을 함께 찾아드립니다.", status: "draft", source: "기획서 2.0 §4.1.6 초안" } as Copy,
+  button: "CONTACT US ↗",
+};
+
+/* ── ⑤ 슬로건 (마지막 CTA 앞) ── */
 export const slogan = {
   lines: ["병 하나,", "처음부터 끝까지"],
   status: "final" as const,
@@ -16,60 +86,4 @@ export const slogan = {
     status: "draft",
     source: "기획서 2.0 부록 B2 임시 초안",
   } as Copy,
-};
-
-/** ④ 사업 역량 — FIND → DRESS → MATCH → DELIVER (문구 출처: YY NOTES Vol.01 회사 소개) */
-export interface Service {
-  key: string;
-  name: string;
-  /** 한글 한 줄 */
-  line: string;
-  /** 하는 일 */
-  scope: string;
-  /** 패널에 나란히 놓을 이미지 (제품 렌더 · 생성 예시 · 임시 도형). 공장 사진은 권한 확인 전 사용 금지 */
-  images: AssetId[];
-  /** 생성 예시 이미지가 포함되면 안내 문구 표시 */
-  generatedExample?: boolean;
-}
-
-export const services: Service[] = [
-  {
-    key: "find",
-    name: "FIND",
-    line: "딱 맞는 병을 찾아요",
-    scope: "프리몰드 소싱",
-    images: ["YS-SRRR15-01_02", "YS-SRRR30-04_02", "YS-SRRR50-02_02"],
-  },
-  {
-    key: "dress",
-    name: "DRESS",
-    line: "브랜드의 옷을 입혀요",
-    scope: "코팅 · 인쇄 후가공",
-    images: ["finishCoating", "finishPrinting", "finishEtching", "finishLabel"],
-    generatedExample: true,
-  },
-  {
-    key: "match",
-    name: "MATCH",
-    line: "캡과 드롭퍼, 짝을 맞춰요",
-    scope: "부자재 매칭",
-    images: ["YS-SRRR20-01_03"],
-  },
-  { key: "deliver", name: "DELIVER", line: "문 앞까지 책임져요", scope: "발주 · 입출고 · 납품", images: ["svcDeliver"] },
-];
-
-export const servicesSource = "YY NOTES Vol.01 회사 소개";
-
-/**
- * ⑤ 대표 제품 2–3개.
- * 회사가 대표 제품을 아직 지정하지 않아 임시로 선정했다(기준병 + 형태가 다른 2종). 지정되면 id만 바꾼다.
- */
-export const featuredProductIds = ["ys-srrr20-01", "ys-srrr30-04", "ys-srrr50-02"];
-export const featuredSelectionConfirmed = false;
-
-/** ⑥ 마지막 CTA — 문구 미확정 (기획서 부록 B5: 예시를 확정 카피로 취급하지 말 것) */
-export const cta = {
-  title: { text: "LET'S CREATE TOGETHER.", status: "draft", source: "기획서 2.0 §4.1.6 초안" } as Copy,
-  sub: { text: "브랜드에 어울리는 패키징을 함께 찾아드립니다.", status: "draft", source: "기획서 2.0 §4.1.6 초안" } as Copy,
-  button: "CONTACT US ↗",
 };

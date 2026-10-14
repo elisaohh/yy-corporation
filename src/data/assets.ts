@@ -30,22 +30,17 @@ export interface MediaAsset {
   note?: string;
 }
 
-/** 4:5 비율 임시 이미지 항목 */
-function placeholder(src: string, alt: string): MediaAsset {
-  return { kind: "image", src, alt, width: 800, height: 1000, status: "placeholder", note: "임시" };
-}
-
 /** 후가공 생성 예시 이미지 — 실제 작업 사례로 표시하지 않는다 */
 function generated(src: string, alt: string): MediaAsset {
   return { kind: "image", src, alt, width: 900, height: 1600, status: "final", note: "생성 예시 — 실제 작업 사례 아님" };
 }
 
 const baseAssets = {
-  /** HOME 인트로 정지 포스터 — 기준 유리병(YS-SRRR20-01, 20ml) 기반으로 제작 예정 */
+  /** HOME 인트로 정지 포스터 (heroMode: poster일 때) */
   heroPoster: {
     kind: "image",
     src: null,
-    alt: "어두운 배경 속 투명한 20ml 원통형 세럼 유리병",
+    alt: "어두운 배경 속 투명한 30ml 원통형 세럼 유리병",
     width: 1920,
     height: 1080,
     status: "placeholder",
@@ -54,7 +49,7 @@ const baseAssets = {
   heroPosterMobile: {
     kind: "image",
     src: null,
-    alt: "어두운 배경 속 투명한 20ml 원통형 세럼 유리병",
+    alt: "어두운 배경 속 투명한 30ml 원통형 세럼 유리병",
     width: 1080,
     height: 1920,
     status: "placeholder",
@@ -65,24 +60,34 @@ const baseAssets = {
   heroBottleClear: {
     kind: "image",
     src: "/assets/hero/bottle-clear.webp",
-    alt: "투명한 20ml 원통형 세럼 유리병 YS-SRRR20-01",
+    alt: "투명한 30ml 원통형 세럼 유리병",
     width: 900,
     height: 1600,
     status: "final",
-    note: "기준병 고해상도 사진",
+    note: "기준병 고해상도 사진 (자료: YS-SRRR30-01.png — 제품 코드 확인 필요)",
+  },
+  dropperPart: {
+    kind: "image",
+    src: "/assets/hero/dropper.webp",
+    alt: "흰색 스포이드 캡과 유리 피펫",
+    width: 900,
+    height: 1600,
+    status: "final",
+    note: "드로퍼 피펫.png — 기준병 캡 위치와 같은 캔버스 좌표로 정렬",
+  },
+  heroMacroDark: {
+    kind: "image",
+    src: "/assets/hero/macro-glass-dark.webp",
+    alt: "어두운 배경 속 유리 표면의 반사광",
+    width: 960,
+    height: 1720,
+    status: "final",
+    note: "기준병 사진 몸통 접사 반전 — 공장 사진 공개 권한 확인 전 대체 자료",
   },
   finishCoating: generated("/assets/hero/finish-coating.webp", "코팅 효과 예시 — 생성 이미지"),
   finishPrinting: generated("/assets/hero/finish-printing.webp", "인쇄 효과 예시 — 생성 이미지"),
   finishEtching: generated("/assets/hero/finish-etching.webp", "부식 효과 예시 — 생성 이미지"),
   finishLabel: generated("/assets/hero/finish-label.webp", "라벨 효과 예시 — 생성 이미지"),
-
-  /* ── HOME FIND / DRESS / MATCH / DELIVER 이미지 (임시) ──
-     최종: 실사에 가까운 3D 제품 + 절제된 그래픽 (기획서 부록 B3).
-     작업 사진은 보조 이미지 후보로만 분류되어 있으며 공개 권한 확인 전에는 쓰지 않는다. */
-  svcFind: placeholder("/assets/placeholders/shape-bottle-b.svg", "임시 이미지 — 다양한 용기 (FIND)"),
-  svcDress: placeholder("/assets/placeholders/shape-bottle-a.svg", "임시 이미지 — 코팅·인쇄된 용기 (DRESS)"),
-  svcMatch: placeholder("/assets/placeholders/shape-dropper-a.svg", "임시 이미지 — 캡·스포이드 조합 (MATCH)"),
-  svcDeliver: placeholder("/assets/placeholders/shape-pack.svg", "임시 이미지 — 완성 패키징 배열 (DELIVER)"),
 } satisfies Record<string, MediaAsset>;
 
 export const assets: Record<string, MediaAsset> = { ...baseAssets, ...productImageAssets };

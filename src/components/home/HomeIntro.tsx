@@ -1,20 +1,17 @@
-import { IntroSequence } from "@/components/home/IntroSequence";
+import { IntroBrand } from "@/components/home/IntroBrand";
 import { Pending } from "@/components/ui/Pending";
 import { siteConfig } from "@/config/site";
 import { assets } from "@/data/assets";
 
 /**
- * ① 시네마틱 인트로 — 차콜 바탕, 빛으로 드러나는 원통형 세럼 유리병 (기획서 2.0 부록 B1).
- * 기준 병: YS-SRRR20-01 · 20ml (data/reference.ts — 기획서의 30ml 표기에서 변경, 2026-10-14 결정).
- *
- * 소스는 siteConfig.heroMode로 바꾼다.
- *   poster: 정지 포스터 (현재 — 기준 유리병 원본 사진 제공 전이라 자리표시자)
- *   video : 영상 인트로 (자산 준비 후)
- *   three : 실시간 3D (모션·3D 단계)
- * 600vh 고정 스크롤 연출은 모션 단계에서 이 컴포넌트 안에 추가한다.
+ * ① HOME 인트로 — 소스는 siteConfig.heroMode로 바꾼다.
+ *   brand : 자동 재생 브랜드 인트로 (현재 — IntroBrand)
+ *   poster: 정지 포스터
+ *   video : 영상 인트로 (공장 영상 등 공개 권한 확인 후)
+ *   three : 실시간 3D
  */
 export function HomeIntro() {
-  if (siteConfig.heroMode === "sequence") return <IntroSequence />;
+  if (siteConfig.heroMode === "brand") return <IntroBrand />;
   return (
     <section
       data-header-theme="dark"
