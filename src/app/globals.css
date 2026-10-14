@@ -1,0 +1,160 @@
+@import "tailwindcss";
+
+/*
+ * YY CORPORATION 디자인 토큰 — 설계서 "Clear Glass" v0.2.1
+ * 색·타이포·간격·모션을 이곳에서만 정의한다.
+ * PANTONE 두 색은 잠정값(브랜드 원본 색상 데이터 확인 전).
+ */
+@theme {
+  /* Color */
+  --color-paper: #ffffff;
+  --color-mist: #f4f3f1;
+  --color-card: #f5f5f3;
+  --color-stone: #e6e4e0;
+  --color-ash: #6b6864;
+  --color-charcoal: #2b2b2a;
+  --color-intro: #262625;
+  --color-outro: #2e2e2d;
+  --color-on-dark: #ffffff;
+  --color-on-dark-sub: #b9b6b1;
+  --color-point-1225: #ffc845; /* 잠정 — 면 전용 */
+  --color-point-4008: #f3af22; /* 잠정 — 선 전용 */
+
+  /* Type */
+  --font-en: var(--font-inter), "Helvetica Neue", Arial, sans-serif;
+  --font-kr: var(--font-pretendard), "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+
+  /* Breakpoints: 모바일 ≤767 / 태블릿 768–1199 / 데스크톱 ≥1200 */
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 75rem;
+  --breakpoint-xl: 90rem;
+}
+
+:root {
+  color-scheme: light;
+
+  /* Layout */
+  --gutter: clamp(24px, 5vw, 96px);
+  --content-max: 1440px;
+  --header-h: 60px;
+
+  /* Motion */
+  --ease-yy-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-yy-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 200ms;
+  --dur-base: 300ms;
+  --dur-page: 400ms;
+  --dur-reveal: 600ms;
+}
+
+@media (min-width: 48rem) {
+  :root {
+    --header-h: 76px;
+  }
+}
+
+@layer base {
+  html,
+  body {
+    overflow-x: clip;
+  }
+
+  body {
+    background: var(--color-paper);
+    color: var(--color-charcoal);
+    font-family: var(--font-kr);
+    font-size: 16px;
+    line-height: 1.7;
+    letter-spacing: -0.01em;
+    word-break: keep-all;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+    font-weight: 300;
+  }
+
+  /* 포커스: 밝은 바탕 차콜 2px, 어두운 바탕 흰색 2px — 애니메이션 없음 */
+  :focus-visible {
+    outline: 2px solid var(--color-charcoal);
+    outline-offset: 3px;
+  }
+
+  [data-surface="dark"] :focus-visible {
+    outline-color: var(--color-on-dark);
+  }
+
+  ::selection {
+    background: var(--color-point-1225);
+    color: var(--color-charcoal);
+  }
+}
+
+@utility px-gutter {
+  padding-inline: var(--gutter);
+}
+
+@utility container-yy {
+  width: 100%;
+  max-width: calc(var(--content-max) + var(--gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+@utility font-en {
+  font-family: var(--font-en);
+}
+
+@utility label-en {
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+@utility skip-link {
+  position: absolute;
+  left: 16px;
+  top: -100px;
+  z-index: 100;
+  padding: 12px 16px;
+  background: var(--color-charcoal);
+  color: var(--color-paper);
+  font-size: 14px;
+  &:focus-visible {
+    top: 16px;
+  }
+}
+
+/* 페이지 진입 페이드 (기획서 2.0 §3.2, 0.3–0.5초) */
+@keyframes page-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.page-enter {
+  animation: page-in var(--dur-page) var(--ease-yy-in-out) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
