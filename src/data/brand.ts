@@ -72,9 +72,9 @@ export const logos: Record<LogoVariant, LogoAsset> = {
 
 /** 화면 위치별 로고 배정. 배치를 바꿀 때는 이 표만 수정한다. */
 export const logoPlacement = {
-  headerDesktop: { variant: "basicCorp", height: 30 },
-  headerMobile: { variant: "basicCorp", height: 26 },
-  mobileMenu: { variant: "basicCorp", height: 28 },
+  headerDesktop: { variant: "horizontalCorporation", height: 26 },
+  headerMobile: { variant: "horizontalCorporation", height: 22 },
+  mobileMenu: { variant: "horizontalCorporation", height: 24 },
   homeIntro: { variant: "verticalCorporation", height: 120 },
   aboutIntro: { variant: "verticalCorporation", height: 200 },
   loader: { variant: "verticalCorporation", height: 72 },

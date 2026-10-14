@@ -4,22 +4,29 @@ import { HomeIntro } from "@/components/home/HomeIntro";
 import { ProcessMotion } from "@/components/home/ProcessMotion";
 import { ProductCollection } from "@/components/home/ProductCollection";
 import { Slogan } from "@/components/home/Slogan";
+import { VariantSwitcher } from "@/components/review/VariantSwitcher";
+import { pickVariant } from "@/config/variants";
 
 /**
- * HOME — 2026-10-14 개편안(사용자 승인, Momix 리듬 참고 · 독자 구성)
- * ① 브랜드 인트로(자동 재생 약 5초) → ② 회사 소개(FIND · DRESS · MATCH · DELIVER)
- * → ③ 공정 모션(코팅 · 인쇄 · 부식 · 라벨 → 부자재 체결 → 실제 제품으로 확장)
+ * HOME — ① 히어로 → ② 회사 소개(FIND · DRESS · MATCH · DELIVER) → ③ 공정 모션
  * → ④ PRODUCT 컬렉션 → ⑤ 슬로건 → ⑥ 차콜 CTA → 푸터
+ * ①②⑤는 시안 비교 중 — ?hero=&intro=&slogan= (config/variants.ts)
  */
-export default function HomePage() {
+export default async function HomePage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
+  const sp = await searchParams;
+  const hero = pickVariant("hero", sp.hero);
+  const intro = pickVariant("intro", sp.intro);
+  const slogan = pickVariant("slogan", sp.slogan);
+
   return (
     <>
-      <HomeIntro />
-      <CompanyIntro />
+      <HomeIntro variant={hero} />
+      <CompanyIntro key={`intro-${intro}`} variant={intro} />
       <ProcessMotion />
       <ProductCollection />
-      <Slogan />
+      <Slogan key={`slogan-${slogan}`} variant={slogan} />
       <ContactCta />
+      <VariantSwitcher current={{ hero, intro, slogan }} />
     </>
   );
 }

@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Fragment, useEffect, useRef } from "react";
 import { Logo } from "@/components/brand/Logo";
 import { hero } from "@/data/home";
+import type { HeroVariant } from "@/config/variants";
 import layers from "@/data/hero-layers.json";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -20,13 +21,13 @@ gsap.registerPlugin(ScrollTrigger);
  */
 const ASPECT = `${layers.width} / ${layers.height}`;
 const RATIO = (layers.width / layers.height).toFixed(4);
-/** 큰 화면에서 사진이 지나치게 커지지 않게 */
-const MAX_W = 980;
+/** 큰 화면에서 사진이 지나치게 커지지 않게 — 시안별 최대 폭 */
+const MAX_W: Record<HeroVariant, number> = { a: 1240, b: 1380, c: 1180 };
 
 /** 작은 물방울일수록 가볍게(크게) 움직인다 */
 const depthOf = (w: number) => 0.55 + Math.min(0.75, 3 / w);
 
-export function HeroFloat() {
+export function HeroFloat({ variant = "a" }: { variant?: HeroVariant }) {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -140,28 +141,38 @@ export function HeroFloat() {
   }, []);
 
   const words = hero.title.split(" ");
+  const behind = variant === "b"; // 제목이 사진 뒤 가운데
+  const arch = variant === "c"; // 옅은 아치 면 위에 병
 
   return (
     <section ref={sectionRef} data-header-theme="light" aria-labelledby="hero-title" className="relative overflow-hidden bg-paper">
-      <div className="container-yy flex h-[100svh] min-h-[600px] flex-col pb-8 pt-[calc(var(--header-h)+20px)] md:pb-10 md:pt-[calc(var(--header-h)+28px)]">
+      <div className="container-yy relative flex h-[100svh] min-h-[600px] flex-col pb-6 pt-[calc(var(--header-h)+12px)] md:pb-8 md:pt-[calc(var(--header-h)+16px)]">
         {/* 윗줄: 분야 · 공식 문구 */}
         <div className="flex flex-wrap items-start justify-between gap-x-10 gap-y-3">
           <p data-fade className="label-en text-[11px] tracking-[0.32em] text-ash md:text-[12px]">
             {hero.eyebrow}
           </p>
-          <div data-fade className="text-[15px] leading-[1.6] md:text-right md:text-[17px]">
-            <p className="font-medium text-charcoal">{hero.lead}</p>
-            <p className="text-ash">{hero.sub}</p>
-          </div>
+          {!behind && (
+            <div data-fade className="text-[15px] leading-[1.6] md:text-right md:text-[17px]">
+              <p className="font-medium text-charcoal">{hero.lead}</p>
+              <p className="text-ash">{hero.sub}</p>
+            </div>
+          )}
         </div>
 
         {/* 사진 — 병(바탕 층) + 떠 있는 물방울 */}
-        <div aria-hidden="true" className="relative z-10 mt-4 flex min-h-[min(92vw,420px)] flex-1 items-center justify-center [container-type:size] md:items-end md:-mb-[2.2vw] md:min-h-[320px]">
+        <div
+          aria-hidden="true"
+          className={`relative z-10 flex min-h-[min(100vw,460px)] flex-1 items-center justify-center [container-type:size] md:min-h-[320px] ${
+            behind ? "mt-0" : "mt-2 md:-mb-[2.4vw]"
+          }`}
+        >
           {/* 남은 영역 안에서 사진 비율 그대로 최대 크기 (컨테이너 쿼리 단위) */}
-          <div data-photo className="relative" style={{ aspectRatio: ASPECT, width: `min(100cqw, 100cqh * ${RATIO}, ${MAX_W}px)` }}>
+          <div data-photo className="relative" style={{ aspectRatio: ASPECT, width: `min(${behind ? 108 : 100}cqw, ${arch ? 104 : 112}cqh * ${RATIO}, ${MAX_W[variant]}px)` }}>
+            {arch && <div className="absolute inset-x-[9%] -bottom-[6%] top-[4%] rounded-t-full bg-mist" />}
             <div data-depth="0.3" className="absolute inset-0">
               <div data-scroll="0.35" className="absolute inset-0">
-                <div data-bob="0.6" className="absolute inset-0">
+                <div data-bob="0.6" className={`absolute inset-0 ${arch ? "mix-blend-multiply" : ""}`}>
                   {/* eslint-disable-next-line @next/next/no-img-element -- 층 합성용 원본 비율 그대로 */}
                   <img src={layers.base} alt="" width={layers.width} height={layers.height} fetchPriority="high" className="size-full" />
                 </div>
@@ -194,7 +205,11 @@ export function HeroFloat() {
         <h1
           id="hero-title"
           aria-label={hero.title}
-          className="relative mt-3 font-en text-[clamp(38px,12vw,96px)] leading-[0.92] font-extrabold tracking-[-0.045em] text-charcoal uppercase md:mt-0 md:whitespace-nowrap md:text-[clamp(52px,7.4vw,122px)]"
+          className={
+            behind
+              ? "pointer-events-none absolute inset-x-0 top-1/2 z-0 -translate-y-1/2 text-center font-en text-[clamp(60px,17vw,300px)] leading-[0.84] font-extrabold tracking-[-0.055em] text-charcoal uppercase"
+              : `relative ${arch ? "z-20" : ""} mt-3 font-en text-[clamp(38px,12vw,96px)] leading-[0.92] font-extrabold tracking-[-0.045em] text-charcoal uppercase md:mt-0 md:whitespace-nowrap md:text-[clamp(52px,7.4vw,122px)]`
+          }
         >
           {words.map((word, i) => (
             <Fragment key={`${word}-${i}`}>
@@ -203,18 +218,20 @@ export function HeroFloat() {
                   {word}
                 </span>
               </span>
-              {i === 1 && <br className="md:hidden" />}
+              {i === 1 && <br className={behind ? "" : "md:hidden"} />}
               {i < words.length - 1 && " "}
             </Fragment>
           ))}
         </h1>
 
-        {/* 아랫줄: 스크롤 안내 · 제품 보기 */}
-        <div className="mt-6 flex items-center justify-between gap-6 md:mt-8">
-          <span data-fade className="hidden items-center gap-3 font-en text-[11px] tracking-[0.3em] text-ash md:flex">
-            <span className="block h-px w-10 bg-charcoal/40" />
-            SCROLL
-          </span>
+        {/* 아랫줄: 제품 보기 */}
+        <div className="relative z-10 mt-5 flex flex-wrap items-end justify-between gap-6 md:mt-6">
+          {behind && (
+            <div data-fade className="text-[15px] leading-[1.6] md:text-[17px]">
+              <p className="font-medium text-charcoal">{hero.lead}</p>
+              <p className="text-ash">{hero.sub}</p>
+            </div>
+          )}
           <Link data-fade href={hero.cta.href} className="btn btn-primary btn-en md:ml-auto">
             {hero.cta.label.toUpperCase()}
             <svg aria-hidden="true" viewBox="0 0 24 24" className="size-4" fill="none" stroke="currentColor" strokeWidth="1.5">

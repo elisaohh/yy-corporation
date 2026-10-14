@@ -23,7 +23,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 /** 유리 피펫 불투명도 — 낮을수록 유리처럼 비친다(2026-10-15 요청) */
 
-const PIPETTE_OPACITY = 0.5;
+const PIPETTE_OPACITY = 0.28;
 
 
 
@@ -34,6 +34,8 @@ const PIPETTE_MASK = `linear-gradient(to bottom, #000 0%, #000 ${processScene.la
 export function ProcessMotion() {
 
   const sectionRef = useRef<HTMLElement>(null);
+  /** 공정 이름을 누르면 해당 단계로 이동할 때 쓰는 타임라인 */
+  const tlRef = useRef<gsap.core.Timeline | null>(null);
 
   const steps = finishingProcesses;
 
@@ -140,6 +142,8 @@ export function ProcessMotion() {
             pin: true,
 
             scrub: 0.8,
+            // 공정 하나가 끝난 자리마다 부드럽게 멈춘다 — 어중간한 중간 장면에서 멈추지 않게
+            snap: { snapTo: "labelsDirectional", duration: { min: 0.35, max: 0.9 }, delay: 0.12, ease: "power2.inOut" },
 
             anticipatePin: 1,
 
@@ -152,6 +156,8 @@ export function ProcessMotion() {
         if (process.env.NODE_ENV === "development")
 
           (window as unknown as Record<string, unknown>).__yyProcess = tl;
+        tlRef.current = tl;
+        tl.addLabel("start", 0);
 
 
 
@@ -196,6 +202,7 @@ export function ProcessMotion() {
           if (i > 0) tl.to(items[i - 1], { color: "var(--color-ash)", duration: 0.35 }, at);
 
           if (i > 0) tl.set(layers[i - 1], { autoAlpha: 0 }, at + SWEEP); // 이전 표면은 새 표면이 다 덮은 뒤 숨김
+          tl.addLabel(`step${i}`, at + SWEEP + 0.15);
 
         });
 
@@ -221,9 +228,11 @@ export function ProcessMotion() {
 
         // MATCH 완료 후 잠깐 완성된 병을 보여주고 다음 PRODUCT로 연결.
         // 마지막 화면을 별도로 오래 붙잡지 않고, 스크롤을 되돌리면 역재생된다.
+        tl.addLabel(`step${steps.length}`, match + 1.95);
         const finish = match + 2.1;
         tl.to(panel, { autoAlpha: 0, y: -12, duration: 0.55, ease: "sine.inOut" }, finish)
-          .to(stage, { autoAlpha: 0, y: -22, duration: 0.7, ease: "sine.inOut" }, finish + 0.1);
+          .to(stage, { autoAlpha: 0, y: -22, duration: 0.7, ease: "sine.inOut" }, finish + 0.1)
+          .addLabel("end");
 
 
       },
@@ -232,9 +241,18 @@ export function ProcessMotion() {
 
     );
 
-    return () => mm.revert();
-
+    return () => {
+      tlRef.current = null;
+      mm.revert();
+    };
   }, []);
+
+  /** 공정 이름 클릭 → 그 공정이 끝난 장면으로 스크롤 */
+  const goTo = (i: number) => {
+    const st = tlRef.current?.scrollTrigger;
+    if (!st) return;
+    window.scrollTo({ top: st.labelToScroll(`step${i}`), behavior: "smooth" });
+  };
 
   return (
 
@@ -376,24 +394,20 @@ export function ProcessMotion() {
 
             <ol className="grid grid-cols-2 gap-x-6 gap-y-3 sm:grid-cols-5 lg:grid-cols-1 lg:gap-y-5">
 
-              {steps.map((step) => (
-
+              {steps.map((step, i) => (
                 <li key={step.key} data-step className="text-ash">
-
-                  <p className="font-en text-[clamp(18px,2.2vw,30px)] leading-none font-extrabold tracking-[-0.025em]">{step.name}</p>
-
-                  <p className="mt-1.5 hidden text-[14px] lg:block">{step.line}</p>
-
+                  <button type="button" onClick={() => goTo(i)} className="text-left transition-opacity hover:opacity-70">
+                    <span className="block font-en text-[clamp(18px,2.2vw,30px)] leading-none font-extrabold tracking-[-0.025em]">{step.name}</span>
+                    <span className="mt-1.5 hidden text-[14px] lg:block">{step.line}</span>
+                  </button>
                 </li>
-
               ))}
 
               <li data-step className="text-ash">
-
-                <p className="font-en text-[clamp(18px,2.2vw,30px)] leading-none font-extrabold tracking-[-0.025em]">MATCH</p>
-
-                <p className="mt-1.5 hidden text-[14px] lg:block">스포이드 · 캡 체결</p>
-
+                <button type="button" onClick={() => goTo(steps.length)} className="text-left transition-opacity hover:opacity-70">
+                  <span className="block font-en text-[clamp(18px,2.2vw,30px)] leading-none font-extrabold tracking-[-0.025em]">MATCH</span>
+                  <span className="mt-1.5 hidden text-[14px] lg:block">스포이드 · 캡 체결</span>
+                </button>
               </li>
 
             </ol>

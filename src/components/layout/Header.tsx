@@ -6,7 +6,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Logo } from "@/components/brand/Logo";
 import { HEADER_THEME_EVENT } from "@/components/layout/headerEvents";
 import { MobileMenu } from "@/components/layout/MobileMenu";
-import { isActivePath, mainNav } from "@/data/navigation";
+import { headerNav, isActivePath } from "@/data/navigation";
 
 type HeaderTheme = "light" | "dark";
 
@@ -113,12 +113,12 @@ export function Header() {
       >
         <div className="container-yy flex h-[var(--header-h)] items-center justify-between">
           <Link href="/" aria-label="YY CORPORATION 홈" className="-m-2 inline-flex p-2">
-            <Logo placement="headerDesktop" decorative priority className="h-[26px] w-auto md:h-[30px]" />
+            <Logo placement="headerDesktop" decorative priority className="h-[22px] w-auto md:h-[26px]" />
           </Link>
 
           <nav aria-label="주요 메뉴" className="hidden md:block">
             <ul className="flex items-center gap-8 lg:gap-10">
-              {mainNav.map((item) => {
+              {headerNav.map((item) => {
                 const active = isActivePath(pathname, item.href);
                 return (
                   <li key={item.href}>

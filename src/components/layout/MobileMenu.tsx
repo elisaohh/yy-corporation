@@ -5,7 +5,7 @@ import { useEffect, useRef, type RefObject } from "react";
 import { Logo } from "@/components/brand/Logo";
 import { Pending } from "@/components/ui/Pending";
 import { company, companyStatus } from "@/data/company";
-import { isActivePath, mainNav } from "@/data/navigation";
+import { headerNav, isActivePath } from "@/data/navigation";
 
 interface MobileMenuProps {
   open: boolean;
@@ -119,7 +119,7 @@ export function MobileMenu({ open, onClose, returnFocusRef, pathname }: MobileMe
 
         <nav aria-label="모바일 메뉴" className="flex-1 overflow-y-auto px-7 pt-8">
           <ul className="grid gap-4">
-            {mainNav.map((item, index) => {
+            {headerNav.map((item, index) => {
               const active = isActivePath(pathname, item.href);
               return (
                 <li
