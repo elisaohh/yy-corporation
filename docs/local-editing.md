@@ -35,7 +35,7 @@ npm.cmd run dev
 ### 모션 속도 조절
 
 - **히어로** `src/components/home/HeroFloat.tsx` (문구는 `src/data/home.ts`의 `hero`)
-  - 로딩 진행선 `duration: 0.85`, 화면 걷힘 `0.8`, 물방울 떠다니는 폭 `gsap.utils.random(4, 8)`, 마우스 반응 `nx * 22` 등 숫자를 바꾼다.
+  - 로딩 진행선 `duration: 0.85`, 화면 걷힘 `0.8`, 물방울 자동 움직임 폭 `random(14, 24)`(세로) · `12`(가로) · `6`(회전), 마우스 반응 `nx * 22` 등 숫자를 바꾼다.
   - 사진 최대 폭 `MAX_W`, 제목 크기 `md:text-[clamp(52px,7.4vw,122px)]`
 - **피펫 불투명도** 공정 모션 `ProcessMotion.tsx`의 `PIPETTE_OPACITY`
 - **공정 모션** `src/components/home/ProcessMotion.tsx`

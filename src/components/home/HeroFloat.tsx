@@ -82,20 +82,16 @@ export function HeroFloat() {
         window.addEventListener("keydown", skip);
         intro.eventCallback("onComplete", off);
 
-        // 2) 계속 떠다니기 — 물방울마다 다른 진폭 · 주기, 병은 아주 느리게
+        // 2) 자동으로 계속 떠다니기 — 가로 · 세로 · 회전을 서로 다른 주기로 돌려 매번 다른 궤적
         function startFloating() {
           q("[data-bob]").forEach((el) => {
             const d = Number(el.dataset.bob);
-            gsap.to(el, {
-              y: -gsap.utils.random(4, 8) * d,
-              x: gsap.utils.random(-3, 3) * d,
-              rotation: gsap.utils.random(-1.2, 1.2),
-              duration: gsap.utils.random(3.6, 6),
-              ease: "sine.inOut",
-              yoyo: true,
-              repeat: -1,
-              delay: gsap.utils.random(0, 1.5),
-            });
+            const bottle = d < 0.7;
+            const loop = (vars: gsap.TweenVars, min: number, max: number) =>
+              gsap.to(el, { ...vars, duration: gsap.utils.random(min, max), ease: "sine.inOut", yoyo: true, repeat: -1, delay: gsap.utils.random(0, 1.2) });
+            loop({ y: (bottle ? -12 : -gsap.utils.random(14, 24)) * d }, bottle ? 4.5 : 3, bottle ? 5.5 : 4.6);
+            loop({ x: gsap.utils.random(-1, 1) * (bottle ? 6 : 12) * d }, bottle ? 6 : 4.2, bottle ? 7.5 : 6.4);
+            loop({ rotation: gsap.utils.random(-1, 1) * (bottle ? 1.2 : 6) }, 5, 8);
           });
         }
 
