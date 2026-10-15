@@ -86,18 +86,18 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
   };
 
   if (total === 0) {
-    return <div className="aspect-[4/5] bg-card" aria-label="제품 이미지 준비 중" />;
+    return <div className="mx-auto aspect-square w-full max-w-[560px] bg-card" aria-label="제품 이미지 준비 중" />;
   }
 
   return (
-    <div className="grid gap-4">
+    <div className="mx-auto grid w-full max-w-[560px] gap-4">
       <div
         role="group"
         aria-roledescription="carousel"
         aria-label={`${productName} 이미지`}
         tabIndex={0}
         onKeyDown={onKeyDown}
-        className="relative aspect-[4/5] overflow-hidden bg-card outline-offset-4 [touch-action:pan-y_pinch-zoom] lg:aspect-square lg:max-h-[calc(100svh-var(--header-h)-200px)] lg:min-h-[420px] lg:w-full"
+        className="relative aspect-square w-full overflow-hidden bg-card outline-offset-4 [touch-action:pan-y_pinch-zoom]"
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
       >

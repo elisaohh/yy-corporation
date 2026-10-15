@@ -34,6 +34,10 @@ export interface Product {
   specSource?: string;
 }
 
+/** MOQ · 재질 기본값 — 제품별 자료가 없을 때 (2026-10-15 사용자 지시) */
+const DEFAULT_MOQ = "5,000";
+const DEFAULT_MATERIAL = "유리";
+
 function glassBottle(code: string, spec: Partial<Product> = {}): Product {
   const slug = code.toLowerCase();
   return {
@@ -45,10 +49,11 @@ function glassBottle(code: string, spec: Partial<Product> = {}): Product {
     code,
     capacity: null,
     dimensions: null,
-    moq: null,
-    material: null,
     isPlaceholder: false,
     ...spec,
+    // 2026-10-15 사용자 지시: MOQ · 재질 자료가 없으면 5,000 · 유리로 표시
+    moq: spec.moq ?? DEFAULT_MOQ,
+    material: spec.material ?? DEFAULT_MATERIAL,
   };
 }
 

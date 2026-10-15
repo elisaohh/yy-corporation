@@ -39,11 +39,11 @@ export default async function ProductDetailPage({ params }: PageProps) {
       </Suspense>
 
       <div className="mt-6 grid gap-10 md:mt-8 lg:grid-cols-12 lg:gap-8">
-        <div className="lg:col-span-7">
+        <div className="lg:col-span-6 lg:col-start-1">
           <ProductGallery images={product.images} productName={product.name} />
         </div>
 
-        <div className="lg:sticky lg:top-[calc(var(--header-h)+32px)] lg:col-span-4 lg:col-start-9 lg:self-start">
+        <div className="lg:sticky lg:top-[calc(var(--header-h)+32px)] lg:col-span-5 lg:col-start-8 lg:self-start">
           {category && (
             <p className="label-en text-ash">
               {category.label}

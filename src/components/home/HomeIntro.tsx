@@ -1,7 +1,6 @@
 import { HeroFloat } from "@/components/home/HeroFloat";
 import { Pending } from "@/components/ui/Pending";
 import { siteConfig } from "@/config/site";
-import type { HeroVariant } from "@/config/variants";
 import { assets } from "@/data/assets";
 
 /**
@@ -11,8 +10,8 @@ import { assets } from "@/data/assets";
  *   video : 영상 인트로 (공장 영상 등 공개 권한 확인 후)
  *   three : 실시간 3D
  */
-export function HomeIntro({ variant = "a" }: { variant?: HeroVariant }) {
-  if (siteConfig.heroMode === "float") return <HeroFloat key={variant} variant={variant} />;
+export function HomeIntro() {
+  if (siteConfig.heroMode === "float") return <HeroFloat />;
   return (
     <section
       data-header-theme="dark"
