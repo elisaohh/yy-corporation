@@ -40,7 +40,6 @@ export function HeroFloat() {
       (context) => {
         const q = gsap.utils.selector(section);
         const loader = q("[data-loader]")[0];
-        const bar = q("[data-loader-bar]")[0];
         const count = q("[data-loader-count]")[0];
         const words = q("[data-word]");
         const fades = q("[data-fade]");
@@ -61,10 +60,9 @@ export function HeroFloat() {
         const intro = gsap.timeline({ defaults: { ease: "power3.out" } });
         if (process.env.NODE_ENV === "development") (window as unknown as Record<string, unknown>).__yyHero = intro;
         intro
-          // 로딩: 로고가 아래에서 차오르고 → 가는 선이 채워지며 숫자가 000 → 100
+          // 로딩: 로고가 아래에서 차오르고 → 숫자가 000 → 100
           .fromTo(q("[data-loader-logo]"), { clipPath: "inset(100% 0% 0% 0%)", y: 12 }, { clipPath: "inset(0% 0% 0% 0%)", y: 0, duration: 0.8, ease: "power3.out" })
           .fromTo(q("[data-loader-meter]"), { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3 }, "-=0.4")
-          .fromTo(bar, { scaleX: 0 }, { scaleX: 1, duration: 1, ease: "power2.inOut" }, "<")
           .fromTo(
             { v: 0 },
             { v: 0 },
@@ -78,7 +76,7 @@ export function HeroFloat() {
             },
             "<",
           )
-          // 공개: 로고 · 선이 살짝 올라가며 사라지고 → 흰 막이 걷힌 뒤 차콜 막이 한 박자 늦게 따라 걷힌다(겹친 커튼)
+          // 공개: 로고 · 숫자가 살짝 올라가며 사라지고 → 흰 막이 걷힌 뒤 차콜 막이 한 박자 늦게 따라 걷힌다(겹친 커튼)
           .to(q("[data-loader-inner]"), { y: -18, autoAlpha: 0, duration: 0.45, ease: "power2.in" }, "+=0.1")
           .to(q("[data-loader-curtain]"), { yPercent: -100, duration: 0.9, ease: "power4.inOut" }, "-=0.15")
           .to(q("[data-loader-trail]"), { yPercent: -100, duration: 0.9, ease: "power4.inOut" }, "<0.12")
@@ -254,9 +252,6 @@ export function HeroFloat() {
               <Logo placement="loader" decorative />
             </div>
             <div data-loader-meter className="flex items-center gap-4" style={{ opacity: 0 }}>
-              <span className="relative block h-px w-32 overflow-hidden bg-stone">
-                <span data-loader-bar className="absolute inset-0 origin-left bg-charcoal" style={{ transform: "scaleX(0)" }} />
-              </span>
               <span data-loader-count className="w-7 font-en text-[11px] tabular-nums tracking-[0.08em] text-ash">
                 000
               </span>
