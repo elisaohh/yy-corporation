@@ -5,46 +5,19 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useRef } from "react";
 import { isStill } from "@/lib/still";
-import { aboutIntro, aboutVisuals, business, story, vision, type AboutVisual } from "@/data/about";
+import { aboutVisuals, business, story, vision, type AboutVisual } from "@/data/about";
 
 gsap.registerPlugin(ScrollTrigger);
 
 /**
  * ABOUT (2026-10-15 전면 리디자인 — Chapter Transition + Visual Storytelling)
- *   00 Intro    — 미스트, 대형 슬로건. 스크롤하면 슬로건이 살짝 위로 밀리며 Story로 이어진다.
+ *   제목 영역 — 공용 PageIntro(미스트 a안)를 about/page.tsx에서 그대로 사용.
  *   01 Story    — 흰 바탕, 35/65 에디토리얼. 왼쪽 제목은 섹션 안에서만 sticky. 강조 문장 + 이미지 2장.
  *   02 Vision   — 딥 차콜, 이미지 없음. 대형 문장이 스크롤에 따라 단어마다 진해진다(화면 고정 없음).
  *   03 Business — 라이트 그레이, 사업 4개를 이미지 · 텍스트 교차 블록으로.
  * 모션: 데스크톱은 이미지 미세 확대 · 텍스트 이동, 모바일은 투명도만. 모션 줄이기에서는 모두 바로 보인다.
  * 이미지는 생성 이미지(실제 YY 제품 · 시설 사진 아님) — data/about.ts aboutVisuals.
  */
-
-/* ── 00 Intro ── */
-function Intro() {
-  const lines = aboutIntro.slogan.split(", ");
-  return (
-    <section data-header-theme="light" aria-labelledby="about-title" className="bg-mist">
-      <div className="container-yy flex min-h-[78svh] flex-col justify-end pb-16 pt-[calc(var(--header-h)+72px)] md:min-h-[86svh] md:pb-24">
-        <div data-intro-drift>
-          <p className="font-en text-[13px] tracking-[0.04em] text-ash">About</p>
-          <h1 id="about-title" className="mt-6 text-[clamp(46px,8.4vw,148px)] leading-[1.04] font-bold tracking-[-0.05em] text-charcoal">
-            {lines.map((line, i) => (
-              <span key={line} className="block overflow-hidden pb-[0.06em]">
-                <span data-intro-line className="block">
-                  {line}
-                  {i < lines.length - 1 && ","}
-                </span>
-              </span>
-            ))}
-          </h1>
-          <p data-intro-sub className="mt-8 max-w-[34ch] text-[clamp(17px,1.4vw,20px)] leading-[1.7] text-charcoal/75 md:mt-10">
-            {aboutIntro.lead}
-          </p>
-        </div>
-      </div>
-    </section>
-  );
-}
 
 function ChapterLabel({ no, name, dark = false }: { no: string; name: string; dark?: boolean }) {
   return (
@@ -200,15 +173,6 @@ export function AboutSections() {
         const desktop = Boolean(ctx.conditions?.desktop);
         const q = gsap.utils.selector(el);
 
-        // 00 Intro — 슬로건 두 줄이 차오르고 보조 문장이 이어서 나타남, 스크롤하면 살짝 위로
-        gsap
-          .timeline({ defaults: { ease: "power3.out" } })
-          .from(q("[data-intro-line]"), { yPercent: 105, duration: 1.1, stagger: 0.12 })
-          .from(q("[data-intro-sub]"), { autoAlpha: 0, duration: 0.8 }, "-=0.5");
-        if (desktop) {
-          gsap.to(q("[data-intro-drift]"), { y: -60, ease: "none", scrollTrigger: { trigger: q("[data-intro-drift]")[0], start: "top 40%", end: "bottom top", scrub: 0.5 } });
-        }
-
         // 제목 · 강조 문장 — 데스크톱은 짧게 올라오며, 모바일은 투명도만
         q("[data-rise]").forEach((t) => {
           gsap.from(t, { autoAlpha: 0, y: desktop ? 28 : 0, duration: 0.9, ease: "power3.out", scrollTrigger: { trigger: t, start: "top 85%" } });
@@ -241,7 +205,7 @@ export function AboutSections() {
 
   return (
     <div ref={ref}>
-      <Intro />
+
       <Story />
       <Vision />
       <Business />
