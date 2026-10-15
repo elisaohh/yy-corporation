@@ -1,49 +1,42 @@
 import Link from "next/link";
 import { Logo } from "@/components/brand/Logo";
 import { Pending } from "@/components/ui/Pending";
+import { aboutIntro } from "@/data/about";
 import { company, companyStatus, copyrightName } from "@/data/company";
-import { mainNav } from "@/data/navigation";
+import { headerNav } from "@/data/navigation";
 
 /**
- * 공통 푸터 — 기획서 2.0 §3.3: 로고, 간단한 사업 소개, 메뉴, 연락처·주소, 사업자 정보, 저작권.
- * 다크 영역을 인트로·CTA로 한정하기 위해 밝은 바탕으로 둔다.
- * 회사 정보는 data/company.ts 에서만 읽는다. 값이 없는 항목(팩스·운영 시간 등)은 표시하지 않는다.
+ * 공통 푸터 — 로고(누르면 홈) · 슬로건 · 메뉴(HOME 제외) · 회사 정보 · 저작권.
+ * 2026-10-15: ABOUT의 회사 정보(Company) 구간을 푸터로 옮김.
+ * 회사 정보는 data/company.ts 에서만 읽는다. 값이 없는 항목은 표시하지 않는다.
  * 개인정보처리방침 · 이용약관 링크는 기존 문서 확보 후 페이지와 함께 추가한다(임의 작성 금지).
  */
 export function Footer() {
-  const contacts = [
-    { label: "ADDRESS", value: company.address },
-    { label: "TEL", value: company.phone },
-    { label: "FAX", value: company.fax },
-    { label: "E-MAIL", value: company.email },
-    { label: "HOURS", value: company.hours },
-  ].filter((row): row is { label: string; value: string } => Boolean(row.value));
-
-  const business = [
-    company.legalName && `상호 ${company.legalName}`,
-    company.representative && `대표 ${company.representative}`,
-    company.businessNumber && `사업자등록번호 ${company.businessNumber}`,
-  ].filter(Boolean) as string[];
+  const info = [
+    { label: "회사명", value: company.legalName },
+    { label: "대표", value: company.representative },
+    { label: "사업자등록번호", value: company.businessNumber },
+    { label: "주소", value: company.address },
+    { label: "전화", value: company.phone, href: company.phone ? `tel:${company.phone.replace(/-/g, "")}` : undefined },
+    { label: "팩스", value: company.fax },
+    { label: "이메일", value: company.email, href: company.email ? `mailto:${company.email}` : undefined },
+  ].filter((row): row is { label: string; value: string; href?: string } => Boolean(row.value));
 
   const year = new Date().getFullYear();
 
   return (
     <footer data-header-theme="light" className="border-t border-stone bg-paper text-charcoal">
       <div className="container-yy grid gap-12 py-16 md:grid-cols-12 md:gap-8 md:py-20">
-        <div className="md:col-span-5">
-          <Logo placement="footer" />
-          <p className="mt-6 max-w-[34ch] text-[15px] leading-relaxed text-ash">
-            {company.summary ?? (
-              <>
-                사업 소개 1–2줄 <Pending />
-              </>
-            )}
-          </p>
+        <div className="md:col-span-4">
+          <Link href="/" aria-label="YY CORPORATION 홈" className="-m-2 inline-flex p-2">
+            <Logo placement="footer" decorative />
+          </Link>
+          <p className="mt-6 text-[clamp(20px,1.8vw,24px)] leading-[1.4] font-bold tracking-[-0.03em]">{aboutIntro.slogan}</p>
         </div>
 
-        <nav aria-label="푸터 메뉴" className="md:col-span-3">
+        <nav aria-label="푸터 메뉴" className="md:col-span-2">
           <ul className="grid gap-3">
-            {mainNav.map((item) => (
+            {headerNav.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
@@ -56,12 +49,20 @@ export function Footer() {
           </ul>
         </nav>
 
-        <div className="md:col-span-4">
-          <dl className="grid gap-3 text-[14px]">
-            {contacts.map((row) => (
-              <div key={row.label} className="grid grid-cols-[72px_minmax(0,1fr)] items-baseline gap-4">
-                <dt className="label-en text-[11px] text-ash">{row.label}</dt>
-                <dd className="min-w-0">{row.value}</dd>
+        <div className="md:col-span-6">
+          <dl className="text-[14px]">
+            {info.map((row) => (
+              <div key={row.label} className="grid grid-cols-[112px_minmax(0,1fr)] items-baseline gap-4 border-t border-stone py-3 first:border-t-0 first:pt-0">
+                <dt className="text-ash">{row.label}</dt>
+                <dd className="min-w-0">
+                  {row.href ? (
+                    <a href={row.href} className="underline-offset-4 hover:underline">
+                      {row.value}
+                    </a>
+                  ) : (
+                    row.value
+                  )}
+                </dd>
               </div>
             ))}
           </dl>
@@ -73,14 +74,7 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="container-yy flex flex-col gap-2 border-t border-stone py-6 text-[12px] text-ash md:flex-row md:items-center md:justify-between">
-        {business.length > 0 && (
-          <p className="flex flex-wrap gap-x-4 gap-y-1">
-            {business.map((item) => (
-              <span key={item}>{item}</span>
-            ))}
-          </p>
-        )}
+      <div className="container-yy border-t border-stone py-6 text-[12px] text-ash">
         <p className="font-en tracking-[0.04em]">
           © {year} {copyrightName}. All rights reserved.
         </p>
