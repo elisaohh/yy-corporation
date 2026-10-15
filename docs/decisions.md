@@ -134,3 +134,4 @@
 | 2026-10-15 | ABOUT 시안 3종 | 제목 영역 차콜(PageIntro b), 본문 Story · Vision · Business 세 파트 · 왼쪽 정렬 · 배경 이미지/영상 없음. /about?v=a 에디토리얼 2단 · b 챕터 전환(Vision 차콜 면) · c 고정 목차. 이전 VisionStatement · Business 컴포넌트는 미사용(결정 후 정리) |
 | 2026-10-15 | ABOUT 확정 | B안(챕터 전환) 적용 — 차콜 제목 영역, Story · Vision(차콜 면) · Business 큰 영문 챕터명. A · C안과 이전 비전 · 비즈니스 컴포넌트 삭제 |
 | 2026-10-15 | ABOUT 제목 배경 | 차콜 → 미스트(PageIntro a안) |
+| 2026-10-15 | ABOUT 한 화면 구성 | 데스크톱에서 파트마다 한 화면: Story 고정 없음, Vision 고정(약 1.2화면) — 단어 명암 → 두 축 · 문장 등장, Business 고정(약 2화면) — 01→04 단계 전환 · 스냅 · 목록 클릭 이동. 모바일은 고정 없이 차례로 |
