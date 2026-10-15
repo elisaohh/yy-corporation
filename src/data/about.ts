@@ -28,6 +28,8 @@ export const story = {
 export const vision = {
   label: "Our Vision",
   statement: "지속가능한 패키징 솔루션으로 뷰티 브랜드의 성공을 이끄는 글로벌 턴키 파트너",
+  /** statement를 줄 단위로만 나눈 것(문구 변경 없음) — 줄마다 올라오는 모션용 */
+  statementLines: ["지속가능한 패키징 솔루션으로", "뷰티 브랜드의 성공을 이끄는", "글로벌 턴키 파트너"],
   pillars: [
     {
       en: "Total Turnkey Expertise",

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, type CSSProperties } from "react";
 import { isStill } from "@/lib/still";
 import { aboutVisuals, business, story, vision, type AboutVisual } from "@/data/about";
 
@@ -13,9 +13,9 @@ gsap.registerPlugin(ScrollTrigger);
  * ABOUT (2026-10-15 전면 리디자인 — Chapter Transition + Visual Storytelling)
  *   제목 영역 — 공용 PageIntro(미스트 a안)를 about/page.tsx에서 그대로 사용.
  *   01 Story    — 흰 바탕, 35/65 에디토리얼. 왼쪽 제목은 섹션 안에서만 sticky. 강조 문장 + 이미지 2장.
- *   02 Vision   — 딥 차콜, 이미지 없음. 대형 문장이 스크롤에 따라 단어마다 진해진다(화면 고정 없음).
+ *   02 Vision   — 딥 차콜, 이미지 없음. 큰 문장 세 줄이 차례로 올라오고 마지막 줄에 포인트 밑줄(화면 고정 없음).
  *   03 Business — 라이트 그레이, 사업 4개를 이미지 · 텍스트 교차 블록으로.
- * 모션: 데스크톱은 이미지 미세 확대 · 텍스트 이동, 모바일은 투명도만. 모션 줄이기에서는 모두 바로 보인다.
+ * 모션: 데스크톱은 이미지 미세 확대 · 텍스트 이동 · 강조 띠/밑줄 그어짐, 모바일은 투명도만. 모션 줄이기에서는 모두 바로 보인다.
  * 이미지는 생성 이미지(실제 YY 제품 · 시설 사진 아님) — data/about.ts aboutVisuals.
  */
 
@@ -39,6 +39,52 @@ function Visual({ v, className = "", sizes }: { v: AboutVisual; className?: stri
   );
 }
 
+/**
+ * 강조 표시 — 문구는 그대로 두고 지정한 구절만 감싼다.
+ *   marker: 밝은 바탕 — 글자 아래쪽에 포인트 색(1225, 면 전용) 띠
+ *   line:   차콜 바탕 — 포인트 색(4008, 선 전용) 밑줄
+ *   bold:   모션 없이 굵기 · 진한 색만
+ * marker · line은 스크롤 시 왼쪽에서 그어진다(모션 줄이기 · ?still에서는 처음부터 보임).
+ */
+type MarkKind = "marker" | "line" | "bold";
+const markStyle: Record<Exclude<MarkKind, "bold">, CSSProperties> = {
+  marker: {
+    backgroundImage: "linear-gradient(var(--color-point-1225), var(--color-point-1225))",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "0 88%",
+    backgroundSize: "100% 0.32em",
+    boxDecorationBreak: "clone",
+    WebkitBoxDecorationBreak: "clone",
+  },
+  line: {
+    backgroundImage: "linear-gradient(var(--color-point-4008), var(--color-point-4008))",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "0 100%",
+    backgroundSize: "100% 0.06em",
+    paddingBottom: "0.04em",
+    boxDecorationBreak: "clone",
+    WebkitBoxDecorationBreak: "clone",
+  },
+};
+
+function Mark({ text, marks, dark = false }: { text: string; marks: [string, MarkKind][]; dark?: boolean }) {
+  const pattern = new RegExp(`(${marks.map(([p]) => p.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})`);
+  return (
+    <>
+      {text.split(pattern).map((part, i) => {
+        const kind = marks.find(([p]) => p === part)?.[1];
+        if (!kind) return part;
+        if (kind === "bold") return <strong key={i} className={`font-bold ${dark ? "text-on-dark" : "text-charcoal"}`}>{part}</strong>;
+        return (
+          <em key={i} data-mark={kind} className="not-italic" style={markStyle[kind]}>
+            {part}
+          </em>
+        );
+      })}
+    </>
+  );
+}
+
 /* ── 01 Story ── */
 function Story() {
   const [first, highlight, last] = story.sentences;
@@ -48,23 +94,27 @@ function Story() {
         <div className="lg:sticky lg:top-[calc(var(--header-h)+40px)] lg:self-start">
           <ChapterLabel no="01" name="Our Story" />
           <h2 id="story-title" data-rise className="mt-6 max-w-[14ch] text-[clamp(30px,3.2vw,50px)] leading-[1.25] font-bold tracking-[-0.04em]">
-            {story.title}
+            <Mark text={story.title} marks={[["친환경 유리의 감성", "marker"]]} />
           </h2>
         </div>
 
         <div>
-          <p data-rise className="max-w-[30ch] text-[clamp(22px,2.2vw,32px)] leading-[1.5] font-medium tracking-[-0.03em] text-charcoal">
-            {highlight}
+          <p data-rise className="max-w-[30ch] text-[clamp(22px,2.2vw,32px)] leading-[1.5] font-medium tracking-[-0.03em] text-charcoal/80">
+            <Mark text={highlight} marks={[["맑고 투명한 감성", "bold"], ["변치 않는 보존성", "bold"]]} />
           </p>
           <div data-fade className="mt-10 grid max-w-[64ch] gap-5 md:mt-12 md:grid-cols-2 md:gap-10">
-            <p className="text-[16px] leading-[1.85] text-charcoal/75">{first}</p>
-            <p className="text-[16px] leading-[1.85] text-charcoal/75">{last}</p>
+            <p className="text-[16px] leading-[1.85] text-charcoal/75">
+              <Mark text={first} marks={[["‘지속 가능한 아름다움’", "bold"]]} />
+            </p>
+            <p className="text-[16px] leading-[1.85] text-charcoal/75">
+              <Mark text={last} marks={[["선한 영향력", "bold"]]} />
+            </p>
           </div>
 
-          {/* 큰 이미지 + 보조 이미지(구도 · 크기 다르게) */}
-          <div className="mt-14 grid grid-cols-12 items-end gap-4 md:mt-20 md:gap-6">
-            <Visual v={aboutVisuals.storyMain} className="col-span-12 aspect-[3/2] md:col-span-8" sizes="(min-width: 1200px) 560px, (min-width: 768px) 60vw, 100vw" />
-            <Visual v={aboutVisuals.storySub} className="col-span-7 col-start-6 aspect-[4/5] md:col-span-4 md:col-start-auto" sizes="(min-width: 1200px) 280px, (min-width: 768px) 30vw, 60vw" />
+          {/* 큰 이미지 + 보조 이미지(구도 · 크기 다르게) — 본문 폭보다 작게 */}
+          <div className="mt-14 grid max-w-[640px] grid-cols-12 items-end gap-4 md:mt-20 md:gap-5">
+            <Visual v={aboutVisuals.storyMain} className="col-span-12 aspect-[3/2] md:col-span-8" sizes="(min-width: 768px) 420px, 100vw" />
+            <Visual v={aboutVisuals.storySub} className="col-span-6 col-start-7 aspect-[4/5] md:col-span-4 md:col-start-auto" sizes="(min-width: 768px) 210px, 50vw" />
           </div>
         </div>
       </div>
@@ -74,16 +124,18 @@ function Story() {
 
 /* ── 02 Vision ── */
 function Vision() {
-  const words = vision.statement.split(" ");
+  const lines = vision.statementLines;
   return (
     <section id="vision" data-header-theme="dark" data-surface="dark" aria-labelledby="vision-title" className="bg-intro py-28 text-on-dark md:py-40">
       <div className="container-yy">
         <ChapterLabel no="02" name="Our Vision" dark />
-        <h2 id="vision-title" data-words className="mt-10 max-w-[17ch] text-[clamp(34px,5.4vw,88px)] leading-[1.15] font-bold tracking-[-0.045em] md:mt-14">
-          {words.map((w, i) => (
-            <span key={i} data-word className="inline-block">
-              {w}
-              {i < words.length - 1 && " "}
+        {/* 줄마다 아래에서 올라오고, 마지막 줄 밑줄이 그어진다. 흐린 상태로 기다리지 않는다. */}
+        <h2 id="vision-title" className="mt-10 text-[clamp(34px,5.4vw,88px)] leading-[1.18] font-bold tracking-[-0.045em] md:mt-14">
+          {lines.map((line, i) => (
+            <span key={line} className="block overflow-hidden pb-[0.12em]">
+              <span data-vision-line className="block">
+                {i === lines.length - 1 ? <Mark text={line} marks={[[line, "line"]]} /> : line}
+              </span>
             </span>
           ))}
         </h2>
@@ -92,12 +144,14 @@ function Vision() {
           {vision.pillars.map((p) => {
             const sentences = p.body.split(/(?<=\.)\s+/);
             return (
-              <article key={p.en} data-fade className="border-t border-white/25 pt-8">
+              <article key={p.en} data-pillar className="relative pt-8">
+                <span aria-hidden="true" className="absolute inset-x-0 top-0 h-px bg-white/25" />
+                <span aria-hidden="true" data-pillar-line className="absolute left-0 top-0 h-[2px] w-16 origin-left bg-point-4008" />
                 <h3 className="font-en text-[clamp(22px,2vw,30px)] leading-[1.2] font-semibold tracking-[-0.025em]">{p.en}</h3>
-                <p className="mt-2 text-[16px] font-semibold text-on-dark-sub">{p.ko}</p>
+                <p className="mt-2 text-[17px] font-semibold text-on-dark">{p.ko}</p>
                 <div className="mt-6 grid gap-3">
                   {sentences.map((s, i) => (
-                    <p key={i} className="max-w-[40ch] text-[16px] leading-[1.8] text-on-dark/80">
+                    <p key={i} className="max-w-[40ch] text-[16px] leading-[1.8] text-on-dark/90">
                       {s}
                     </p>
                   ))}
@@ -107,8 +161,8 @@ function Vision() {
           })}
         </div>
 
-        <p data-fade className="mt-20 max-w-[44ch] border-l border-white/30 pl-6 text-[clamp(17px,1.4vw,20px)] leading-[1.8] text-on-dark/90 md:mt-28">
-          {vision.quote}
+        <p data-fade className="mt-20 max-w-[44ch] border-l-2 border-point-4008 pl-6 text-[clamp(18px,1.6vw,23px)] leading-[1.75] text-on-dark/80 md:mt-28">
+          <Mark text={vision.quote} marks={[["친환경 유리의 아름다운 감성", "bold"], ["무결점 턴키 프로세스", "bold"]]} dark />
         </p>
       </div>
     </section>
@@ -124,15 +178,15 @@ function Business() {
           <ChapterLabel no="03" name="Our Business" />
           <div>
             <h2 id="business-title" data-rise className="max-w-[16ch] text-[clamp(30px,3.2vw,50px)] leading-[1.25] font-bold tracking-[-0.04em]">
-              {business.title.join(" ")}
+              <Mark text={business.title.join(" ")} marks={[["프리미엄 패키징", "marker"]]} />
             </h2>
             <p data-fade className="mt-6 max-w-[46ch] text-[16px] leading-[1.85] text-charcoal/75">
-              {business.lead}
+              <Mark text={business.lead} marks={[["브랜드의 가치를 극대화", "bold"]]} />
             </p>
           </div>
         </div>
 
-        <div className="mt-20 grid gap-24 md:mt-28 md:gap-36">
+        <div className="mt-20 grid gap-20 md:mt-28 md:gap-28">
           {business.items.map((item, i) => {
             const v = aboutVisuals.business[item.no];
             const flip = i % 2 === 1;
@@ -140,12 +194,15 @@ function Business() {
               <article key={item.no} data-block className="grid items-center gap-8 md:grid-cols-12 md:gap-8">
                 <Visual
                   v={v}
-                  className={`aspect-[3/2] md:col-span-7 ${flip ? "md:order-2 md:col-start-6" : ""}`}
-                  sizes="(min-width: 1200px) 760px, (min-width: 768px) 58vw, 100vw"
+                  className={`aspect-[3/2] w-[88%] md:row-start-1 md:w-auto md:col-span-6 lg:col-span-5 ${flip ? "ml-auto md:ml-0 md:col-start-7 lg:col-start-8" : "md:col-start-1"}`}
+                  sizes="(min-width: 1200px) 500px, (min-width: 768px) 46vw, 88vw"
                 />
-                <div data-block-text className={`md:col-span-4 ${flip ? "md:order-1 md:col-start-1" : "md:col-start-9"}`}>
-                  <p className="font-en text-[13px] tabular-nums text-ash">{item.no}</p>
-                  <h3 className="mt-4 font-en text-[clamp(28px,3vw,48px)] leading-[1.05] font-semibold tracking-[-0.04em]">{item.en}</h3>
+                <div data-block-text className={`md:row-start-1 md:col-span-5 ${flip ? "md:col-start-1 lg:col-start-2" : "md:col-start-8"}`}>
+                  <p className="flex items-center gap-3 font-en text-[13px] tabular-nums text-ash">
+                    <span aria-hidden="true" className="h-[2px] w-6 bg-point-4008" />
+                    {item.no}
+                  </p>
+                  <h3 className="mt-4 font-en text-[clamp(28px,2.8vw,44px)] leading-[1.05] font-bold tracking-[-0.04em]">{item.en}</h3>
                   <p className="mt-3 text-[clamp(18px,1.5vw,22px)] font-bold tracking-[-0.02em]">{item.ko}</p>
                   <p className="mt-5 max-w-[36ch] text-[16px] leading-[1.85] text-charcoal/75">{item.body}</p>
                 </div>
@@ -194,9 +251,22 @@ export function AboutSections() {
           gsap.from(t, { autoAlpha: 0, y: desktop ? 32 : 0, duration: 0.9, ease: "power3.out", scrollTrigger: { trigger: t, start: "top 85%" } });
         });
 
-        // 02 Vision — 단어마다 진해짐(고정 없이, 문장이 화면 아래쪽 → 가운데 오는 동안)
-        q("[data-words]").forEach((h) => {
-          gsap.fromTo(h.querySelectorAll("[data-word]"), { opacity: 0.16 }, { opacity: 1, stagger: 0.5, ease: "none", scrollTrigger: { trigger: h, start: "top 82%", end: "bottom 48%", scrub: 0.4 } });
+        // 02 Vision — 세 줄이 차례로 올라온 뒤 마지막 줄 밑줄이 그어짐(한 번 재생, 다 보인 상태로 끝남)
+        const visionLines = q("[data-vision-line]");
+        if (visionLines.length) {
+          const tl = gsap.timeline({ scrollTrigger: { trigger: visionLines[0], start: "top 80%" } });
+          tl.from(visionLines, desktop ? { yPercent: 110, duration: 1.1, stagger: 0.16, ease: "power3.out" } : { autoAlpha: 0, duration: 0.8, stagger: 0.12 });
+          const lastMark = visionLines[visionLines.length - 1].querySelector("[data-mark]");
+          if (lastMark) tl.from(lastMark, { backgroundSize: "0% 0.06em", duration: 0.9, ease: "power2.inOut" }, "-=0.3");
+        }
+        q("[data-pillar]").forEach((p) => {
+          const tl = gsap.timeline({ scrollTrigger: { trigger: p, start: "top 85%" } });
+          tl.from(p.querySelector("[data-pillar-line]"), { scaleX: 0, duration: 0.7, ease: "power2.out" }).from(p.querySelectorAll(":scope > :not([aria-hidden])"), { autoAlpha: 0, y: desktop ? 20 : 0, duration: 0.7, stagger: 0.08, ease: "power2.out" }, 0.1);
+        });
+
+        // 밝은 바탕 강조 띠 — 제목이 들어온 뒤 왼쪽에서 칠해짐
+        q("[data-mark='marker']").forEach((m) => {
+          gsap.from(m, { backgroundSize: "0% 0.32em", duration: 0.9, delay: 0.4, ease: "power2.inOut", scrollTrigger: { trigger: m, start: "top 85%" } });
         });
       },
     );
