@@ -14,7 +14,7 @@ gsap.registerPlugin(ScrollTrigger);
  */
 export function VisionStatement() {
   const ref = useRef<HTMLElement>(null);
-  // 개발 서버 미리보기: /about?vision=1~5 → 후보 영상
+  // 개발 서버 미리보기: /about?vision=1~6 → 후보 영상
   const [preview, setPreview] = useState<string | null>(null);
   useEffect(() => {
     if (process.env.NODE_ENV !== "development") return;

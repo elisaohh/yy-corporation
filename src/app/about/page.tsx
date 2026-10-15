@@ -10,7 +10,7 @@ export const metadata: Metadata = { title: "About" };
 
 /**
  * ABOUT (2026-10-15 개편) — 다른 페이지처럼 큰 타이틀로 시작, data/about.ts의 회사 작성 문구를 모두 싣는다.
- * 흐름: 머리 영역(현장 사진 · 슬로건) → 이야기(미스트 + 떠 있는 병) → 비전(어두운 사진 배경)
+ * 흐름: 머리 영역(미스트 + 떠다니는 병 · 슬로건) → 이야기(미스트 + 제품 사진) → 비전(어두운 사진 배경)
  *      → 핵심 가치(흐르는 단어 띠 + 4칸) → 전문 역량(리스트 + 바뀌는 사진) → CTA (회사 정보는 푸터로 이동)
  * 사진 경로는 data/about.ts의 aboutMedia에서 바꾼다.
  */
@@ -22,20 +22,21 @@ export default function AboutPage() {
       <PageIntro
         title={aboutIntro.title}
         backdrop="d"
+        motionTone="light"
         motionImage={aboutMedia.intro}
         intro={
           <>
-            <span className="block text-[clamp(20px,1.8vw,26px)] leading-[1.4] font-semibold tracking-[-0.02em] text-on-dark">{aboutIntro.slogan}</span>
+            <span className="block text-[clamp(20px,1.8vw,26px)] leading-[1.4] font-semibold tracking-[-0.02em] text-charcoal">{aboutIntro.slogan}</span>
             <span className="mt-3 block">{aboutIntro.lead}</span>
           </>
         }
       />
 
-      {/* ② 이야기 — 미스트 + 오른쪽에 떠 있는 병(히어로 사진), 문장 순차 등장 */}
-      <section data-header-theme="light" aria-labelledby="story-title" className="relative overflow-hidden bg-mist py-28 md:py-40">
+      {/* ② 이야기 — 흰 바탕 + 오른쪽에 떠 있는 제품 사진, 문장 순차 등장 */}
+      <section data-header-theme="light" aria-labelledby="story-title" className="relative overflow-hidden bg-paper py-28 md:py-40">
         <div aria-hidden="true" className="pointer-events-none absolute -right-[8%] top-1/2 hidden w-[min(52vw,760px)] -translate-y-1/2 mix-blend-multiply lg:block">
-          {/* eslint-disable-next-line @next/next/no-img-element -- 히어로 사진(병 · 물방울) */}
-          <img src={aboutMedia.story} alt="" loading="lazy" className="page-intro-float w-full opacity-90" />
+          {/* eslint-disable-next-line @next/next/no-img-element -- 제품 사진(색상 · 질감 변형) */}
+          <img src={aboutMedia.story} alt="" loading="lazy" className="page-intro-float w-full" />
         </div>
         <div className="container-yy relative">
           <p className="label-en text-ash">{story.label}</p>

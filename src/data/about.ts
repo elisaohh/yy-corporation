@@ -91,8 +91,9 @@ export const expertiseSource = "엑셀 ABOUT 시트 ② 회사 소개 · ③ 기
  * 교체할 때 이 경로만 바꾼다. video를 넣으면(예: "/assets/about/vision.mp4") 비전 구간 배경이 영상으로 바뀐다.
  */
 export const aboutMedia = {
-  intro: "/assets/site/site-06.webp",
-  story: "/assets/hero/hero-base.webp",
+  /** 머리 영역 — PRODUCT와 같은 밝은 미스트 + 떠다니는 병 */
+  intro: "/assets/hero/hero-base.webp",
+  story: "/assets/products/YS-SRRR30-04/YS-SRRR30-04_04.webp",
   vision: { image: "/assets/site/site-08.webp", video: null as string | null },
   expertise: {
     Sourcing: "/assets/site/site-05.webp",
@@ -103,13 +104,14 @@ export const aboutMedia = {
 };
 
 /**
- * 비전 배경 영상 후보(2026-10-15, Pexels 무료 라이선스) — 개발 서버에서 /about?vision=1~5 로 미리보기.
+ * 비전 배경 영상 후보(2026-10-15 2차: 실물 대신 톤에 맞는 추상 배경, Pexels 무료 라이선스) — 개발 서버에서 /about?vision=1~6 로 미리보기.
  * 미리보기는 Pexels 서버에서 바로 재생한다. 결정하면 파일을 받아 public/assets/about/ 에 두고 aboutMedia.vision.video 에 연결한다.
  */
 export const visionVideoCandidates = [
-  { label: "유리 공장 — 성형 라인", page: "https://www.pexels.com/video/glass-manufactory-852406/", src: "https://videos.pexels.com/video-files/852406/852406-hd_1280_720_30fps.mp4" },
-  { label: "녹은 유리 — 클로즈업", page: "https://www.pexels.com/video/melting-glass-853970/", src: "https://videos.pexels.com/video-files/853970/853970-hd_1920_1080_25fps.mp4" },
-  { label: "컨베이어 위 빈 유리병", page: "https://www.pexels.com/video/empty-glass-jars-moving-through-conveyor-belt-in-factory-10615247/", src: "https://videos.pexels.com/video-files/10615247/10615247-hd_1366_664_30fps.mp4" },
-  { label: "화장품 유리 용기 — 위에서", page: "https://www.pexels.com/video/high-angle-shot-of-cosmetic-bottles-6693869/", src: "https://videos.pexels.com/video-files/6693869/6693869-hd_1366_720_30fps.mp4" },
-  { label: "바다 위 컨테이너선 — 글로벌", page: "https://www.pexels.com/video/a-large-container-ship-sailing-in-the-ocean-9570700/", src: "https://videos.pexels.com/video-files/9570700/9570700-hd_1280_720_30fps.mp4" },
+  { label: "벽에 비친 유리 빛 무늬", page: "https://www.pexels.com/video/shadow-of-patterns-reflected-on-the-wall-6392258/", src: "https://videos.pexels.com/video-files/6392258/6392258-hd_1366_720_24fps.mp4" },
+  { label: "물잔을 통과한 빛 반사", page: "https://www.pexels.com/video/light-reflections-through-glass-of-water-6585633/", src: "https://videos.pexels.com/video-files/6585633/6585633-hd_1280_720_30fps.mp4" },
+  { label: "맑은 물 표면의 빛 일렁임", page: "https://www.pexels.com/video/sunlight-reflections-on-clear-water-surface-34308148/", src: "https://videos.pexels.com/video-files/34308148/14534370_1280_720_30fps.mp4" },
+  { label: "검은 배경의 연기", page: "https://www.pexels.com/video/close-up-shot-of-smoke-on-a-black-background-4320603/", src: "https://videos.pexels.com/video-files/4320603/4320603-hd_1280_720_24fps.mp4" },
+  { label: "물속에 퍼지는 회색 잉크(슬로 모션)", page: "https://www.pexels.com/video/slow-motion-of-a-grey-ink-in-water-6071224/", src: "https://videos.pexels.com/video-files/6071224/6071224-hd_1280_720_30fps.mp4" },
+  { label: "천천히 움직이는 금빛 액체", page: "https://www.pexels.com/video/golden-liquid-moving-6895129/", src: "https://videos.pexels.com/video-files/6895129/6895129-hd_1280_720_30fps.mp4" },
 ];
