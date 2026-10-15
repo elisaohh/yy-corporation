@@ -58,7 +58,8 @@ export function VisionStatement() {
       </div>
 
       <div className="container-yy relative w-full">
-        <h2 id="vision-title" className="label-en text-point-1225">
+        <h2 id="vision-title" className="label-en flex items-center gap-3 text-on-dark-sub">
+          <span className="size-1.5 rounded-full bg-point-1225" aria-hidden="true" />
           {vision.label}
         </h2>
         <p data-statement className="mt-6 max-w-[24ch] text-[clamp(28px,3.4vw,54px)] leading-[1.2] font-bold tracking-[-0.03em] md:mt-8">
@@ -68,8 +69,7 @@ export function VisionStatement() {
         <div className="mt-12 grid gap-4 md:mt-14 md:grid-cols-2 md:gap-6">
           {vision.pillars.map((pillar, i) => (
             <Reveal key={pillar.en} delay={i * 120} className="border border-white/15 bg-white/[0.06] p-6 backdrop-blur-md md:p-8">
-              <p className="font-en text-[12px] tabular-nums text-on-dark-sub">{String(i + 1).padStart(2, "0")}</p>
-              <p className="mt-4 font-en text-[clamp(18px,1.6vw,22px)] font-semibold tracking-[-0.01em]">{pillar.en}</p>
+              <p className="font-en text-[clamp(18px,1.6vw,22px)] font-semibold tracking-[-0.01em]">{pillar.en}</p>
               <p className="mt-1 text-[15px] text-on-dark-sub">{pillar.ko}</p>
               <p className="mt-4 max-w-[46ch] text-[15px] leading-[1.75] text-on-dark/85">{pillar.body}</p>
             </Reveal>

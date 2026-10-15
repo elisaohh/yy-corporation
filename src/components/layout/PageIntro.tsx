@@ -16,7 +16,7 @@ interface PageIntroProps {
   motionImage?: string;
   /** d안 톤 — dark: 사진 위 어두운 막(현장 사진) / light: 미스트 위 multiply(흰 배경 제품 이미지) */
   motionTone?: "dark" | "light";
-  /** d안(light)에서 이미지 대신 오른쪽에 둘 그래픽(예: 반투명 단색 로고) */
+  /** d안(light)에서 이미지 대신 오른쪽 아래에 크게 걸쳐 두는 고정 그래픽(예: 반투명 단색 로고) */
   graphic?: ReactNode;
   /** 바로 아래가 여백 없는 목록일 때 머리 영역 아래 간격 */
   gapAfter?: boolean;
@@ -45,7 +45,8 @@ export function PageIntro({ title, intro, backdrop = "none", motionImage, motion
         />
       )}
       {lightMotion && graphic && (
-        <div aria-hidden="true" className="page-intro-float pointer-events-none absolute right-[var(--gutter)] top-1/2 hidden w-[min(34vw,460px)] -translate-y-1/2 md:block">
+        // 고정 그래픽 — 오른쪽 아래로 크게 걸쳐 일부만 보이게(잘림은 의도)
+        <div aria-hidden="true" className="pointer-events-none absolute -bottom-[42%] -right-[4%] hidden w-[min(50vw,760px)] md:block">
           {graphic}
         </div>
       )}
