@@ -91,10 +91,11 @@ export const expertiseSource = "엑셀 ABOUT 시트 ② 회사 소개 · ③ 기
  * 교체할 때 이 경로만 바꾼다. video를 넣으면(예: "/assets/about/vision.mp4") 비전 구간 배경이 영상으로 바뀐다.
  */
 export const aboutMedia = {
-  /** 머리 영역 — PRODUCT와 같은 밝은 미스트 + 떠다니는 병 */
-  intro: "/assets/hero/hero-base.webp",
+  /** 머리 영역 — PRODUCT와 같은 밝은 미스트 + 떠다니는 병(PRODUCT와 다른 사진) */
+  intro: "/assets/products/YS-SRRR50-02/YS-SRRR50-02_04.webp",
   story: "/assets/products/YS-SRRR30-04/YS-SRRR30-04_04.webp",
-  vision: { image: "/assets/site/site-08.webp", video: null as string | null },
+  /** 비전 배경 영상 — Pexels "Slow Motion of a Grey Ink in Water"(6071224, 무료 라이선스) */
+  vision: { image: "/assets/site/site-08.webp", video: "/assets/about/vision-ink.mp4" as string | null },
   expertise: {
     Sourcing: "/assets/site/site-05.webp",
     Finishing: "/assets/site/site-11.webp",

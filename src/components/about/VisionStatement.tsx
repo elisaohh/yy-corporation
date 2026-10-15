@@ -44,7 +44,7 @@ export function VisionStatement() {
   }, []);
 
   return (
-    <section ref={ref} data-header-theme="dark" data-surface="dark" aria-labelledby="vision-title" className="relative overflow-hidden bg-intro py-28 text-on-dark md:py-40">
+    <section ref={ref} data-header-theme="dark" data-surface="dark" aria-labelledby="vision-title" className="relative overflow-hidden bg-intro py-20 text-on-dark md:py-24 lg:flex lg:min-h-[100svh] lg:items-center lg:py-[calc(var(--header-h)+24px)]">
       <div aria-hidden="true" className="absolute inset-0">
         <div data-bg className="absolute inset-0">
           {video ? (
@@ -57,27 +57,27 @@ export function VisionStatement() {
         <div className="absolute inset-0 bg-gradient-to-b from-intro/80 via-intro/55 to-intro/90" />
       </div>
 
-      <div className="container-yy relative">
+      <div className="container-yy relative w-full">
         <h2 id="vision-title" className="label-en text-point-1225">
           {vision.label}
         </h2>
-        <p data-statement className="mt-10 max-w-[20ch] text-[clamp(32px,4.8vw,76px)] leading-[1.18] font-bold tracking-[-0.03em] md:mt-14">
+        <p data-statement className="mt-6 max-w-[24ch] text-[clamp(28px,3.4vw,54px)] leading-[1.2] font-bold tracking-[-0.03em] md:mt-8">
           {vision.statement}
         </p>
 
-        <div className="mt-20 grid gap-4 md:mt-28 md:grid-cols-2 md:gap-6">
+        <div className="mt-12 grid gap-4 md:mt-14 md:grid-cols-2 md:gap-6">
           {vision.pillars.map((pillar, i) => (
-            <Reveal key={pillar.en} delay={i * 120} className="border border-white/15 bg-white/[0.06] p-8 backdrop-blur-md md:p-10">
+            <Reveal key={pillar.en} delay={i * 120} className="border border-white/15 bg-white/[0.06] p-6 backdrop-blur-md md:p-8">
               <p className="font-en text-[12px] tabular-nums text-on-dark-sub">{String(i + 1).padStart(2, "0")}</p>
-              <p className="mt-6 font-en text-[clamp(20px,1.8vw,26px)] font-semibold tracking-[-0.01em]">{pillar.en}</p>
+              <p className="mt-4 font-en text-[clamp(18px,1.6vw,22px)] font-semibold tracking-[-0.01em]">{pillar.en}</p>
               <p className="mt-1 text-[15px] text-on-dark-sub">{pillar.ko}</p>
-              <p className="mt-6 max-w-[42ch] text-[16px] leading-[1.8] text-on-dark/85">{pillar.body}</p>
+              <p className="mt-4 max-w-[46ch] text-[15px] leading-[1.75] text-on-dark/85">{pillar.body}</p>
             </Reveal>
           ))}
         </div>
 
-        <Reveal className="mt-20 md:mt-28">
-          <blockquote className="max-w-[46ch] border-l-2 border-point-1225 pl-6 text-[clamp(17px,1.5vw,21px)] leading-[1.75] text-on-dark/90">
+        <Reveal className="mt-10 md:mt-12">
+          <blockquote className="max-w-[60ch] border-l-2 border-point-1225 pl-6 text-[clamp(16px,1.3vw,18px)] leading-[1.7] text-on-dark/90">
             {vision.quote}
           </blockquote>
         </Reveal>

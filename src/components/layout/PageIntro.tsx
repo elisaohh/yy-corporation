@@ -30,7 +30,7 @@ export function PageIntro({ title, intro, backdrop = "none", motionImage, motion
     <section
       data-header-theme={dark ? "dark" : "light"}
       data-surface={dark ? "dark" : undefined}
-      className={`relative overflow-hidden ${backdrop === "a" || backdrop === "c" || lightMotion ? "bg-mist" : ""} ${backdrop === "b" ? "bg-intro text-on-dark" : ""} ${backdrop === "d" && !lightMotion ? "bg-intro text-on-dark" : ""} ${gapAfter ? "mb-10 md:mb-14" : ""}`}
+      className={`relative overflow-hidden ${filled ? "md:flex md:h-[440px] md:flex-col md:justify-center" : ""} ${backdrop === "a" || backdrop === "c" || lightMotion ? "bg-mist" : ""} ${backdrop === "b" ? "bg-intro text-on-dark" : ""} ${backdrop === "d" && !lightMotion ? "bg-intro text-on-dark" : ""} ${gapAfter ? "mb-10 md:mb-14" : ""}`}
     >
       {backdrop === "c" && (
         <div
@@ -56,9 +56,9 @@ export function PageIntro({ title, intro, backdrop = "none", motionImage, motion
         </div>
       )}
 
-      <div className={`container-yy relative ${filled ? "pb-20 pt-[calc(var(--header-h)+88px)] md:pb-28 md:pt-[calc(var(--header-h)+136px)]" : "pb-16 pt-[calc(var(--header-h)+72px)] md:pb-24 md:pt-[calc(var(--header-h)+120px)]"}`}>
+      <div className={`container-yy relative ${filled ? "w-full pb-16 pt-[calc(var(--header-h)+64px)] md:pb-0 md:pt-[var(--header-h)]" : "pb-16 pt-[calc(var(--header-h)+72px)] md:pb-24 md:pt-[calc(var(--header-h)+120px)]"}`}>
         <h1 className="font-en text-[clamp(36px,4.6vw,64px)] leading-[1.05] font-light tracking-[0.06em] uppercase">{title}</h1>
-        <div className={`mt-6 max-w-[40ch] text-[clamp(16px,1.3vw,18px)] leading-[1.75] ${dark ? "text-on-dark-sub" : "text-ash"}`}>{intro}</div>
+        <div className={`mt-6 max-w-[48ch] text-[clamp(16px,1.3vw,18px)] leading-[1.75] ${dark ? "text-on-dark-sub" : "text-ash"}`}>{intro}</div>
       </div>
     </section>
   );
