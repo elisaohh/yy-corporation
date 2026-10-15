@@ -56,7 +56,7 @@ export const processScene = {
   dropperCap: "dropperCap" as AssetId,
   dropperPipette: "dropperPipette" as AssetId,
   /** 라벨이 피펫을 가리는 구간(캔버스 높이 대비 %) — proc-label 실측 */
-  labelBand: { top: 44.4, bottom: 72.5 }, // proc-label(부식 후 라벨) 실측 710–1160행
+  labelBand: { top: 48.8, bottom: 75.4 }, // proc-label(부식 후 라벨, 2026-10-15 SOLENNE 교체) 실측 780–1206행
   /** 체결 후 함께 등장하는 실제 제품 (기준병 양옆) */
   expandTo: ["YS-SRRR15-01_02", "YS-SRRR30-02_01", "YS-SRRR30-04_01", "YS-SRRR50-02_01"] as AssetId[],
 };

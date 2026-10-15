@@ -31,8 +31,8 @@ export interface MediaAsset {
 }
 
 /** 히어로의 떠다니는 병 (scripts/build-float-bottles.mjs) — 흰 바탕, 여백 제거 */
-function floatBottle(src: string, alt: string, width: number): MediaAsset {
-  return { kind: "image", src, alt, width, height: 1540, status: "final", note: "기준병 YS-SRRR30-04 + 스포이드 결합" };
+function floatBottle(src: string, alt: string, width: number, height: number): MediaAsset {
+  return { kind: "image", src, alt, width, height, status: "final", note: "기준병 YS-SRRR30-04 + 스포이드 결합" };
 }
 
 /** 공정 모션 캔버스 이미지(900×1600) */
@@ -67,9 +67,9 @@ const baseAssets = {
   },
 
   /* ── HOME 인트로 · 공정 모션 (scripts/build-*.mjs) — 900×1600 흰 바탕 캔버스, 같은 좌표에 정렬 ── */
-  floatClear: floatBottle("/assets/hero/float-clear.webp", "스포이드를 결합한 투명 유리 세럼병", 483),
-  floatCoating: floatBottle("/assets/hero/float-coating.webp", "코팅된 유리 세럼병 — 생성 예시", 488),
-  floatEtching: floatBottle("/assets/hero/float-etching.webp", "부식 처리된 유리 세럼병 — 생성 예시", 483),
+  floatClear: floatBottle("/assets/hero/float-clear.webp", "스포이드를 결합한 투명 유리 세럼병", 483, 1420),
+  floatCoating: floatBottle("/assets/hero/float-coating.webp", "그라데이션 코팅된 유리 세럼병 — 생성 예시", 483, 1434),
+  floatEtching: floatBottle("/assets/hero/float-etching.webp", "부식 처리된 유리 세럼병 — 생성 예시", 483, 1385),
   procClear: proc("/assets/hero/proc-clear.webp", "스포이드를 끼우기 전의 투명한 30ml 유리병"),
   procCoating: generated("/assets/hero/proc-coating.webp", "코팅 효과 예시 — 생성 이미지"),
   procPrinting: generated("/assets/hero/proc-printing.webp", "인쇄 효과 예시(코팅 위 인쇄) — 생성 이미지"),
