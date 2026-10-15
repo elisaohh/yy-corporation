@@ -22,7 +22,7 @@ export const siteConfig = {
    * 임시 이미지·미확정 문구에 "임시" / "확인 필요" 표시를 붙인다.
    * 실제 자료로 모두 교체되면 false로 바꾼다.
    */
-  showPlaceholderLabels: false, // 2026-10-15 디자인 검토 중 끔(미확정 목록은 docs에서 관리)
+  showPlaceholderLabels: true,
 
   /** 모바일 제품 목록 열 수 — 실제 사진 확인 후 1 또는 2로 결정 (설계서 v0.2) */
   productMobileColumns: 2 as 1 | 2,
