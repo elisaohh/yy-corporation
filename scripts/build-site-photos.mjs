@@ -12,10 +12,13 @@ const SRC = "자료/02_후가공/작업사진";
 const OUT = "public/assets/site";
 const ORDER = [11, 2, 9, 12, 3, 13, 7, 6, 5, 15, 14, 4, 8, 10, 1];
 
+/** 2026-10-15 사용자가 ONE-STOP용으로 이름을 바꾼 원본 */
+const RENAMED = { 1: "delivery-01", 12: "delivery-02", 2: "glass-01", 9: "glass-02", 14: "surface-01", 5: "surface-02" };
+
 await mkdir(OUT, { recursive: true });
 const photos = [];
 for (const [i, n] of ORDER.entries()) {
-  const file = `${SRC}/1 (${n}).jpg`;
+  const file = `${SRC}/${RENAMED[n] ?? `1 (${n})`}.jpg`;
   const name = `site-${String(i + 1).padStart(2, "0")}`;
   const img = sharp(file).rotate();
   const meta = await img.metadata();

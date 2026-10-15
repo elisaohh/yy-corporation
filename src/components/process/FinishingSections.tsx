@@ -84,16 +84,9 @@ export function FinishingSections() {
   };
 
   return (
-    <section ref={outerRef} data-header-theme="light" aria-labelledby="finishing-title" className="relative bg-paper" style={{ height: reduced ? "auto" : `${count * 100 + 100}svh` }}>
+    <section ref={outerRef} data-header-theme="light" aria-label="후가공 공정" className="relative bg-paper" style={{ height: reduced ? "auto" : `${count * 100 + 100}svh` }}>
       <div className={reduced ? "container-yy py-20" : "sticky top-0 flex h-[100svh] flex-col overflow-hidden pt-[var(--header-offset,0px)]"}>
         <div className={reduced ? "" : "container-yy flex min-h-0 flex-1 flex-col py-8 md:py-10"}>
-          <div className="mb-5 flex shrink-0 flex-wrap items-end justify-between gap-4 md:mb-7">
-            <div>
-              <p className="label-en text-ash">FINISHING PROCESS</p>
-              <h2 id="finishing-title" className="mt-3 font-en text-[clamp(32px,4.3vw,62px)] font-extrabold leading-[1] tracking-[-0.045em] text-charcoal">Details Make the Brand.</h2>
-            </div>
-            <p className="max-w-[32ch] text-[13px] leading-[1.6] text-ash">코팅부터 라벨까지, 네 가지 후가공을 소개합니다.</p>
-          </div>
           <div className="mb-4 flex shrink-0 items-center justify-between border-b border-stone pb-3">
             <div className="flex gap-4 overflow-x-auto [scrollbar-width:none]">
               {finishingProcesses.map((p, i) => <button type="button" key={p.key} onClick={() => go(i)} aria-current={active === i ? "step" : undefined} className={`shrink-0 font-en text-[11px] font-semibold tracking-[0.08em] md:text-[13px] ${active === i ? "text-charcoal" : "text-ash"}`}>{p.name}</button>)}
