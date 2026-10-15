@@ -41,7 +41,7 @@ export function ExpertiseList() {
               style={{ color: on ? "var(--color-charcoal)" : "color-mix(in srgb, var(--color-ash) 40%, var(--color-paper))" }}
             >
               {/* 모바일: 항목 사진 */}
-              <div className="mb-6 aspect-[4/3] overflow-hidden bg-card lg:hidden">
+              <div className="mb-6 aspect-[4/3] max-w-[420px] overflow-hidden bg-card lg:hidden">
                 {/* eslint-disable-next-line @next/next/no-img-element -- 현장 사진 */}
                 <img src={aboutMedia.expertise[item.key]} alt="" loading="lazy" className="size-full object-cover" />
               </div>
@@ -67,7 +67,7 @@ export function ExpertiseList() {
 
       {/* 데스크톱: 고정 사진 — 활성 항목에 맞춰 교차 전환 */}
       <div aria-hidden="true" className="hidden lg:col-span-5 lg:block">
-        <div className="sticky top-[calc(var(--header-h)+48px)] aspect-[4/5] overflow-hidden bg-card">
+        <div className="sticky top-[calc(var(--header-h)+64px)] ml-auto aspect-[4/5] w-full max-w-[360px] overflow-hidden bg-card">
           {expertise.map((item, i) => (
             // eslint-disable-next-line @next/next/no-img-element -- 현장 사진
             <img
