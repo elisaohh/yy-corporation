@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { isStill } from "@/lib/still";
 
 /** 가로 띠 칸 — src가 없으면 "실사 준비 중" 칸 */
-export type TrackItem = { en: string; ko: string; src?: string };
+export type TrackItem = { en: string; ko: string; src?: string; alt?: string };
 
 /** 자동으로 한 칸씩 넘어가는 간격(ms) */
 const AUTO_MS = 3200;
@@ -123,7 +123,7 @@ export function TrackCarousel({ label, items }: { label: string; items: TrackIte
               <div className="relative aspect-[4/5] overflow-hidden bg-card">
                 {t.src ? (
                   /* eslint-disable-next-line @next/next/no-img-element -- 실사 웹 사본 */
-                  <img src={t.src} alt={`${t.ko} 예시`} loading="lazy" className="size-full object-cover" />
+                  <img src={t.src} alt={t.alt ?? t.ko} loading="lazy" className="size-full object-cover" />
                 ) : (
                   <div className="flex size-full flex-col justify-between p-5 md:p-6">
                     <span aria-hidden="true" className="font-en text-[clamp(28px,2.6vw,40px)] leading-none font-extrabold tracking-[-0.04em] text-stone">
