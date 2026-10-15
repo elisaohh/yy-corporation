@@ -30,6 +30,8 @@ export default function ContactPage() {
     <>
       <PageIntro
         title="Contact"
+        backdrop="a"
+        gapAfter
         intro={
           <>
             {contactCopy.intro.text}

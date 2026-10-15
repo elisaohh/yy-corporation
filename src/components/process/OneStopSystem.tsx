@@ -33,10 +33,10 @@ const sections: { title: string; en: string; description: string; height: number
     en: "GLASS FORMING",
     description: "협력 제조사의 자동화 성형 라인에서 균일한 품질의 유리 용기를 생산합니다.",
     // 왼쪽 위 큰 사진 + 오른쪽 아래로 겹치는 작은 사진
-    height: 76,
+    height: 62,
     photos: [
-      { src: `${BASE}/glass-01.webp`, w: 960, h: 720, left: 0, top: 0, width: 72, shift: 0 },
-      { src: `${BASE}/glass-02.webp`, w: 960, h: 720, left: 46, top: 35, width: 54, shift: -60 },
+      { src: `${BASE}/glass-01.webp`, w: 960, h: 720, left: 0, top: 0, width: 70, shift: 0 },
+      { src: `${BASE}/glass-02.webp`, w: 960, h: 720, left: 52, top: 23, width: 48, shift: -24 },
     ],
   },
   {
@@ -44,10 +44,10 @@ const sections: { title: string; en: string; description: string; height: number
     en: "SURFACE FINISHING",
     description: "코팅·인쇄·부식·라벨 등 다양한 후가공을 통해 브랜드에 맞는 색상과 표면 질감을 구현합니다.",
     // 가로 사진 위에 세로 사진이 오른쪽에서 걸쳐 올라옴
-    height: 66,
+    height: 62,
     photos: [
-      { src: `${BASE}/surface-01.webp`, w: 960, h: 720, left: 0, top: 12, width: 70, shift: 0 },
-      { src: `${BASE}/surface-02.webp`, w: 721, h: 961, left: 62, top: 0, width: 38, shift: -70 },
+      { src: `${BASE}/surface-01.webp`, w: 960, h: 720, left: 0, top: 9, width: 68, shift: 0 },
+      { src: `${BASE}/surface-02.webp`, w: 721, h: 961, left: 64, top: 0, width: 36, shift: -24 },
     ],
   },
   {
@@ -55,10 +55,10 @@ const sections: { title: string; en: string; description: string; height: number
     en: "DELIVERY",
     description: "생산 일정과 품질을 확인하고, 입고부터 최종 납품까지 체계적으로 관리합니다.",
     // 오른쪽 큰 사진 + 왼쪽 아래에서 겹치는 사진
-    height: 82,
+    height: 62,
     photos: [
-      { src: `${BASE}/delivery-01.webp`, w: 960, h: 720, left: 24, top: 0, width: 76, shift: 0 },
-      { src: `${BASE}/delivery-02.webp`, w: 960, h: 720, left: 0, top: 43, width: 50, shift: -60 },
+      { src: `${BASE}/delivery-01.webp`, w: 960, h: 720, left: 26, top: 0, width: 74, shift: 0 },
+      { src: `${BASE}/delivery-02.webp`, w: 960, h: 720, left: 0, top: 22, width: 46, shift: -24 },
     ],
   },
 ];

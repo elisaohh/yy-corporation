@@ -17,11 +17,11 @@ interface PendingProps {
 
 /**
  * 미확정 정보 표시. 실제 값이 없는 자리에 임의 값을 넣는 대신 이 표시를 쓴다.
- * siteConfig.showPlaceholderLabels가 false면 대시(—)만 보인다.
+ * siteConfig.showPlaceholderLabels가 false면 배지는 숨기고, 값이 비어 있는 "확인 필요" 자리만 대시(—)로 남긴다.
  */
 export function Pending({ kind = "confirm", label, className = "" }: PendingProps) {
   if (!siteConfig.showPlaceholderLabels) {
-    return <span className={className}>—</span>;
+    return kind === "confirm" && !label ? <span className={className}>—</span> : null;
   }
   const isTemp = kind !== "confirm";
   return (
