@@ -116,3 +116,21 @@ export const visionVideoCandidates = [
   { label: "물속에 퍼지는 회색 잉크(슬로 모션)", page: "https://www.pexels.com/video/slow-motion-of-a-grey-ink-in-water-6071224/", src: "https://videos.pexels.com/video-files/6071224/6071224-hd_1280_720_30fps.mp4" },
   { label: "천천히 움직이는 금빛 액체", page: "https://www.pexels.com/video/golden-liquid-moving-6895129/", src: "https://videos.pexels.com/video-files/6895129/6895129-hd_1280_720_30fps.mp4" },
 ];
+
+/**
+ * 비전 아래 03 · 04 (2026-10-15 사용자 제공 문구 — 비전의 01 Total Turnkey · 02 Brand Success에 이어지는 번호)
+ */
+export const capabilities = [
+  {
+    no: "03",
+    en: "DECORATION",
+    ko: "정밀 후가공 솔루션",
+    body: "코팅, 실크스크린, 박, 형압 등 다양한 후가공을 통해 브랜드의 아이덴티티와 감성을 패키지에 구현합니다.",
+  },
+  {
+    no: "04",
+    en: "GLOBAL SOURCING",
+    ko: "글로벌 패키징 소싱",
+    body: "국내·외 제조 네트워크를 활용하여 가격 경쟁력과 디자인을 고려한 다양한 패키징을 제안합니다.",
+  },
+];

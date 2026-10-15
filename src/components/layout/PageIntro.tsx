@@ -16,12 +16,14 @@ interface PageIntroProps {
   motionImage?: string;
   /** d안 톤 — dark: 사진 위 어두운 막(현장 사진) / light: 미스트 위 multiply(흰 배경 제품 이미지) */
   motionTone?: "dark" | "light";
+  /** d안(light)에서 이미지 대신 오른쪽에 둘 그래픽(예: 반투명 단색 로고) */
+  graphic?: ReactNode;
   /** 바로 아래가 여백 없는 목록일 때 머리 영역 아래 간격 */
   gapAfter?: boolean;
 }
 
 /** 서브페이지 공통 머리 영역: 큰 영문 타이틀 + 짧은 한글 소개 (기획서 2.0 부록 E·F) */
-export function PageIntro({ title, intro, backdrop = "none", motionImage, motionTone = "dark", gapAfter = false }: PageIntroProps) {
+export function PageIntro({ title, intro, backdrop = "none", motionImage, motionTone = "dark", graphic, gapAfter = false }: PageIntroProps) {
   const lightMotion = backdrop === "d" && motionTone === "light";
   const dark = backdrop === "b" || (backdrop === "d" && !lightMotion);
   const filled = backdrop !== "none";
@@ -42,7 +44,12 @@ export function PageIntro({ title, intro, backdrop = "none", motionImage, motion
           }}
         />
       )}
-      {lightMotion && motionImage && (
+      {lightMotion && graphic && (
+        <div aria-hidden="true" className="page-intro-float pointer-events-none absolute right-[var(--gutter)] top-1/2 hidden w-[min(34vw,460px)] -translate-y-1/2 md:block">
+          {graphic}
+        </div>
+      )}
+      {lightMotion && !graphic && motionImage && (
         <div aria-hidden="true" className="absolute inset-y-0 right-0 w-[min(70%,900px)] mix-blend-multiply">
           {/* eslint-disable-next-line @next/next/no-img-element -- 배경 이미지 */}
           <img src={motionImage} alt="" className="page-intro-float absolute inset-y-[8%] right-0 h-[84%] w-full object-contain object-right opacity-60" />
