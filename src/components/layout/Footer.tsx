@@ -42,6 +42,17 @@ export function Footer() {
                 >
                   {item.label}
                 </Link>
+                {item.children && (
+                  <ul className="mt-1 grid gap-1 pl-3">
+                    {item.children.map((child) => (
+                      <li key={child.href}>
+                        <Link href={child.href} className="inline-flex min-h-8 items-center font-en text-[12px] tracking-[0.1em] text-ash uppercase hover:text-charcoal">
+                          {child.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </li>
             ))}
           </ul>

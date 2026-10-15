@@ -19,7 +19,7 @@ export function CompanyIntro() {
           </Reveal>
           <Reveal delay={120}>
             <p className="mt-8 max-w-[34ch] text-[clamp(16px,1.3vw,18px)] leading-[1.75] text-ash">{companyIntro.body}</p>
-            <Link href="/about" className="link-en mt-8">
+            <Link href="/about/company" className="link-en mt-8">
               ABOUT →
             </Link>
           </Reveal>

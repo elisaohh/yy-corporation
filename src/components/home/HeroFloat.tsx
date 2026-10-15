@@ -15,7 +15,7 @@ gsap.registerPlugin(ScrollTrigger);
  * ① HOME 히어로 — 사용자 제공 사진(자료/07_히어로)을 층으로 나눠 쓴다(scripts/build-hero-layers.mjs).
  * - 바탕 층: 병 3개(와 병에 맞닿은 물방울). 떠 있는 물방울은 사진 속 그대로 잘라 각각 따로 떠다닌다.
  * - 물방울은 multiply로 합성 — 병 앞을 지나도 흰 바탕이 비치지 않고 테두리만 남아 맑은 물방울처럼 보인다.
- * - 로딩: 로고 + 가는 진행선 → 화면이 위로 걷힘(약 1.4초, 휠 · 터치 · 키 입력 시 즉시)
+ * - 로딩: 로고가 차오름 → 화면이 위로 걷힘(약 1.4초, 휠 · 터치 · 키 입력 시 즉시)
  * - 데스크톱: 마우스 방향으로 깊이감, 스크롤하면 물방울이 병보다 빨리 위로 흘러간다.
  * - 모션 줄이기: 로딩 없이 정지 화면.
  */
@@ -40,7 +40,6 @@ export function HeroFloat() {
       (context) => {
         const q = gsap.utils.selector(section);
         const loader = q("[data-loader]")[0];
-        const count = q("[data-loader-count]")[0];
         const words = q("[data-word]");
         const fades = q("[data-fade]");
         const photo = q("[data-photo]")[0];
@@ -60,23 +59,10 @@ export function HeroFloat() {
         const intro = gsap.timeline({ defaults: { ease: "power3.out" } });
         if (process.env.NODE_ENV === "development") (window as unknown as Record<string, unknown>).__yyHero = intro;
         intro
-          // 로딩: 로고가 아래에서 차오르고 → 숫자가 000 → 100
+          // 로딩: 로고가 아래에서 차오른 뒤 잠시 머문다(숫자 표시는 2026-10-16 삭제)
           .fromTo(q("[data-loader-logo]"), { clipPath: "inset(100% 0% 0% 0%)", y: 12 }, { clipPath: "inset(0% 0% 0% 0%)", y: 0, duration: 0.8, ease: "power3.out" })
-          .fromTo(q("[data-loader-meter]"), { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3 }, "-=0.4")
-          .fromTo(
-            { v: 0 },
-            { v: 0 },
-            {
-              v: 100,
-              duration: 1,
-              ease: "power2.inOut",
-              onUpdate() {
-                if (count) count.textContent = String(Math.round(this.targets()[0].v)).padStart(3, "0");
-              },
-            },
-            "<",
-          )
-          // 공개: 로고 · 숫자가 살짝 올라가며 사라지고 → 흰 막이 걷힌 뒤 차콜 막이 한 박자 늦게 따라 걷힌다(겹친 커튼)
+          .to({}, { duration: 0.6 })
+          // 공개: 로고가 살짝 올라가며 사라지고 → 흰 막이 걷힌 뒤 차콜 막이 한 박자 늦게 따라 걷힌다(겹친 커튼)
           .to(q("[data-loader-inner]"), { y: -18, autoAlpha: 0, duration: 0.45, ease: "power2.in" }, "+=0.1")
           .to(q("[data-loader-curtain]"), { yPercent: -100, duration: 0.9, ease: "power4.inOut" }, "-=0.15")
           .to(q("[data-loader-trail]"), { yPercent: -100, duration: 0.9, ease: "power4.inOut" }, "<0.12")
@@ -250,11 +236,6 @@ export function HeroFloat() {
           <div className="grid justify-items-center gap-7">
             <div data-loader-logo style={{ clipPath: "inset(100% 0% 0% 0%)" }}>
               <Logo placement="loader" decorative />
-            </div>
-            <div data-loader-meter className="flex items-center gap-4" style={{ opacity: 0 }}>
-              <span data-loader-count className="w-7 font-en text-[11px] tabular-nums tracking-[0.08em] text-ash">
-                000
-              </span>
             </div>
           </div>
         </div>

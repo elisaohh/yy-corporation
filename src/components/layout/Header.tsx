@@ -86,6 +86,9 @@ export function Header() {
   useEffect(() => {
     setMenuOpen(false);
     setHidden(false);
+    // 하위 메뉴에서 이동한 뒤 포커스가 남아 드롭다운이 계속 펼쳐져 있지 않도록
+    const focused = document.activeElement;
+    if (focused instanceof HTMLElement && headerRef.current?.contains(focused)) focused.blur();
     const id = requestAnimationFrame(detectTheme);
     return () => cancelAnimationFrame(id);
   }, [pathname, detectTheme]);
@@ -121,16 +124,45 @@ export function Header() {
               {headerNav.map((item) => {
                 const active = isActivePath(pathname, item.href);
                 return (
-                  <li key={item.href}>
+                  <li key={item.href} className={item.children ? "group relative" : undefined}>
                     <Link
                       href={item.href}
-                      aria-current={active ? "page" : undefined}
+                      aria-current={active && !item.children ? "page" : undefined}
                       className={`label-en relative inline-flex min-h-11 items-center pt-2.5 before:absolute before:left-1/2 before:top-[9px] before:size-1 before:-translate-x-1/2 before:rounded-full before:bg-current before:transition-opacity before:duration-200 ${
                         active ? "before:opacity-100" : "before:opacity-0 hover:before:opacity-40"
                       }`}
                     >
                       {item.label}
                     </Link>
+                    {/* 하위 메뉴 — 마우스를 올리거나 키보드로 포커스가 들어오면 펼쳐진다(2026-10-16 ABOUT › COMPANY · STORY) */}
+                    {item.children && (
+                      <div className="invisible absolute left-1/2 top-full -translate-x-1/2 pt-3 opacity-0 transition-[opacity,visibility] duration-200 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+                        <ul
+                          aria-label={`${item.label} 하위 메뉴`}
+                          className={`min-w-[150px] border py-2 shadow-[0_18px_40px_-24px_rgba(43,43,42,0.35)] ${
+                            isDark ? "border-on-dark/10 bg-intro text-on-dark" : "border-stone bg-paper text-charcoal"
+                          }`}
+                        >
+                          {item.children.map((child) => {
+                            const childActive = isActivePath(pathname, child.href);
+                            return (
+                              <li key={child.href}>
+                                <Link
+                                  href={child.href}
+                                  aria-current={childActive ? "page" : undefined}
+                                  className={`label-en flex min-h-11 items-center justify-between gap-4 px-5 transition-colors duration-200 ${
+                                    isDark ? "hover:bg-on-dark/10" : "hover:bg-card"
+                                  } ${childActive ? "" : "opacity-70 hover:opacity-100"}`}
+                                >
+                                  {child.label}
+                                  {childActive && <span aria-hidden="true" className="size-1 rounded-full bg-current" />}
+                                </Link>
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      </div>
+                    )}
                   </li>
                 );
               })}

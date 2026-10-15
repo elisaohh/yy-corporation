@@ -132,7 +132,7 @@ export function MobileMenu({ open, onClose, returnFocusRef, pathname }: MobileMe
                   <Link
                     href={item.href}
                     onClick={onClose}
-                    aria-current={active ? "page" : undefined}
+                    aria-current={active && !item.children ? "page" : undefined}
                     className="relative inline-flex min-h-11 flex-col pt-3"
                   >
                     <span
@@ -144,6 +144,26 @@ export function MobileMenu({ open, onClose, returnFocusRef, pathname }: MobileMe
                     </span>
                     <span className="mt-1 text-[13px] text-ash">{item.description}</span>
                   </Link>
+                  {item.children && (
+                    <ul aria-label={`${item.label} 하위 메뉴`} className="mt-2 grid gap-1 border-l border-stone pl-4">
+                      {item.children.map((child) => {
+                        const childActive = isActivePath(pathname, child.href);
+                        return (
+                          <li key={child.href}>
+                            <Link
+                              href={child.href}
+                              onClick={onClose}
+                              aria-current={childActive ? "page" : undefined}
+                              className={`inline-flex min-h-11 items-center gap-3 ${childActive ? "text-charcoal" : "text-ash"}`}
+                            >
+                              <span className="font-en text-[17px] font-medium tracking-[0.04em]">{child.label}</span>
+                              <span className="text-[13px]">{child.description}</span>
+                            </Link>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  )}
                 </li>
               );
             })}
