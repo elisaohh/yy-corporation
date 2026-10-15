@@ -4,7 +4,7 @@ import Link from "next/link";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useRef, useState } from "react";
-import { aboutMedia, expertise } from "@/data/about";
+import { expertise } from "@/data/about";
 import { companyIntro } from "@/data/home";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -12,9 +12,9 @@ gsap.registerPlugin(ScrollTrigger);
 /**
  * ② 회사 소개 + 전문 역량 (2026-10-15: 이전 ABOUT의 SOURCING → DELIVERY 디자인을 HOME으로)
  * 데스크톱: 한 화면에 고정한 채 스크롤하면 단계가 넘어간다 —
- *   왼쪽 큰 단어 목록에서 현재 항목만 진해지고 커지며, 오른쪽 사진은 아래에서 위로 걷히듯 바뀌고,
- *   사진 위치가 단계마다 위아래로 엇갈려 구성이 달라진다. 단계마다 부드럽게 멈춘다(스냅).
- * 모바일 · 모션 줄이기: 고정 없이 항목마다 사진 + 설명을 차례로 보여 준다.
+ *   왼쪽 큰 단어 목록에서 현재 항목만 진해지고 커지며, 오른쪽은 큰 번호 · 태그 · 설명이 교차하고
+ *   위치가 단계마다 위아래로 엇갈려 구성이 달라진다. 단계마다 부드럽게 멈춘다(스냅). 사진 없음(2026-10-15 요청).
+ * 모바일 · 모션 줄이기: 고정 없이 항목을 차례로 보여 준다.
  */
 export function CompanyIntro() {
   const ref = useRef<HTMLElement>(null);
@@ -89,40 +89,27 @@ export function CompanyIntro() {
           </div>
 
           <div className="relative col-span-5 col-start-8 flex flex-col">
-            {/* 사진 — 단계마다 위아래 위치가 엇갈리며 아래에서 위로 걷히듯 교체 */}
+            {/* 단계 내용 — 큰 번호 + 서비스 태그 + 한 줄 + 설명이 교차하며, 단계마다 위아래 위치가 엇갈려 구도가 바뀐다 */}
             <div
-              className="relative aspect-[4/5] max-h-[54svh] overflow-hidden bg-card transition-transform duration-[900ms] ease-[var(--ease-yy-out)]"
-              style={{ transform: `translateY(${active % 2 ? "6svh" : "0"})` }}
+              className="relative my-auto h-[min(56svh,460px)] transition-transform duration-[900ms] ease-[var(--ease-yy-out)]"
+              style={{ transform: `translateY(${active % 2 ? "8svh" : "-4svh"})` }}
             >
-              {expertise.map((item, i) => (
-                // eslint-disable-next-line @next/next/no-img-element -- 현장 사진
-                <img
-                  key={item.key}
-                  src={aboutMedia.expertise[item.key]}
-                  alt=""
-                  className="absolute inset-0 size-full object-cover transition-[clip-path,transform] duration-[900ms] ease-[var(--ease-yy-out)]"
-                  style={{
-                    clipPath: i <= active ? "inset(0% 0% 0% 0%)" : "inset(100% 0% 0% 0%)",
-                    transform: i === active ? "scale(1)" : "scale(1.08)",
-                    zIndex: i,
-                  }}
-                />
-              ))}
-              <p className="absolute left-4 top-4 z-10 bg-paper/90 px-2 py-1 font-en text-[11px] font-semibold tracking-[0.14em] uppercase">
-                {expertise[active].service}
-              </p>
-            </div>
-            {/* 설명 — 단계마다 교차 */}
-            <div className="relative mt-auto min-h-[120px]">
               {expertise.map((item, i) => (
                 <div
                   key={item.key}
                   aria-hidden={active !== i}
-                  className="absolute inset-x-0 bottom-0 transition-[opacity,transform] duration-500 ease-[var(--ease-yy-out)]"
-                  style={{ opacity: active === i ? 1 : 0, transform: active === i ? "translateY(0)" : "translateY(12px)" }}
+                  className="absolute inset-0 flex flex-col justify-end transition-[opacity,transform] duration-700 ease-[var(--ease-yy-out)]"
+                  style={{ opacity: active === i ? 1 : 0, transform: active === i ? "translateY(0)" : i < active ? "translateY(-24px)" : "translateY(24px)" }}
                 >
-                  <p className="text-[clamp(18px,1.5vw,21px)] font-semibold tracking-[-0.02em]">{item.line}</p>
-                  <p className="mt-2 max-w-[46ch] text-[15px] leading-[1.75] text-ash">{item.body}</p>
+                  <p className="font-en text-[clamp(120px,14vw,220px)] leading-[0.8] font-extralight tabular-nums tracking-[-0.06em] text-charcoal/12">
+                    {String(i + 1).padStart(2, "0")}
+                  </p>
+                  <p className="mt-8 flex items-center gap-3 font-en text-[12px] font-semibold tracking-[0.18em] text-charcoal uppercase">
+                    <span className="size-1.5 rounded-full bg-point-4008" aria-hidden="true" />
+                    {item.service}
+                  </p>
+                  <p className="mt-4 text-[clamp(22px,2vw,30px)] font-bold tracking-[-0.03em]">{item.line}</p>
+                  <p className="mt-3 max-w-[42ch] text-[16px] leading-[1.8] text-ash">{item.body}</p>
                 </div>
               ))}
             </div>
@@ -136,11 +123,7 @@ export function CompanyIntro() {
           <ol className="mt-12 grid gap-12">
             {expertise.map((item, i) => (
               <li key={item.key} className="border-t border-charcoal/15 pt-6">
-                <div className="aspect-[4/3] overflow-hidden bg-card">
-                  {/* eslint-disable-next-line @next/next/no-img-element -- 현장 사진 */}
-                  <img src={aboutMedia.expertise[item.key]} alt="" loading="lazy" className="size-full object-cover" />
-                </div>
-                <p className="mt-5 flex items-baseline gap-3">
+                <p className="flex items-baseline gap-3">
                   <span className="font-en text-[12px] tabular-nums text-ash">{String(i + 1).padStart(2, "0")}</span>
                   <span className="font-en text-[clamp(34px,9vw,52px)] leading-none font-extrabold tracking-[-0.045em] uppercase">{item.key}</span>
                 </p>
