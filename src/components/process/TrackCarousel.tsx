@@ -13,7 +13,7 @@ const RESUME_MS = 6000;
 
 /**
  * PACKAGING TURN-KEY 02 · 03의 사진 띠 (2026-10-16: 페이지 스크롤과 분리).
- * - 자체 가로 스크롤(손가락 · 트랙패드 · 이전/다음 버튼), 칸 단위로 맞춰 멈춤.
+ * - 한 화면에 사진 두 장씩(2026-10-16). 자체 가로 스크롤(손가락 · 트랙패드 · 이전/다음 버튼), 칸 단위로 맞춰 멈춤.
  * - 화면에 보이는 동안만 AUTO_MS마다 한 칸씩 자동으로 넘어가고, 끝에 닿으면 처음으로.
  * - 마우스를 올리거나 키보드 포커스가 있거나, 직접 넘긴 직후에는 멈춘다. 모션 줄이기에서는 자동 넘김 없음.
  */
@@ -101,7 +101,9 @@ export function TrackCarousel({ label, items }: { label: string; items: TrackIte
   }, []);
 
   return (
+    // 폭 · 위치는 01 · 04 겹침 사진 영역과 같게(오른쪽 정렬, min(72%, (화면높이-280px)×1.6)) — 사진 높이도 그 영역 높이(폭의 62%)에 맞춰 4:5
     <div
+      className="ml-auto w-full md:w-[min(72%,calc((100svh-280px)*1.6))]"
       onMouseEnter={() => (paused.current = true)}
       onMouseLeave={() => (paused.current = false)}
       onFocusCapture={() => (paused.current = true)}
@@ -113,12 +115,12 @@ export function TrackCarousel({ label, items }: { label: string; items: TrackIte
         aria-roledescription="carousel"
         aria-label={label}
         tabIndex={0}
-        className="-mx-[var(--gutter)] snap-x snap-mandatory scroll-px-[var(--gutter)] overflow-x-auto px-[var(--gutter)] [scrollbar-width:none] md:mx-0 md:scroll-px-0 md:px-0 [&::-webkit-scrollbar]:hidden"
+        className="@container -mx-[var(--gutter)] snap-x snap-mandatory scroll-px-[var(--gutter)] overflow-x-auto px-[var(--gutter)] [scrollbar-width:none] md:mx-0 md:scroll-px-0 md:px-0 [&::-webkit-scrollbar]:hidden"
       >
         <ul className="flex w-max gap-4 md:gap-6">
           {items.map((t, k) => (
-            <li key={t.en} data-card className="w-[68vw] shrink-0 snap-start md:w-[clamp(220px,24vw,330px)]">
-              <div className="relative aspect-square overflow-hidden bg-card">
+            <li key={t.en} data-card className="w-[calc((100cqw-1rem)/2)] shrink-0 snap-start md:w-[calc((100cqw-1.5rem)/2)]">
+              <div className="relative aspect-[4/5] overflow-hidden bg-card">
                 {t.src ? (
                   /* eslint-disable-next-line @next/next/no-img-element -- 실사 웹 사본 */
                   <img src={t.src} alt={`${t.ko} 예시`} loading="lazy" className="size-full object-cover" />
@@ -144,10 +146,10 @@ export function TrackCarousel({ label, items }: { label: string; items: TrackIte
       {/* 진행 막대 + 이전 / 다음 */}
       <div className="mt-6 flex items-center gap-5">
         <div aria-hidden="true" className="h-px flex-1 bg-stone">
-          <div className="h-full origin-left bg-charcoal transition-transform duration-300" style={{ transform: `scaleX(${Math.max(progress, 1 / items.length)})` }} />
+          <div className="h-full origin-left bg-charcoal transition-transform duration-300" style={{ transform: `scaleX(${Math.min(1, 2 / items.length + (1 - 2 / items.length) * progress)})` }} />
         </div>
         <p className="font-en text-[12px] tabular-nums text-ash">
-          {String(index + 1).padStart(2, "0")} / {String(items.length).padStart(2, "0")}
+          {String(index + 1).padStart(2, "0")}–{String(Math.min(index + 2, items.length)).padStart(2, "0")} / {String(items.length).padStart(2, "0")}
         </p>
         <div className="flex gap-2">
           {([-1, 1] as const).map((dir) => (
