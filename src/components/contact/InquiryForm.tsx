@@ -3,7 +3,6 @@
 import { useSearchParams } from "next/navigation";
 import { useEffect, useId, useRef, useState, type ChangeEvent, type FormEvent } from "react";
 import { Pending } from "@/components/ui/Pending";
-import { siteConfig } from "@/config/site";
 import { contactCopy } from "@/data/content";
 import { getProductById, productInquiryLabel } from "@/data/products";
 
@@ -170,7 +169,7 @@ export function InquiryForm() {
   const submitting = status === "submitting";
 
   return (
-    <form ref={formRef} noValidate onSubmit={onSubmit} className="grid gap-6" aria-describedby={`${uid}-demo`}>
+    <form ref={formRef} noValidate onSubmit={onSubmit} className="grid gap-6">
       <div className="grid gap-6 md:grid-cols-2">
         {textField("company", "회사명 · 브랜드명", { required: true, autoComplete: "organization" })}
         {textField("name", "담당자명", { required: true, autoComplete: "name" })}
@@ -245,12 +244,6 @@ export function InquiryForm() {
           </p>
         )}
       </div>
-
-      {siteConfig.enableDemoForm && (
-        <p id={`${uid}-demo`} className="text-[13px] text-ash">
-          {contactCopy.demoNotice}
-        </p>
-      )}
 
       <div>
         <button type="submit" disabled={submitting} className="btn btn-primary w-full md:w-auto md:min-w-48">

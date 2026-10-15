@@ -8,12 +8,14 @@ import { contactCopy } from "@/data/content";
 
 export const metadata: Metadata = { title: "Contact" };
 
-/** 네이버 지도 — 확정된 회사 주소로 검색 결과를 연다(지도 퍼가기 · API 키 없이 연결만) */
+/** 네이버 지도 — 확정된 회사 주소로 검색 결과를 연다(버튼) */
 const naverMapUrl = (address: string) => `https://map.naver.com/p/search/${encodeURIComponent(address)}`;
+/** 화면에 보이는 지도 — 구글 지도 퍼가기(API 키 불필요). 네이버 지도 퍼가기는 API 키가 있어야 해서 2026-10-16 구글로 표시 */
+const mapEmbedUrl = (address: string) => `https://maps.google.com/maps?q=${encodeURIComponent(address)}&z=16&hl=ko&output=embed`;
 
 /**
  * CONTACT — 큰 영문 타이틀 + 짧은 한글 소개 → PC: 왼쪽 오시는 길 · 회사 정보 / 오른쪽 문의 폼. 모바일: 폼 먼저 (기획서 2.0 부록 G).
- * 지도는 네이버 지도로 연결한다(2026-10-15 사용자 요청). 문의 폼은 시연용(실제 전송 없음).
+ * 지도: 구글 지도 퍼가기로 실제 지도를 보여 주고, 네이버 지도 버튼으로 연결한다(2026-10-16). 문의 폼은 시연용(실제 전송 없음).
  */
 export default function ContactPage() {
   // 값이 없는 항목(팩스 · 상담 시간)은 표시하지 않는다
@@ -53,42 +55,33 @@ export default function ContactPage() {
           <aside aria-label="오시는 길과 회사 정보" className="lg:order-1 lg:col-span-5">
             <div className="lg:sticky lg:top-[calc(var(--header-h)+32px)]">
               {company.address && (
-                <a
-                  href={naverMapUrl(company.address)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group relative block aspect-[4/3] overflow-hidden bg-mist outline-offset-4"
-                >
-                  {/* 지도 느낌의 옅은 격자 + 위치 표시 (실제 지도는 네이버 지도에서) */}
-                  <span
-                    aria-hidden="true"
-                    className="absolute inset-0 opacity-70"
-                    style={{
-                      backgroundImage:
-                        "linear-gradient(var(--color-stone) 1px, transparent 1px), linear-gradient(90deg, var(--color-stone) 1px, transparent 1px)",
-                      backgroundSize: "36px 36px",
-                    }}
+                <figure className="overflow-hidden border border-stone bg-mist">
+                  <iframe
+                    title={`지도 — ${company.address}`}
+                    src={mapEmbedUrl(company.address)}
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    className="block aspect-[4/3] w-full border-0 grayscale-[35%]"
                   />
-                  <span aria-hidden="true" className="absolute left-1/2 top-[44%] grid -translate-x-1/2 -translate-y-1/2 place-items-center">
-                    <span className="absolute size-16 animate-ping rounded-full bg-point-1225/40" />
-                    <svg viewBox="0 0 24 24" className="relative size-10 text-charcoal drop-shadow" fill="currentColor">
-                      <path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5Z" />
-                    </svg>
-                  </span>
-                  <span className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 bg-gradient-to-t from-paper via-paper/90 to-transparent p-5 pt-14">
+                  <figcaption className="flex items-end justify-between gap-4 border-t border-stone bg-paper p-5">
                     <span>
                       <span className="label-en block text-ash">Location</span>
                       <span className="mt-2 block text-[15px] leading-snug">{company.address}</span>
                     </span>
-                    <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-charcoal px-4 py-2.5 text-[13px] font-medium text-paper transition-colors group-hover:bg-point-1225 group-hover:text-charcoal">
+                    <a
+                      href={naverMapUrl(company.address)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex min-h-11 shrink-0 items-center gap-1.5 rounded-full bg-charcoal px-4 text-[13px] font-medium text-paper transition-colors hover:bg-point-1225 hover:text-charcoal"
+                    >
                       네이버 지도
                       <svg aria-hidden="true" viewBox="0 0 24 24" className="size-3.5" fill="none" stroke="currentColor" strokeWidth="1.8">
                         <path d="M7 17 17 7M9 7h8v8" />
                       </svg>
-                    </span>
-                  </span>
-                  <span className="sr-only">(새 창에서 네이버 지도 열기)</span>
-                </a>
+                      <span className="sr-only">(새 창에서 열기)</span>
+                    </a>
+                  </figcaption>
+                </figure>
               )}
               <dl className="mt-8 grid gap-0">
                 {info.map((row) => (

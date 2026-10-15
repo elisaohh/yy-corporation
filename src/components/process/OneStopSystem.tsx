@@ -4,13 +4,14 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useRef } from "react";
 import { Reveal } from "@/components/motion/Reveal";
+import { TrackCarousel, type TrackItem } from "@/components/process/TrackCarousel";
 
 gsap.registerPlugin(ScrollTrigger);
 
 /**
  * PACKAGING TURN-KEY (2026-10-16 ONE-STOP SYSTEM에서 이름 변경) — 01 유리 성형 · 02 후가공 · 03 부자재 · 04 입고 및 납품.
  * 01 · 04: 왼쪽 글 · 오른쪽 사진 두 장 겹침 배치.
- * 02 · 03: 항목별 사진(후가공 4 · 부자재 3)을 가로로 이어 붙인 띠 — 스크롤하면 띠가 왼쪽으로 흐른다(화면 고정 없음, 페이지 길이 그대로).
+ * 02 · 03: 항목별 사진(후가공 4 · 부자재 3)을 가로로 이어 붙인 띠 — TrackCarousel(페이지 스크롤과 분리: 자동 넘김 + 이전/다음 + 가로 스크롤).
  *          실사가 준비되기 전에는 사진 자리에 "실사 준비 중" 칸이 보인다 — 사진은 tracks의 src만 채우면 된다.
  * 사진은 원본 비율 그대로(자르지 않음) 두 장을 겹쳐 놓고, 스크롤할 때 앞 사진이 조금 더 빨리 움직여 깊이감을 준다.
  * 사진: 자료/02_후가공/작업사진/{glass,surface,delivery}-NN → scripts/build-onestop-photos.mjs
@@ -28,9 +29,6 @@ type Placed = {
   /** 스크롤 시 이동량(px, 음수 = 위로 더 빨리) */
   shift: number;
 };
-
-/** 가로 띠 칸 — src가 없으면 "실사 준비 중" 칸 */
-type TrackItem = { en: string; ko: string; src?: string };
 
 type Section = { title: string; en: string; description: string } & (
   | { kind: "overlap"; height: number; photos: Placed[] }
@@ -109,24 +107,6 @@ export function OneStopSystem() {
         );
       });
     });
-    // 02 · 03 가로 띠 — 데스크톱: 세로 스크롤에 맞춰 띠가 왼쪽으로 흐름(화면 고정 없음)
-    // 모바일 · 모션 줄이기: 손가락 · 가로 스크롤로 넘겨 보기(기본 상태)
-    mm.add("(min-width: 768px) and (prefers-reduced-motion: no-preference)", () => {
-      gsap.utils.toArray<HTMLElement>("[data-track-viewport]", section).forEach((viewport) => {
-        const track = viewport.querySelector<HTMLElement>("[data-track]");
-        const progress = viewport.parentElement?.querySelector<HTMLElement>("[data-track-progress]");
-        if (!track) return;
-        const distance = () => Math.max(0, track.scrollWidth - viewport.clientWidth);
-        gsap.set(viewport, { overflowX: "hidden" });
-        // 띠가 화면 가운데 올 때까지는 첫 칸(01)에 머물고, 띠 아래 끝이 화면 위쪽 20%에 닿을 때(아직 보일 때) 마지막 칸에 닿도록(2026-10-16: 가운데서 이미 3번째였음)
-        const st = { trigger: viewport, start: "center center", end: "bottom 20%", scrub: 0.6, invalidateOnRefresh: true };
-        gsap.to(track, { x: () => -distance(), ease: "none", scrollTrigger: st });
-        if (progress) {
-          gsap.set(progress, { display: "block" });
-          gsap.fromTo(progress.firstElementChild, { scaleX: 0 }, { scaleX: 1, ease: "none", scrollTrigger: st });
-        }
-      });
-    });
     return () => mm.revert();
   }, []);
 
@@ -173,40 +153,7 @@ export function OneStopSystem() {
               ) : (
                 /* 가로 띠 — 항목별 사진(실사 준비 전에는 빈 칸) */
                 <Reveal delay={120} className="min-w-0 md:col-span-8">
-                  <div
-                    data-track-viewport
-                    role="region"
-                    aria-label={`${item.title} 종류`}
-                    tabIndex={0}
-                    className="-mx-[var(--gutter)] snap-x snap-mandatory scroll-px-[var(--gutter)] overflow-x-auto px-[var(--gutter)] [scrollbar-width:none] md:mx-0 md:scroll-px-0 md:px-0 [&::-webkit-scrollbar]:hidden"
-                  >
-                    <ul data-track className="flex w-max gap-4 md:gap-6">
-                      {item.items.map((t, k) => (
-                        <li key={t.en} className="w-[68vw] shrink-0 snap-start md:w-[clamp(220px,24vw,330px)]">
-                          <div className="relative aspect-square overflow-hidden bg-card">
-                            {t.src ? (
-                              /* eslint-disable-next-line @next/next/no-img-element -- 실사 웹 사본 */
-                              <img src={t.src} alt={`${t.ko} 예시`} loading="lazy" className="size-full object-cover" />
-                            ) : (
-                              <div className="flex size-full flex-col justify-between p-5 md:p-6">
-                                <span aria-hidden="true" className="font-en text-[clamp(28px,2.6vw,40px)] leading-none font-extrabold tracking-[-0.04em] text-stone">{t.en}</span>
-                                <span className="text-[13px] text-ash">실사 준비 중</span>
-                              </div>
-                            )}
-                          </div>
-                          <p className="mt-4 flex items-baseline gap-3">
-                            <span className="font-en text-[12px] tabular-nums text-ash">{String(k + 1).padStart(2, "0")}</span>
-                            <span className="text-[17px] font-bold tracking-[-0.02em] text-charcoal">{t.ko}</span>
-                            <span className="font-en text-[12px] tracking-[0.1em] text-ash">{t.en}</span>
-                          </p>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  {/* 진행 막대 — 데스크톱 모션에서만 보임 */}
-                  <div data-track-progress aria-hidden="true" className="mt-8 hidden h-px bg-stone">
-                    <div className="h-full origin-left bg-charcoal" />
-                  </div>
+                  <TrackCarousel label={`${item.title} 종류`} items={item.items} />
                 </Reveal>
               )}
             </article>
