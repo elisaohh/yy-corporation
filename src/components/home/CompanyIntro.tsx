@@ -3,45 +3,37 @@ import { Reveal } from "@/components/motion/Reveal";
 import { companyIntro, services } from "@/data/home";
 
 /**
- * ② 짧은 회사 소개 — 화면 1개, 고정 없음 (2026-10-14 HOME 개편안).
- * FIND · DRESS · MATCH · DELIVER를 이 섹션에 통합했다(기존 가로 스크롤 삭제).
- * 기획서 1.2 "HOME에 회사 소개 넣지 않음"에서 사용자 결정으로 변경 — ABOUT과 겹치지 않게 짧게 둔다.
+ * ② 짧은 회사 소개 (2026-10-15 디자인 시스템) — 제목축(1단)에 한 문장, 본문축(7단)에 소개 + FIND · DRESS · MATCH · DELIVER.
+ * 카드 · 큰 단어 · 줄마다 등장 효과 없이, 블록 전체가 한 번만 옅게 나타난다.
  */
 export function CompanyIntro() {
   return (
-    <section data-header-theme="light" aria-labelledby="company-intro-title" className="bg-paper py-28 md:py-40">
-      <div className="container-yy grid gap-16 lg:grid-cols-12 lg:gap-8">
-        <div className="lg:col-span-5">
-          <Reveal>
-            <h2 id="company-intro-title" className="text-[clamp(30px,3.6vw,52px)] leading-[1.25] font-bold tracking-[-0.035em]">
-              {companyIntro.title}
-            </h2>
-          </Reveal>
-          <Reveal delay={120}>
-            <p className="mt-8 max-w-[34ch] text-[clamp(16px,1.3vw,18px)] leading-[1.75] text-ash">{companyIntro.body}</p>
-            <Link href="/about" className="link-en mt-8">
-              ABOUT →
-            </Link>
-          </Reveal>
-        </div>
+    <section data-header-theme="light" aria-labelledby="company-intro-title" className="sec-m bg-paper">
+      <Reveal className="container-yy grid gap-12 md:grid-cols-12 md:gap-8">
+        <h2 id="company-intro-title" className="t-h2 md:col-span-5">
+          {companyIntro.title}
+        </h2>
 
-        <ol className="lg:col-span-6 lg:col-start-7">
-          {services.map((service, index) => (
-            <Reveal as="li" key={service.key} delay={80 * index}>
-              <div className="grid grid-cols-[minmax(0,1fr)] gap-2 border-t border-stone py-6 md:grid-cols-[180px_minmax(0,1fr)] md:items-baseline md:gap-8 md:py-7">
-                <p className="flex items-baseline gap-4">
-                  <span className="font-en text-[12px] tabular-nums text-ash">{String(index + 1).padStart(2, "0")}</span>
-                  <span className="font-en text-[clamp(26px,2.4vw,34px)] leading-none font-extrabold tracking-[-0.03em]">{service.name}</span>
-                </p>
-                <p className="text-[17px] leading-[1.5]">
-                  {service.line}
-                  <span className="mt-1 block text-[14px] text-ash">{service.scope}</span>
-                </p>
+        <div className="md:col-span-6 md:col-start-7">
+          <p className="t-body-l max-w-[40ch] text-charcoal/80">{companyIntro.body}</p>
+
+          <dl className="mt-14 grid grid-cols-2 gap-x-8 gap-y-10 border-t border-stone pt-10 md:mt-20">
+            {services.map((s) => (
+              <div key={s.key}>
+                <dt className="t-meta text-ash">{s.name}</dt>
+                <dd className="mt-3">
+                  <span className="t-h3 block">{s.line}</span>
+                  <span className="t-body mt-1 block text-ash">{s.scope}</span>
+                </dd>
               </div>
-            </Reveal>
-          ))}
-        </ol>
-      </div>
+            ))}
+          </dl>
+
+          <Link href="/about" className="link-line mt-12">
+            회사 소개
+          </Link>
+        </div>
+      </Reveal>
     </section>
   );
 }

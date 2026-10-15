@@ -121,6 +121,83 @@
   font-family: var(--font-en);
 }
 
+/* ── 디자인 시스템 2026-10-15 (Premium Editorial Minimalism) ──
+ * 타이포 6단계 · 섹션 간격 3단계. 제목축 = 1단, 본문축 = 7단(12단 그리드).
+ * 영문 extrabold 대형 제목은 쓰지 않는다. 대비는 크기로 만든다. */
+@utility t-display {
+  font-family: var(--font-kr);
+  font-size: clamp(40px, 6.2vw, 108px);
+  line-height: 1.08;
+  font-weight: 500;
+  letter-spacing: -0.045em;
+}
+@utility t-h2 {
+  font-family: var(--font-kr);
+  font-size: clamp(28px, 3.3vw, 50px);
+  line-height: 1.28;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+}
+@utility t-h3 {
+  font-family: var(--font-kr);
+  font-size: clamp(19px, 1.6vw, 24px);
+  line-height: 1.4;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+@utility t-body-l {
+  font-size: clamp(16px, 1.25vw, 18px);
+  line-height: 1.75;
+  letter-spacing: -0.01em;
+}
+@utility t-body {
+  font-size: 15px;
+  line-height: 1.75;
+  @media (min-width: 48rem) {
+    font-size: 16px;
+  }
+}
+/* 번호 · 코드 · 수치 전용 */
+@utility t-meta {
+  font-family: var(--font-en);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
+}
+@utility sec-s {
+  padding-block: 64px;
+  @media (min-width: 48rem) {
+    padding-block: 96px;
+  }
+}
+@utility sec-m {
+  padding-block: 96px;
+  @media (min-width: 48rem) {
+    padding-block: 160px;
+  }
+}
+@utility sec-l {
+  padding-block: 128px;
+  @media (min-width: 48rem) {
+    padding-block: 240px;
+  }
+}
+/* 밑줄 텍스트 링크 — 화살표 없이 */
+@utility link-line {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 15px;
+  font-weight: 500;
+  background: linear-gradient(currentColor, currentColor) left calc(100% - 10px) / 100% 1px no-repeat;
+  transition: background-size var(--dur-base) var(--ease-yy-out);
+  &:hover {
+    background-size: 100% 2px;
+  }
+}
+
 @utility label-en {
   font-family: var(--font-en);
   font-size: 12px;
@@ -157,7 +234,7 @@
     height: 48px;
     padding-inline: 26px;
     border: 1px solid var(--color-charcoal);
-    border-radius: 999px;
+    border-radius: 2px;
     font-size: 15px;
     font-weight: 500;
     line-height: 1;
@@ -307,15 +384,11 @@
 /* 스크롤 등장 (components/motion/Reveal) */
 .reveal {
   opacity: 0;
-  transform: translateY(16px);
-  transition:
-    opacity var(--dur-reveal) var(--ease-yy-out),
-    transform var(--dur-reveal) var(--ease-yy-out);
+  transition: opacity var(--dur-reveal) var(--ease-yy-out);
   transition-delay: var(--reveal-delay, 0ms);
 }
 .reveal[data-shown] {
   opacity: 1;
-  transform: none;
 }
 
 /* 페이지 진입 페이드 (기획서 2.0 §3.2, 0.3–0.5초) */
