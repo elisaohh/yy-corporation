@@ -41,6 +41,7 @@ export function HeroFloat() {
         const q = gsap.utils.selector(section);
         const loader = q("[data-loader]")[0];
         const bar = q("[data-loader-bar]")[0];
+        const count = q("[data-loader-count]")[0];
         const words = q("[data-word]");
         const fades = q("[data-fade]");
         const photo = q("[data-photo]")[0];
@@ -60,8 +61,27 @@ export function HeroFloat() {
         const intro = gsap.timeline({ defaults: { ease: "power3.out" } });
         if (process.env.NODE_ENV === "development") (window as unknown as Record<string, unknown>).__yyHero = intro;
         intro
-          .fromTo(bar, { scaleX: 0 }, { scaleX: 1, duration: 0.85, ease: "power2.inOut" })
-          .to(loader, { clipPath: "inset(0% 0% 100% 0%)", duration: 0.8, ease: "power4.inOut" }, "+=0.05")
+          // 로딩: 로고가 아래에서 차오르고 → 가는 선이 채워지며 숫자가 000 → 100
+          .fromTo(q("[data-loader-logo]"), { clipPath: "inset(100% 0% 0% 0%)", y: 12 }, { clipPath: "inset(0% 0% 0% 0%)", y: 0, duration: 0.8, ease: "power3.out" })
+          .fromTo(q("[data-loader-meter]"), { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3 }, "-=0.4")
+          .fromTo(bar, { scaleX: 0 }, { scaleX: 1, duration: 1, ease: "power2.inOut" }, "<")
+          .fromTo(
+            { v: 0 },
+            { v: 0 },
+            {
+              v: 100,
+              duration: 1,
+              ease: "power2.inOut",
+              onUpdate() {
+                if (count) count.textContent = String(Math.round(this.targets()[0].v)).padStart(3, "0");
+              },
+            },
+            "<",
+          )
+          // 공개: 로고 · 선이 살짝 올라가며 사라지고 → 흰 막이 걷힌 뒤 차콜 막이 한 박자 늦게 따라 걷힌다(겹친 커튼)
+          .to(q("[data-loader-inner]"), { y: -18, autoAlpha: 0, duration: 0.45, ease: "power2.in" }, "+=0.1")
+          .to(q("[data-loader-curtain]"), { yPercent: -100, duration: 0.9, ease: "power4.inOut" }, "-=0.15")
+          .to(q("[data-loader-trail]"), { yPercent: -100, duration: 0.9, ease: "power4.inOut" }, "<0.12")
           .set(loader, { autoAlpha: 0 })
           .to(photo, { autoAlpha: 1, scale: 1, y: 0, duration: 1.6, ease: "power2.out" }, "-=0.5")
           .to(drops, { autoAlpha: 1, y: 0, duration: 1.4, stagger: { each: 0.04, from: "random" }, ease: "power2.out" }, "<0.2")
@@ -224,13 +244,24 @@ export function HeroFloat() {
         </div>
       </div>
 
-      {/* 로딩 화면 — 서버 렌더링 시 덮여 있다가 공개된다 */}
-      <div data-loader className="absolute inset-0 z-30 grid place-items-center bg-paper" style={{ clipPath: "inset(0% 0% 0% 0%)" }}>
-        <div className="grid justify-items-center gap-6">
-          <Logo placement="loader" />
-          <span className="relative block h-px w-40 overflow-hidden bg-stone">
-            <span data-loader-bar className="absolute inset-0 origin-left bg-charcoal" style={{ transform: "scaleX(0)" }} />
-          </span>
+      {/* 로딩 화면 — 서버 렌더링 시 덮여 있다가 공개된다. 차콜 막(뒤) + 흰 막(앞)이 차례로 걷히는 겹친 커튼 */}
+      <div data-loader aria-hidden="true" className="absolute inset-0 z-30 overflow-hidden">
+        <div data-loader-trail className="absolute inset-0 bg-intro" />
+        <div data-loader-curtain className="absolute inset-0 bg-paper" />
+        <div data-loader-inner className="absolute inset-0 grid place-items-center">
+          <div className="grid justify-items-center gap-7">
+            <div data-loader-logo style={{ clipPath: "inset(100% 0% 0% 0%)" }}>
+              <Logo placement="loader" decorative />
+            </div>
+            <div data-loader-meter className="flex items-center gap-4" style={{ opacity: 0 }}>
+              <span className="relative block h-px w-32 overflow-hidden bg-stone">
+                <span data-loader-bar className="absolute inset-0 origin-left bg-charcoal" style={{ transform: "scaleX(0)" }} />
+              </span>
+              <span data-loader-count className="w-7 font-en text-[11px] tabular-nums tracking-[0.08em] text-ash">
+                000
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </section>

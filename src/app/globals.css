@@ -258,13 +258,14 @@
     background-size: 100% 2px;
   }
 
+  /* 전송 중 표시 — 옅은 원 위로 짧은 호가 부드럽게 돈다 */
   .spinner {
     width: 14px;
     height: 14px;
-    border: 1.5px solid currentColor;
-    border-right-color: transparent;
+    border: 1.25px solid color-mix(in srgb, currentColor 22%, transparent);
+    border-top-color: currentColor;
     border-radius: 50%;
-    animation: spin 0.8s linear infinite;
+    animation: spin 0.9s cubic-bezier(0.55, 0.15, 0.45, 0.85) infinite;
   }
 }
 
