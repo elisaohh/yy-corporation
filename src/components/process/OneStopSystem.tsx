@@ -106,7 +106,7 @@ export function OneStopSystem() {
 
               {/* 겹침 배치 — 높이는 폭 대비 %로 잡아 어떤 화면 폭에서도 같은 구도 */}
               <Reveal delay={120} className="md:col-span-8">
-                <div className="relative w-full" style={{ paddingBottom: `${item.height}%` }}>
+                <div className="relative ml-auto w-full md:w-[84%]" style={{ paddingBottom: `${item.height}%` }}>
                   {item.photos.map((p, k) => (
                     <div
                       key={p.src}
