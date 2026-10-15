@@ -14,8 +14,6 @@ import { headerNav } from "@/data/navigation";
 export function Footer() {
   const info = [
     { label: "회사명", value: company.legalName },
-    { label: "대표", value: company.representative },
-    { label: "사업자등록번호", value: company.businessNumber },
     { label: "주소", value: company.address },
     { label: "전화", value: company.phone, href: company.phone ? `tel:${company.phone.replace(/-/g, "")}` : undefined },
     { label: "팩스", value: company.fax },
