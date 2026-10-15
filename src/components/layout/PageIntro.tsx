@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
 /**
- * 머리 영역 배경 시안(2026-10-15 비교 중 — PROCESS · PRODUCT, 주소 뒤 ?bg=a|b|c|d)
+ * 머리 영역 배경(2026-10-15 PROCESS · PRODUCT는 d안 확정 — 배경 이미지는 각 page.tsx의 INTRO_IMAGE)
  *   none: 흰 바탕(기존) · a: 미스트 단색 · b: 차콜 단색 · c: 패턴(옅은 격자 + 사선) · d: 움직이는 이미지
  */
 export type IntroBackdrop = "none" | "a" | "b" | "c" | "d";
