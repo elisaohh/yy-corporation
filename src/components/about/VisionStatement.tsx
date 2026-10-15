@@ -2,9 +2,9 @@
 
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Reveal } from "@/components/motion/Reveal";
-import { aboutMedia, vision } from "@/data/about";
+import { aboutMedia, vision, visionVideoCandidates } from "@/data/about";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -14,6 +14,15 @@ gsap.registerPlugin(ScrollTrigger);
  */
 export function VisionStatement() {
   const ref = useRef<HTMLElement>(null);
+  // 개발 서버 미리보기: /about?vision=1~5 → 후보 영상
+  const [preview, setPreview] = useState<string | null>(null);
+  useEffect(() => {
+    if (process.env.NODE_ENV !== "development") return;
+    const n = Number(new URLSearchParams(window.location.search).get("vision"));
+    const c = visionVideoCandidates[n - 1];
+    if (c) setPreview(c.src);
+  }, []);
+  const video = preview ?? aboutMedia.vision.video;
 
   useEffect(() => {
     const section = ref.current;
@@ -38,8 +47,8 @@ export function VisionStatement() {
     <section ref={ref} data-header-theme="dark" data-surface="dark" aria-labelledby="vision-title" className="relative overflow-hidden bg-intro py-28 text-on-dark md:py-40">
       <div aria-hidden="true" className="absolute inset-0">
         <div data-bg className="absolute inset-0">
-          {aboutMedia.vision.video ? (
-            <video src={aboutMedia.vision.video} autoPlay muted loop playsInline className="size-full object-cover opacity-45" />
+          {video ? (
+            <video key={video} src={video} autoPlay muted loop playsInline className="size-full object-cover opacity-50" />
           ) : (
             // eslint-disable-next-line @next/next/no-img-element -- 배경 사진
             <img src={aboutMedia.vision.image} alt="" loading="lazy" className="size-full object-cover opacity-40" />

@@ -101,3 +101,15 @@ export const aboutMedia = {
     Delivery: "/assets/site/site-15.webp",
   } as Record<string, string>,
 };
+
+/**
+ * 비전 배경 영상 후보(2026-10-15, Pexels 무료 라이선스) — 개발 서버에서 /about?vision=1~5 로 미리보기.
+ * 미리보기는 Pexels 서버에서 바로 재생한다. 결정하면 파일을 받아 public/assets/about/ 에 두고 aboutMedia.vision.video 에 연결한다.
+ */
+export const visionVideoCandidates = [
+  { label: "유리 공장 — 성형 라인", page: "https://www.pexels.com/video/glass-manufactory-852406/", src: "https://videos.pexels.com/video-files/852406/852406-hd_1280_720_30fps.mp4" },
+  { label: "녹은 유리 — 클로즈업", page: "https://www.pexels.com/video/melting-glass-853970/", src: "https://videos.pexels.com/video-files/853970/853970-hd_1920_1080_25fps.mp4" },
+  { label: "컨베이어 위 빈 유리병", page: "https://www.pexels.com/video/empty-glass-jars-moving-through-conveyor-belt-in-factory-10615247/", src: "https://videos.pexels.com/video-files/10615247/10615247-hd_1366_664_30fps.mp4" },
+  { label: "화장품 유리 용기 — 위에서", page: "https://www.pexels.com/video/high-angle-shot-of-cosmetic-bottles-6693869/", src: "https://videos.pexels.com/video-files/6693869/6693869-hd_1366_720_30fps.mp4" },
+  { label: "바다 위 컨테이너선 — 글로벌", page: "https://www.pexels.com/video/a-large-container-ship-sailing-in-the-ocean-9570700/", src: "https://videos.pexels.com/video-files/9570700/9570700-hd_1280_720_30fps.mp4" },
+];
