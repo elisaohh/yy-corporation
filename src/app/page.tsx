@@ -17,7 +17,7 @@ export default function HomePage() {
       <CompanyIntro />
       <ProcessMotion />
       <ProductCollection />
-      <Slogan />
+      {/* <Slogan /> */}
       <ContactCta />
     </>
   );

@@ -21,7 +21,7 @@ export function ContactCta() {
         <Reveal>
           <h2
             id="cta-title"
-            className="max-w-[12ch] font-en text-[clamp(44px,8.4vw,136px)] leading-[0.92] font-semibold tracking-[-0.045em] uppercase"
+            className="max-w-[12ch] font-en text-[clamp(44px,8.4vw,116px)] leading-[0.92] font-semibold tracking-[-0.045em] uppercase"
           >
             {cta.title.text}
           </h2>

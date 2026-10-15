@@ -17,7 +17,7 @@ export function Slogan() {
       </div>
 
       <div className="container-yy relative">
-        <h2 className="text-[clamp(44px,7vw,116px)] leading-[1.12] font-bold tracking-[-0.045em] text-charcoal">
+        <h2 className="text-[clamp(44px,7vw,96px)] leading-[1.12] font-bold tracking-[-0.045em] text-charcoal">
           <Reveal as="span" className="block">
             {first}
           </Reveal>
