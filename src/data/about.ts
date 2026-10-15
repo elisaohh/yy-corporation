@@ -152,3 +152,21 @@ export const business = {
     },
   ],
 };
+
+/**
+ * ABOUT 리디자인(2026-10-15) 이미지 — public/assets/about (scripts/build-about-images.mjs)
+ * ⚠ 모두 사용자가 제공한 생성 이미지다. 실제 YY CORPORATION 제품 · 생산 시설 사진이 아니므로 그렇게 설명하지 않는다.
+ * position: 모바일에서 잘릴 때 지킬 핵심 피사체 위치(object-position)
+ */
+export type AboutVisual = { src: string; alt: string; width: number; height: number; position?: string };
+
+export const aboutVisuals = {
+  storyMain: { src: "/assets/about/01a-story-main.webp", alt: "빛이 비치는 두꺼운 유리 바닥 접사", width: 1536, height: 1024, position: "50% 60%" },
+  storySub: { src: "/assets/about/01b-story-sub.webp", alt: "빛을 받은 투명 유리병의 어깨와 목 부분 클로즈업", width: 1536, height: 1024, position: "72% 50%" },
+  business: {
+    "01": { src: "/assets/about/02-glass-packaging.webp", alt: "다양한 형태의 투명 유리 화장품 용기", width: 1536, height: 1024, position: "50% 50%" },
+    "02": { src: "/assets/about/03-component-sourcing.webp", alt: "스포이드 · 펌프 · 캡 등 화장품 용기 부자재", width: 1536, height: 1024, position: "50% 50%" },
+    "03": { src: "/assets/about/04-decoration.webp", alt: "같은 형태의 유리병에 투명 · 유광 · 무광 마감을 적용한 비교", width: 1536, height: 1024, position: "50% 55%" },
+    "04": { src: "/assets/about/05-global-sourcing.webp", alt: "정돈된 패키징 물류 창고", width: 1536, height: 1024, position: "45% 50%" },
+  } as Record<string, AboutVisual>,
+};
