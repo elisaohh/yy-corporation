@@ -8,6 +8,7 @@ import { Logo } from "@/components/brand/Logo";
 import { hero } from "@/data/home";
 import type { HeroVariant } from "@/config/variants";
 import layers from "@/data/hero-layers.json";
+import { isStill } from "@/lib/still";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -46,7 +47,7 @@ export function HeroFloat({ variant = "a" }: { variant?: HeroVariant }) {
         const photo = q("[data-photo]")[0];
         const drops = q("[data-drop]");
 
-        if (context.conditions?.reduce) {
+        if (context.conditions?.reduce || isStill()) {
           gsap.set(loader, { autoAlpha: 0 });
           return;
         }

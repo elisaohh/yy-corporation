@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
 import { variantOptions, type VariantKey } from "@/config/variants";
 
@@ -28,14 +27,14 @@ export function VariantSwitcher({ current }: { current: Record<VariantKey, strin
               <p className="mb-1 text-ash">{LABEL[key]}</p>
               <div className="grid gap-1">
                 {Object.entries(variantOptions[key].options).map(([value, desc]) => (
-                  <Link
+                  // 전체 새로고침 — 고정(pin) 섹션이 바뀔 때 DOM 충돌을 피한다
+                  <a
                     key={value}
                     href={href(key, value)}
-                    scroll={false}
                     className={`block px-2 py-1 leading-snug ${current[key] === value ? "bg-charcoal text-paper" : "hover:bg-mist"}`}
                   >
                     <b className="mr-1 uppercase">{value}</b> {desc}
-                  </Link>
+                  </a>
                 ))}
               </div>
             </div>

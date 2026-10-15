@@ -1,5 +1,6 @@
 "use client";
 
+import { isStill } from "@/lib/still";
 import { useEffect, useRef, type CSSProperties, type ElementType, type ReactNode } from "react";
 
 interface RevealProps {
@@ -22,7 +23,7 @@ export function Reveal({ as: Tag = "div", children, className = "", delay = 0, t
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || isStill()) {
       el.dataset.shown = "";
       return;
     }

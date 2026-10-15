@@ -163,7 +163,15 @@ export function ProcessMotion() {
 
         // 병 등장
 
-        tl.from(stage, { y: 70, autoAlpha: 0, duration: 0.8, ease: "power3.out" }, 0).from(panel, { y: 30, autoAlpha: 0, duration: 0.8, ease: "power2.out" }, 0.15);
+        // 병 · 목록은 섹션이 화면에 들어오는 동안(고정 전) 미리 나타난다 — 고정 직전 빈 화면이 생기지 않게
+        gsap.from([stage, panel], {
+          y: 50,
+          autoAlpha: 0,
+          stagger: 0.1,
+          ease: "power2.out",
+          scrollTrigger: { trigger: section, start: "top 85%", end: "top 25%", scrub: 0.6 },
+        });
+        tl.to({}, { duration: 0.6 }, 0); // 고정 시작 후 잠깐 머문 뒤 첫 공정
 
         // 공정 게이트 4회 통과 — 공정마다 짧은 머무름을 두어 표면 변화를 읽을 수 있게
 

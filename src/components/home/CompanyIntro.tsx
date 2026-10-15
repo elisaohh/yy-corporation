@@ -115,6 +115,8 @@ function IntroPanels() {
   }, []);
 
   return (
+    // 고정(pin) 시 GSAP이 section을 감싸므로, React가 지우는 최상위 노드는 바깥 div로 둔다
+    <div>
     <section ref={ref} data-header-theme="light" aria-labelledby="company-intro-title" className="overflow-hidden bg-mist">
       <div className="pb-20 pt-28 md:pb-24 lg:flex lg:h-[100svh] lg:items-center lg:py-0">
         <div data-track className="flex flex-col gap-6 px-[var(--gutter)] lg:w-max lg:flex-row lg:items-stretch lg:gap-6">
@@ -142,6 +144,7 @@ function IntroPanels() {
         </div>
       </div>
     </section>
+    </div>
   );
 }
 
