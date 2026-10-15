@@ -118,7 +118,8 @@ export function OneStopSystem() {
         if (!track) return;
         const distance = () => Math.max(0, track.scrollWidth - viewport.clientWidth);
         gsap.set(viewport, { overflowX: "hidden" });
-        const st = { trigger: viewport, start: "top 85%", end: "bottom 15%", scrub: 0.6, invalidateOnRefresh: true };
+        // 띠가 화면 가운데 올 때까지는 첫 칸(01)에 머물고, 띠 아래 끝이 화면 위쪽 20%에 닿을 때(아직 보일 때) 마지막 칸에 닿도록(2026-10-16: 가운데서 이미 3번째였음)
+        const st = { trigger: viewport, start: "center center", end: "bottom 20%", scrub: 0.6, invalidateOnRefresh: true };
         gsap.to(track, { x: () => -distance(), ease: "none", scrollTrigger: st });
         if (progress) {
           gsap.set(progress, { display: "block" });

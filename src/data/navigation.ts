@@ -16,7 +16,7 @@ export const mainNav: NavItem[] = [
     description: "회사 소개",
     children: [
       { label: "COMPANY", href: "/about/company", description: "회사 소개" },
-      { label: "STORY", href: "/about/story", description: "뉴스레터 · 공지사항" },
+      { label: "STORY", href: "/about/story", description: "우리의 이야기" },
     ],
   },
   { label: "PRODUCT", href: "/products", description: "제품" },

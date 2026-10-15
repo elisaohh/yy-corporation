@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { categoryLabel, formatStoryDate, storyPosts } from "@/data/story";
+import { formatStoryDate, storyPosts } from "@/data/story";
 
 /** STORY 글 상세 — data/story.ts의 글만 미리 만든다(목록에 없는 주소는 404) */
 export const dynamicParams = false;
@@ -21,7 +21,6 @@ export default async function StoryPostPage({ params }: { params: Promise<{ slug
   const { slug } = await params;
   const post = storyPosts.find((p) => p.slug === slug);
   if (!post) notFound();
-  const cat = categoryLabel(post.category);
 
   return (
     <article data-header-theme="light" className="bg-paper pb-24 pt-[calc(var(--header-h)+56px)] md:pb-36 md:pt-[calc(var(--header-h)+88px)]">
@@ -29,12 +28,9 @@ export default async function StoryPostPage({ params }: { params: Promise<{ slug
         <Link href="/about/story" className="link-en">
           ← STORY
         </Link>
-        <p className="mt-10 flex gap-4 text-[14px]">
-          <span className="font-semibold">{cat.ko}</span>
-          <time dateTime={post.date} className="font-en tabular-nums text-ash">
-            {formatStoryDate(post.date)}
-          </time>
-        </p>
+        <time dateTime={post.date} className="mt-10 block font-en text-[14px] tabular-nums text-ash">
+          {formatStoryDate(post.date)}
+        </time>
         <h1 className="mt-4 text-[clamp(28px,3.4vw,46px)] leading-[1.3] font-bold tracking-[-0.035em]">{post.title}</h1>
 
         {post.cover && (

@@ -150,12 +150,17 @@ export function Header() {
                                 <Link
                                   href={child.href}
                                   aria-current={childActive ? "page" : undefined}
-                                  className={`label-en flex min-h-11 items-center justify-between gap-4 px-5 transition-colors duration-200 ${
-                                    isDark ? "hover:bg-on-dark/10" : "hover:bg-card"
-                                  } ${childActive ? "" : "opacity-70 hover:opacity-100"}`}
+                                  className={`label-en flex min-h-11 items-center px-5 transition-colors duration-200 ${
+                                    childActive
+                                      ? isDark
+                                        ? "bg-on-dark/15"
+                                        : "bg-stone"
+                                      : isDark
+                                        ? "text-on-dark/75 hover:bg-on-dark/10 hover:text-on-dark"
+                                        : "text-charcoal/70 hover:bg-card hover:text-charcoal"
+                                  }`}
                                 >
                                   {child.label}
-                                  {childActive && <span aria-hidden="true" className="size-1 rounded-full bg-current" />}
                                 </Link>
                               </li>
                             );
