@@ -136,3 +136,4 @@
 | 2026-10-15 | ABOUT 제목 배경 | 차콜 → 미스트(PageIntro a안) |
 | 2026-10-15 | ABOUT 한 화면 구성 | 데스크톱에서 파트마다 한 화면: Story 고정 없음, Vision 고정(약 1.2화면) — 단어 명암 → 두 축 · 문장 등장, Business 고정(약 2화면) — 01→04 단계 전환 · 스냅 · 목록 클릭 이동. 모바일은 고정 없이 차례로 |
 | 2026-10-15 | 정리 | ONE-STOP 사진 겹침을 큰 사진 높이 안으로(높이 62%), CONTACT 머리 영역 미스트, 임시 배지 숨김(showPlaceholderLabels false — 값 없는 칸만 —), PRODUCT 소개 문구(엑셀 MAIN 대표 제품 소개 + 이용 안내) |
+| 2026-10-15 | 끊김 · 크기 수정 | ABOUT Vision · Business: GSAP pin · snap → CSS sticky(바깥 190svh · 260svh) + 스크롤 진행에 따른 전환. PROCESS ONE-STOP 사진 영역 높이를 자기 폭 기준(aspect-ratio)으로 바로잡고 폭을 min(72%, (화면높이-280px)×1.6)으로 제한 |

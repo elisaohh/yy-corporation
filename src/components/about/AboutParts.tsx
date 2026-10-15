@@ -11,8 +11,9 @@ gsap.registerPlugin(ScrollTrigger);
  * ABOUT 본문 — Story · Vision · Business (B안 "챕터 전환", 2026-10-15 한 화면 구성)
  * 데스크톱에서는 파트마다 한 화면 안에 담는다.
  *   01 Story    — 한 화면, 고정 없음. 왼쪽 챕터명 + 제목, 오른쪽 문장.
- *   02 Vision   — 차콜 면, 한 화면 고정(약 1.2화면 스크롤): 큰 문장이 단어마다 진해진 뒤 → 두 축과 문장이 이어서 나타난다.
- *   03 Business — 한 화면 고정(약 2화면 스크롤): 왼쪽 목록이 01 → 04로 넘어가며 오른쪽 설명이 바뀐다(단계마다 멈춤). 목록을 눌러도 이동.
+ *   02 Vision   — 차콜 면, 한 화면이 sticky로 머무는 동안(약 0.9화면 스크롤) 큰 문장이 단어마다 진해진 뒤 → 두 축과 문장이 나타난다.
+ *   03 Business — 한 화면이 sticky로 머무는 동안(약 1.6화면 스크롤) 왼쪽 목록이 01 → 04로 넘어가며 오른쪽 설명이 바뀐다. 목록을 눌러도 이동.
+ * GSAP pin · snap 대신 CSS sticky를 써서 스크롤이 끊기지 않게 했다(2026-10-15).
  * 챕터명은 화면에 들어올 때 옆에서 밀려 들어오며 진해진다. 모바일 · 모션 줄이기: 고정 없이 차례로.
  * 배경 사진 · 영상 없음, 모두 왼쪽 정렬.
  */
@@ -56,9 +57,9 @@ function StoryPart() {
 function VisionPart() {
   const words = vision.statement.split(" ");
   return (
-    // 고정(pin) 시 GSAP이 section을 감싸므로 React가 지우는 최상위 노드는 바깥 div
-    <div>
-      <section id="vision" data-vision data-header-theme="dark" data-surface="dark" aria-labelledby="vision-title" className="overflow-hidden bg-intro text-on-dark">
+    // 데스크톱: 바깥 영역(1.9화면)이 지나가는 동안 안쪽 한 화면이 sticky로 머문다(pin 대신 — 끊김 없음)
+    <div data-vision className="relative bg-intro lg:h-[190svh]">
+      <section id="vision" data-header-theme="dark" data-surface="dark" aria-labelledby="vision-title" className="overflow-hidden bg-intro text-on-dark lg:sticky lg:top-0">
         <div className="container-yy flex flex-col gap-12 py-20 md:py-24 lg:h-[100svh] lg:min-h-[640px] lg:justify-center lg:gap-14 lg:py-[calc(var(--header-h)+24px)]">
           <Chapter no="02" name="Vision" dark />
           <div className="grid gap-10 lg:grid-cols-12 lg:gap-8">
@@ -91,8 +92,8 @@ function VisionPart() {
 function BusinessPart({ active, onPick }: { active: number; onPick: (i: number) => void }) {
   const items = business.items;
   return (
-    <div>
-      <section id="business" data-business data-header-theme="light" aria-labelledby="business-title" className="overflow-hidden bg-paper">
+    <div data-business className="relative bg-paper lg:h-[260svh]">
+      <section id="business" data-header-theme="light" aria-labelledby="business-title" className="overflow-hidden bg-paper lg:sticky lg:top-0">
         <div className="container-yy flex flex-col gap-12 py-20 md:py-24 lg:h-[100svh] lg:min-h-[640px] lg:justify-center lg:gap-14 lg:py-[calc(var(--header-h)+24px)]">
           <div className="grid gap-8 lg:grid-cols-12 lg:items-end lg:gap-8">
             <div className="lg:col-span-6">
@@ -188,7 +189,7 @@ export function AboutParts() {
       const visionEl = el.querySelector<HTMLElement>("[data-vision]");
       if (visionEl) {
         const tl = gsap.timeline({
-          scrollTrigger: { trigger: visionEl, start: "top top", end: () => `+=${window.innerHeight * 1.2}`, pin: true, scrub: 0.5, anticipatePin: 1 },
+          scrollTrigger: { trigger: visionEl, start: "top top", end: "bottom bottom", scrub: 0.4 },
         });
         tl.fromTo(visionEl.querySelectorAll("[data-word]"), { opacity: 0.16 }, { opacity: 1, stagger: 0.12, duration: 0.4, ease: "none" })
           .fromTo(visionEl.querySelector("[data-vision-rest]"), { autoAlpha: 0, y: 28 }, { autoAlpha: 1, y: 0, duration: 0.8, ease: "power2.out" }, "+=0.1")
@@ -200,11 +201,8 @@ export function AboutParts() {
         businessST.current = ScrollTrigger.create({
           trigger: biz,
           start: "top top",
-          end: () => `+=${window.innerHeight * 2}`,
-          pin: true,
-          anticipatePin: 1,
-          snap: { snapTo: 1 / (count - 1), duration: { min: 0.25, max: 0.6 }, delay: 0.06, ease: "power2.inOut" },
-          onUpdate: (self) => setActive(Math.min(count - 1, Math.round(self.progress * (count - 1)))),
+          end: "bottom bottom",
+          onUpdate: (self) => setActive(Math.min(count - 1, Math.floor(self.progress * count))),
         });
       }
       return () => {
@@ -228,7 +226,7 @@ export function AboutParts() {
       setActive(i);
       return;
     }
-    window.scrollTo({ top: st.start + ((st.end - st.start) * i) / (count - 1), behavior: "smooth" });
+    window.scrollTo({ top: st.start + ((st.end - st.start) * (i + 0.5)) / count, behavior: "smooth" });
   };
 
   return (

@@ -104,9 +104,10 @@ export function OneStopSystem() {
                 <p className="mt-4 max-w-[35ch] text-[16px] leading-[1.8] text-ash">{item.description}</p>
               </Reveal>
 
-              {/* 겹침 배치 — 높이는 폭 대비 %로 잡아 어떤 화면 폭에서도 같은 구도 */}
+              {/* 겹침 배치 — 위치 · 크기는 사진 영역 폭 대비 % */}
               <Reveal delay={120} className="md:col-span-8">
-                <div className="relative ml-auto w-full md:w-[84%]" style={{ paddingBottom: `${item.height}%` }}>
+                {/* 높이는 자기 폭 기준(aspect-ratio). 노트북처럼 낮은 화면에서도 한 화면에 들어오도록 폭을 화면 높이로도 제한 */}
+                <div className="relative ml-auto w-full md:w-[min(72%,calc((100svh-280px)*1.6))]" style={{ aspectRatio: `100 / ${item.height}` }}>
                   {item.photos.map((p, k) => (
                     <div
                       key={p.src}
