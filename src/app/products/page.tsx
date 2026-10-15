@@ -17,6 +17,7 @@ export default function ProductsPage() {
       <PageIntro
         title="Product"
         backdrop="d"
+        gapAfter
         motionImage={INTRO_IMAGE}
         motionTone="light"
         intro={

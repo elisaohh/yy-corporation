@@ -85,3 +85,19 @@ export const expertise = [
   },
 ];
 export const expertiseSource = "엑셀 ABOUT 시트 ② 회사 소개 · ③ 기업 비전, YY NOTES Vol.01";
+
+/**
+ * ABOUT 배경 · 사진 (2026-10-15) — 현장 사진(public/assets/site, 사용자 결정으로 사용)과 히어로 사진.
+ * 교체할 때 이 경로만 바꾼다. video를 넣으면(예: "/assets/about/vision.mp4") 비전 구간 배경이 영상으로 바뀐다.
+ */
+export const aboutMedia = {
+  intro: "/assets/site/site-06.webp",
+  story: "/assets/hero/hero-base.webp",
+  vision: { image: "/assets/site/site-08.webp", video: null as string | null },
+  expertise: {
+    Sourcing: "/assets/site/site-05.webp",
+    Finishing: "/assets/site/site-11.webp",
+    Matching: "/assets/site/site-09.webp",
+    Delivery: "/assets/site/site-15.webp",
+  } as Record<string, string>,
+};

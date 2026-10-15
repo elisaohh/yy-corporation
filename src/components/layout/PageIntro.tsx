@@ -16,10 +16,12 @@ interface PageIntroProps {
   motionImage?: string;
   /** d안 톤 — dark: 사진 위 어두운 막(현장 사진) / light: 미스트 위 multiply(흰 배경 제품 이미지) */
   motionTone?: "dark" | "light";
+  /** 바로 아래가 여백 없는 목록일 때 머리 영역 아래 간격 */
+  gapAfter?: boolean;
 }
 
 /** 서브페이지 공통 머리 영역: 큰 영문 타이틀 + 짧은 한글 소개 (기획서 2.0 부록 E·F) */
-export function PageIntro({ title, intro, backdrop = "none", motionImage, motionTone = "dark" }: PageIntroProps) {
+export function PageIntro({ title, intro, backdrop = "none", motionImage, motionTone = "dark", gapAfter = false }: PageIntroProps) {
   const lightMotion = backdrop === "d" && motionTone === "light";
   const dark = backdrop === "b" || (backdrop === "d" && !lightMotion);
   const filled = backdrop !== "none";
@@ -28,7 +30,7 @@ export function PageIntro({ title, intro, backdrop = "none", motionImage, motion
     <section
       data-header-theme={dark ? "dark" : "light"}
       data-surface={dark ? "dark" : undefined}
-      className={`relative overflow-hidden ${backdrop === "a" || backdrop === "c" || lightMotion ? "bg-mist" : ""} ${backdrop === "b" ? "bg-intro text-on-dark" : ""} ${backdrop === "d" && !lightMotion ? "bg-intro text-on-dark" : ""} ${filled ? "mb-10 md:mb-14" : ""}`}
+      className={`relative overflow-hidden ${backdrop === "a" || backdrop === "c" || lightMotion ? "bg-mist" : ""} ${backdrop === "b" ? "bg-intro text-on-dark" : ""} ${backdrop === "d" && !lightMotion ? "bg-intro text-on-dark" : ""} ${gapAfter ? "mb-10 md:mb-14" : ""}`}
     >
       {backdrop === "c" && (
         <div
