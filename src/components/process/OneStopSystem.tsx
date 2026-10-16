@@ -57,7 +57,7 @@ const sections: Section[] = [
     kind: "track",
     items: [
       { en: "COATING", ko: "코팅", src: `${BASE}/coating-01.webp`, alt: "코팅 라인에 걸린 유리병과 작업자" },
-      { en: "PRINTING", ko: "인쇄", src: `${BASE}/printing-01.webp`, alt: "인쇄기가 늘어선 작업장과 작업자" },
+      { en: "PRINTING", ko: "인쇄", src: `${BASE}/printing-01.webp`, alt: "인쇄기 앞에서 작업하는 작업자와 트레이에 놓인 유리병" },
       { en: "ETCHING", ko: "부식", src: `${BASE}/etching-01.webp`, alt: "부식 설비 컨베이어 위의 유리병" },
       { en: "LABELING", ko: "라벨" },
     ],
@@ -67,10 +67,10 @@ const sections: Section[] = [
     en: "COMPONENTS",
     // 문구: ABOUT · OUR BUSINESS 02(사용자 제공 문구)
     description: "유리용기와의 결합과 호환성을 고려하여 캡, 펌프, 스포이드 등 다양한 부자재를 함께 제안합니다.",
-    // 실사 3장 예정(2026-10-16) — 준비되면 src에 /assets/process/components/*.webp
+    // 실사: 스포이드(2026-10-16 사용자 제공, 자료/02_후가공/작업사진/dropper-01.jpg). 펌프 · 스프레이는 준비 중
     kind: "track",
     items: [
-      { en: "DROPPER", ko: "스포이드" },
+      { en: "DROPPER", ko: "스포이드", src: `${BASE}/dropper-01.webp`, alt: "스포이드 부자재를 조립 · 검수하는 작업대" },
       { en: "PUMP", ko: "펌프" },
       { en: "SPRAY", ko: "스프레이" },
     ],
