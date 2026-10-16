@@ -4,14 +4,14 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useRef } from "react";
 import { Reveal } from "@/components/motion/Reveal";
-import { TrackCarousel, type TrackItem } from "@/components/process/TrackCarousel";
+import { CurvedMarquee, type TrackItem } from "@/components/process/CurvedMarquee";
 
 gsap.registerPlugin(ScrollTrigger);
 
 /**
  * PACKAGING TURN-KEY (2026-10-16 ONE-STOP SYSTEM에서 이름 변경) — 01 유리 성형 · 02 후가공 · 03 부자재 · 04 입고 및 납품.
  * 01 · 04: 왼쪽 글 · 오른쪽 사진 두 장 겹침 배치.
- * 02 · 03: 항목별 사진(후가공 4 · 부자재 3)을 가로로 이어 붙인 띠 — TrackCarousel(페이지 스크롤과 분리: 자동 넘김 + 이전/다음 + 가로 스크롤).
+ * 02 · 03: 항목별 사진(후가공 4 · 부자재 3)을 가로로 이어 붙인 띠 — CurvedMarquee(오목하게 휜 띠가 끝없이 흐름, 페이지 스크롤과 분리).
  *          실사가 준비되기 전에는 사진 자리에 "실사 준비 중" 칸이 보인다 — 사진은 tracks의 src만 채우면 된다.
  * 사진은 원본 비율 그대로(자르지 않음) 두 장을 겹쳐 놓고, 스크롤할 때 앞 사진이 조금 더 빨리 움직여 깊이감을 준다.
  * 사진: 자료/02_후가공/작업사진/{glass,surface,delivery}-NN → scripts/build-onestop-photos.mjs
@@ -153,7 +153,7 @@ export function OneStopSystem() {
               ) : (
                 /* 가로 띠 — 항목별 사진(실사 준비 전에는 빈 칸) */
                 <Reveal delay={120} className="min-w-0 md:col-span-8">
-                  <TrackCarousel label={`${item.title} 종류`} items={item.items} />
+                  <CurvedMarquee label={`${item.title} 종류`} items={item.items} />
                 </Reveal>
               )}
             </article>
