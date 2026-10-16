@@ -1,5 +1,5 @@
 /**
- * PROCESS "ONE-STOP SYSTEM" 사진 웹 사본 — 자료/02_후가공/작업사진/{glass,surface,delivery,coating,printing,etching,labeling,dropper,pump,spray}-NN.jpg
+ * PROCESS "PACKAGING TURN-KEY" 사진 웹 사본 — 자료/02_후가공/작업사진/{glass,delivery,coating,printing,etching,labeling,dropper,pump,spray}-NN.jpg
  *   → public/assets/process/onestop/<이름>.webp (원본 수정 없음)
  *
  *   node scripts/build-onestop-photos.mjs
@@ -11,7 +11,7 @@ const SRC = "자료/02_후가공/작업사진";
 const OUT = "public/assets/process/onestop";
 await mkdir(OUT, { recursive: true });
 
-const files = (await readdir(SRC)).filter((f) => /^(glass|surface|delivery|coating|printing|etching|labeling|dropper|pump|spray)-\d{2}\.jpe?g$/i.test(f)).sort();
+const files = (await readdir(SRC)).filter((f) => /^(glass|delivery|coating|printing|etching|labeling|dropper|pump|spray)-\d{2}\.jpe?g$/i.test(f)).sort();
 for (const f of files) {
   const name = f.replace(/\.jpe?g$/i, "");
   const meta = await sharp(`${SRC}/${f}`).rotate().metadata();

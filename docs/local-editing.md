@@ -47,14 +47,15 @@ npm.cmd run dev
 
 ## 4. 이미지 바꾸기
 
-원본은 `자료/` 폴더에 두고(수정하지 않음) 아래 스크립트로 웹용 사본을 다시 만든다.
+원본은 `자료/` 폴더에 두고(수정하지 않음) 아래 스크립트로 웹용 사본을 다시 만든다. 파일마다 어디에 쓰이는지는 `자료/README.md`에 정리돼 있다.
 
 | 대상 | 명령 |
 |---|---|
 | 제품 사진 (`자료/03_제품/제품사진/코드_01.png` …) | `node scripts/build-product-images.mjs` |
 | 공정 모션 병 이미지 (`자료/01_기준유리병/사진/YS-SRRR30-04*.png`) | `node scripts/build-process-images.mjs` |
 | 스포이드 캡 · 피펫 분리 | `node scripts/build-dropper-parts.mjs` |
-| 현장 사진 (`자료/02_후가공/작업사진/`) — 순서는 스크립트의 `ORDER` | `node scripts/build-site-photos.mjs` |
+| PROCESS 턴키 사진 (`자료/02_후가공/작업사진/glass-01.jpg` … `spray-01.jpg`) | `node scripts/build-onestop-photos.mjs` |
+| ABOUT 사진 (`자료/08_ABOUT/`) | `node scripts/build-about-images.mjs` |
 | 히어로 사진 (`자료/07_히어로/히어로_병_물방울.webp`) → 병 층 + 물방울 분리 | `node scripts/build-hero-layers.mjs` |
 
 공정 장면에 쓰는 파일 이름은 `scripts/build-process-images.mjs` 위쪽 `scenes` 목록에서 바꾼다.

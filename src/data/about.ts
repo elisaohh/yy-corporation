@@ -87,37 +87,6 @@ export const expertise = [
 export const expertiseSource = "엑셀 ABOUT 시트 ② 회사 소개 · ③ 기업 비전, YY NOTES Vol.01";
 
 /**
- * ABOUT 배경 · 사진 (2026-10-15) — 현장 사진(public/assets/site, 사용자 결정으로 사용)과 히어로 사진.
- * 교체할 때 이 경로만 바꾼다. video를 넣으면(예: "/assets/about/vision.mp4") 비전 구간 배경이 영상으로 바뀐다.
- */
-export const aboutMedia = {
-  /** 머리 영역 — PRODUCT와 같은 밝은 미스트 + 떠다니는 병(PRODUCT와 다른 사진) */
-  intro: "/assets/products/YS-SRRR50-02/YS-SRRR50-02_04.webp",
-  story: "/assets/products/YS-SRRR30-04/YS-SRRR30-04_04.webp",
-  /** 비전 배경 영상 — Pexels "Slow Motion of a Grey Ink in Water"(6071224, 무료 라이선스) */
-  vision: { image: "/assets/site/site-08.webp", video: "/assets/about/vision-ink.mp4" as string | null },
-  expertise: {
-    Sourcing: "/assets/site/site-05.webp",
-    Finishing: "/assets/site/site-11.webp",
-    Matching: "/assets/site/site-09.webp",
-    Delivery: "/assets/site/site-15.webp",
-  } as Record<string, string>,
-};
-
-/**
- * 비전 배경 영상 후보(2026-10-15 2차: 실물 대신 톤에 맞는 추상 배경, Pexels 무료 라이선스) — 개발 서버에서 /about?vision=1~6 로 미리보기.
- * 미리보기는 Pexels 서버에서 바로 재생한다. 결정하면 파일을 받아 public/assets/about/ 에 두고 aboutMedia.vision.video 에 연결한다.
- */
-export const visionVideoCandidates = [
-  { label: "벽에 비친 유리 빛 무늬", page: "https://www.pexels.com/video/shadow-of-patterns-reflected-on-the-wall-6392258/", src: "https://videos.pexels.com/video-files/6392258/6392258-hd_1366_720_24fps.mp4" },
-  { label: "물잔을 통과한 빛 반사", page: "https://www.pexels.com/video/light-reflections-through-glass-of-water-6585633/", src: "https://videos.pexels.com/video-files/6585633/6585633-hd_1280_720_30fps.mp4" },
-  { label: "맑은 물 표면의 빛 일렁임", page: "https://www.pexels.com/video/sunlight-reflections-on-clear-water-surface-34308148/", src: "https://videos.pexels.com/video-files/34308148/14534370_1280_720_30fps.mp4" },
-  { label: "검은 배경의 연기", page: "https://www.pexels.com/video/close-up-shot-of-smoke-on-a-black-background-4320603/", src: "https://videos.pexels.com/video-files/4320603/4320603-hd_1280_720_24fps.mp4" },
-  { label: "물속에 퍼지는 회색 잉크(슬로 모션)", page: "https://www.pexels.com/video/slow-motion-of-a-grey-ink-in-water-6071224/", src: "https://videos.pexels.com/video-files/6071224/6071224-hd_1280_720_30fps.mp4" },
-  { label: "천천히 움직이는 금빛 액체", page: "https://www.pexels.com/video/golden-liquid-moving-6895129/", src: "https://videos.pexels.com/video-files/6895129/6895129-hd_1280_720_30fps.mp4" },
-];
-
-/**
  * OUR BUSINESS (2026-10-15 사용자 제공 문구) — 머리말 + 사업 영역 4가지
  * title은 단어 단위로 나눠 스크롤에 따라 한 단어씩 진해진다.
  */
