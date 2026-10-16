@@ -56,6 +56,7 @@ npm.cmd run dev
 | 스포이드 캡 · 피펫 분리 | `node scripts/build-dropper-parts.mjs` |
 | PROCESS 턴키 사진 (`자료/02_후가공/작업사진/glass-01.jpg` … `spray-01.jpg`) | `node scripts/build-onestop-photos.mjs` |
 | ABOUT 사진 (`자료/08_ABOUT/`) | `node scripts/build-about-images.mjs` |
+| PROCESS 제목 배경 영상 (`자료/09_PROCESS/process-intro.mp4`) | `public/assets/process/process-intro.mp4`에 같은 이름으로 복사 (시작 8초 · 확대는 `src/app/process/page.tsx`의 `INTRO_VIDEO`) |
 | 히어로 사진 (`자료/07_히어로/히어로_병_물방울.webp`) → 병 층 + 물방울 분리 | `node scripts/build-hero-layers.mjs` |
 
 공정 장면에 쓰는 파일 이름은 `scripts/build-process-images.mjs` 위쪽 `scenes` 목록에서 바꾼다.

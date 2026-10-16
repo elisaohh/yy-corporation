@@ -158,3 +158,4 @@
 | 2026-10-16 | TURN-KEY 부자재 사진 | 펌프 · 스프레이에 사용자 제공 생성 이미지 적용(구도 다르게 다시 생성: 펌프=통로 원근, 스프레이=위에서 본 손). 섹션 아래 안내에 "펌프 · 스프레이 사진은 생성 이미지" 추가, alt에도 표기 |
 | 2026-10-16 | TURN-KEY 사진 정정 | 인쇄로 넣었던 사진은 라벨 공정 → labeling-01로 이동, 인쇄는 처음 사진(인쇄기 작업장)으로 되돌림. 후가공 4칸 모두 실사 |
 | 2026-10-16 | 자료 정리 | 사이트에서 안 쓰는 파일 삭제: 현장 사진 갤러리(site-01~15 · SiteGallery · build-site-photos), FinishingSections, Vision 영상(vision-ink.mp4) · aboutMedia · visionVideoCandidates, 떠다니는 병(float-* · build-float-bottles), surface-01·02, 빈 .gitkeep. 원본 자료/는 지우지 않고 안 쓰는 원본을 자료/_보관/으로 이동, 자료/README.md에 파일별 쓰임 · 다시 만들기 명령 정리(git 미포함) |
+| 2026-10-16 | PROCESS 제목 배경 영상 | 사진(glass-01 천천히 이동) → 사용자 제공 유리 성형기 영상(process-intro.mp4, 1920×1080, 7MB). 8초 이후만 반복 · 빛나는 유리병 줄 쪽 1.25배 확대(화질 유지 범위) · 준비되면 서서히 나타남 · 모션 줄이기는 8초 장면 정지. PageIntro에 motionVideo(IntroVideo) 추가. public/references 빈 폴더 삭제 |

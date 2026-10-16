@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { IntroVideo } from "@/components/layout/IntroVideo";
 
 /**
  * 머리 영역 배경(2026-10-15 PROCESS · PRODUCT는 d안 확정 — 배경 이미지는 각 page.tsx의 INTRO_IMAGE)
@@ -12,8 +13,10 @@ interface PageIntroProps {
   /** 짧은 한글 소개 — 확정 전에는 Pending 표시를 넘긴다 */
   intro: ReactNode;
   backdrop?: IntroBackdrop;
-  /** d안에서 천천히 움직이는 배경 이미지 */
+  /** d안에서 천천히 움직이는 배경 이미지 (motionVideo가 있으면 영상의 정지 화면으로 쓰인다) */
   motionImage?: string;
+  /** d안 배경 영상 — start초부터 끝까지 반복, zoom · focus로 확대 위치 지정 */
+  motionVideo?: { src: string; start?: number; zoom?: number; focus?: string };
   /** d안 톤 — dark: 사진 위 어두운 막(현장 사진) / light: 미스트 위 multiply(흰 배경 제품 이미지) */
   motionTone?: "dark" | "light";
   /** d안(light)에서 이미지 대신 오른쪽 아래에 크게 걸쳐 두는 고정 그래픽(예: 반투명 단색 로고) */
@@ -23,7 +26,7 @@ interface PageIntroProps {
 }
 
 /** 서브페이지 공통 머리 영역: 큰 영문 타이틀 + 짧은 한글 소개 (기획서 2.0 부록 E·F) */
-export function PageIntro({ title, intro, backdrop = "none", motionImage, motionTone = "dark", graphic, gapAfter = false }: PageIntroProps) {
+export function PageIntro({ title, intro, backdrop = "none", motionImage, motionVideo, motionTone = "dark", graphic, gapAfter = false }: PageIntroProps) {
   const lightMotion = backdrop === "d" && motionTone === "light";
   const dark = backdrop === "b" || (backdrop === "d" && !lightMotion);
   const filled = backdrop !== "none";
@@ -56,10 +59,14 @@ export function PageIntro({ title, intro, backdrop = "none", motionImage, motion
           <img src={motionImage} alt="" className="page-intro-float absolute inset-y-[8%] right-0 h-[84%] w-full object-contain object-right opacity-60" />
         </div>
       )}
-      {backdrop === "d" && !lightMotion && motionImage && (
-        <div aria-hidden="true" className="absolute inset-0">
-          {/* eslint-disable-next-line @next/next/no-img-element -- 배경 이미지 */}
-          <img src={motionImage} alt="" className="page-intro-pan absolute inset-0 size-full object-cover opacity-55" />
+      {backdrop === "d" && !lightMotion && (motionVideo || motionImage) && (
+        <div aria-hidden="true" className="absolute inset-0 overflow-hidden">
+          {motionVideo ? (
+            <IntroVideo {...motionVideo} className="data-ready:opacity-60" />
+          ) : (
+            /* eslint-disable-next-line @next/next/no-img-element -- 배경 이미지 */
+            <img src={motionImage} alt="" className="page-intro-pan absolute inset-0 size-full object-cover opacity-55" />
+          )}
           <div className="absolute inset-0 bg-gradient-to-r from-intro via-intro/70 to-intro/20" />
         </div>
       )}
