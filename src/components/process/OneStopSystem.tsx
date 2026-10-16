@@ -67,12 +67,12 @@ const sections: Section[] = [
     en: "COMPONENTS",
     // 문구: ABOUT · OUR BUSINESS 02(사용자 제공 문구)
     description: "유리용기와의 결합과 호환성을 고려하여 캡, 펌프, 스포이드 등 다양한 부자재를 함께 제안합니다.",
-    // 실사: 스포이드(2026-10-16 사용자 제공, 자료/02_후가공/작업사진/dropper-01.jpg). 펌프 · 스프레이는 준비 중
+    // 스포이드: 실사(dropper-01). 펌프 · 스프레이: 사용자 제공 생성 이미지(pump-01 · spray-01, 2026-10-16) — 실제 작업 장면 아님
     kind: "track",
     items: [
       { en: "DROPPER", ko: "스포이드", src: `${BASE}/dropper-01.webp`, alt: "스포이드 부자재를 조립 · 검수하는 작업대" },
-      { en: "PUMP", ko: "펌프" },
-      { en: "SPRAY", ko: "스프레이" },
+      { en: "PUMP", ko: "펌프", src: `${BASE}/pump-01.webp`, alt: "작업대에 줄지어 세워 둔 펌프 부자재와 작업자 — 생성 이미지" },
+      { en: "SPRAY", ko: "스프레이", src: `${BASE}/spray-01.webp`, alt: "스프레이에 투명 캡을 끼우는 손 — 생성 이미지" },
     ],
   },
   {
@@ -160,7 +160,7 @@ export function OneStopSystem() {
           ))}
         </div>
 
-        <p className="mt-8 text-[12px] leading-[1.7] text-ash">현장 사진은 생산 및 관리 환경을 보여주는 참고 자료이며, 각 항목의 실제 작업 장면을 의미하지 않습니다.</p>
+        <p className="mt-8 text-[12px] leading-[1.7] text-ash">현장 사진은 생산 및 관리 환경을 보여주는 참고 자료이며, 각 항목의 실제 작업 장면을 의미하지 않습니다. 부자재의 펌프 · 스프레이 사진은 이해를 돕기 위한 생성 이미지입니다.</p>
       </div>
     </section>
   );
