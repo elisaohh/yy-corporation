@@ -53,13 +53,13 @@ const sections: Section[] = [
     title: "후가공",
     en: "SURFACE FINISHING",
     description: "코팅·인쇄·부식·라벨 등 다양한 후가공을 통해 브랜드에 맞는 색상과 표면 질감을 구현합니다.",
-    // 실사(2026-10-16 사용자 제공: 자료/02_후가공/작업사진/{coating,printing,etching}-01.jpg → build-onestop-photos). 라벨은 준비 중
+    // 실사(2026-10-16 사용자 제공: 자료/02_후가공/작업사진/{coating,printing,etching,labeling}-01.jpg → build-onestop-photos)
     kind: "track",
     items: [
       { en: "COATING", ko: "코팅", src: `${BASE}/coating-01.webp`, alt: "코팅 라인에 걸린 유리병과 작업자" },
-      { en: "PRINTING", ko: "인쇄", src: `${BASE}/printing-01.webp`, alt: "인쇄기 앞에서 작업하는 작업자와 트레이에 놓인 유리병" },
+      { en: "PRINTING", ko: "인쇄", src: `${BASE}/printing-01.webp`, alt: "인쇄기가 늘어선 작업장과 작업자" },
       { en: "ETCHING", ko: "부식", src: `${BASE}/etching-01.webp`, alt: "부식 설비 컨베이어 위의 유리병" },
-      { en: "LABELING", ko: "라벨" },
+      { en: "LABELING", ko: "라벨", src: `${BASE}/labeling-01.webp`, alt: "라벨 설비 앞에서 작업하는 작업자와 트레이에 놓인 유리병" },
     ],
   },
   {
