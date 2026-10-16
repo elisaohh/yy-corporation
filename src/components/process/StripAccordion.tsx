@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
+import { useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 
 /** 사진 칸 — src가 없으면 "실사 준비 중" 칸 */
 export type TrackItem = { en: string; ko: string; src?: string; alt?: string };
@@ -43,94 +43,7 @@ function useSwipe(onStep: (dir: 1 | -1) => void) {
 }
 
 /**
- * A안 — 겹침 교체: 01 · 04와 같은 큰 사진 + 오른쪽 아래로 겹친 작은 사진(흰 테두리 · 그림자).
- * 큰 사진 = 지금 공정, 작은 사진 = 다음 공정. 아래 이름에 마우스를 올리거나 사진 위에서 커서를 좌우로 움직이면 부드럽게 바뀐다.
- * 터치: 좌우로 밀기 · 이름 누르기. 키보드: ← →, 이름 버튼.
- */
-export function StackSwap({ label, items }: { label: string; items: TrackItem[] }) {
-  const [active, setActive] = useState(0);
-  const n = items.length;
-  const set = (i: number) => setActive(Math.max(0, Math.min(n - 1, i)));
-  const swipe = useSwipe((d) => set(active + d));
-  const next = (active + 1) % n;
-
-  return (
-    <div className={BOX}>
-      <div
-        role="group"
-        aria-label={`${label} — 좌우 방향키로 넘겨 보기`}
-        tabIndex={0}
-        onPointerMove={(e) => {
-          if (e.pointerType !== "mouse") return;
-          const r = e.currentTarget.getBoundingClientRect();
-          set(Math.floor(((e.clientX - r.left) / r.width) * n));
-        }}
-        onKeyDown={(e) => {
-          if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
-            e.preventDefault();
-            set(active + (e.key === "ArrowRight" ? 1 : -1));
-          }
-        }}
-        {...swipe}
-        className="relative touch-pan-y select-none"
-        style={{ aspectRatio: "100 / 62" }}
-      >
-        {/* 큰 사진 — 지금 공정 */}
-        <div className="absolute left-0 top-0 aspect-[4/3] w-[70%] overflow-hidden bg-card">
-          {items.map((it, i) => (
-            <div
-              key={it.en}
-              aria-hidden={i !== active}
-              className={`absolute inset-0 transition-[opacity,transform] duration-700 ease-[var(--ease-yy-out)] ${i === active ? "scale-100 opacity-100" : "scale-[1.04] opacity-0"}`}
-            >
-              <Photo item={it} />
-            </div>
-          ))}
-        </div>
-        {/* 작은 사진 — 다음 공정(겹침, 스크롤 시 조금 더 빨리 움직임) */}
-        <div
-          data-shift={-24}
-          className="absolute left-[52%] z-10 aspect-[4/3] w-[48%] overflow-hidden bg-card shadow-[0_24px_60px_-28px_rgba(43,43,42,0.45)] ring-[6px] ring-paper md:ring-8"
-          style={{ top: `${(23 / 62) * 100}%` }}
-        >
-          {items.map((it, i) => (
-            <div
-              key={it.en}
-              aria-hidden="true"
-              className={`absolute inset-0 transition-opacity delay-100 duration-700 ease-[var(--ease-yy-out)] ${i === next ? "opacity-100" : "opacity-0"}`}
-            >
-              <Photo item={it} />
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* 공정 이름 — 마우스를 올리거나 포커스 · 누르면 그 공정으로 */}
-      <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-2 border-t border-stone pt-4">
-        {items.map((it, i) => (
-          <li key={it.en}>
-            <button
-              type="button"
-              aria-pressed={i === active}
-              onMouseEnter={() => set(i)}
-              onFocus={() => set(i)}
-              onClick={() => set(i)}
-              className={`inline-flex min-h-11 items-baseline gap-2 border-b-2 transition-colors duration-300 ${
-                i === active ? "border-charcoal text-charcoal" : "border-transparent text-ash hover:text-charcoal"
-              }`}
-            >
-              <span className="font-en text-[12px] tabular-nums">{pad(i + 1)}</span>
-              <span className="text-[16px] font-bold tracking-[-0.02em]">{it.ko}</span>
-            </button>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-/**
- * B안 — 펼쳐지는 띠: 공정 사진을 세로 띠로 나란히 두고, 마우스를 올린 띠가 넓어지며 사진 전체 · 이름이 보인다.
+ * PACKAGING TURN-KEY 02 · 03 사진 — 펼쳐지는 띠(2026-10-16 B안 확정): 공정 사진을 세로 띠로 나란히 두고, 마우스를 올린 띠가 넓어지며 사진 전체 · 이름이 보인다.
  * 나머지 띠는 좁아져 영문 이름만 세로로 남는다. 터치: 좌우로 밀기 · 띠 누르기. 키보드: 띠마다 포커스, ← →.
  */
 export function StripAccordion({ label, items }: { label: string; items: TrackItem[] }) {
@@ -203,13 +116,4 @@ export function StripAccordion({ label, items }: { label: string; items: TrackIt
       </ul>
     </div>
   );
-}
-
-/** 비교용 — ?v=a(기본) · ?v=b */
-export function FinishingShowcase(props: { label: string; items: TrackItem[] }) {
-  const [v, setV] = useState<"a" | "b">("a");
-  useEffect(() => {
-    setV(new URLSearchParams(window.location.search).get("v") === "b" ? "b" : "a");
-  }, []);
-  return v === "b" ? <StripAccordion {...props} /> : <StackSwap {...props} />;
 }
