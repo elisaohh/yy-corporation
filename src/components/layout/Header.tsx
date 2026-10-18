@@ -17,7 +17,7 @@ const SCROLL_DELTA = 6;
 
 /**
  * 공통 헤더 — 기획서 2.0 §3.1, 부록 C.
- * - 바탕은 옅은 반투명 + 블러(2026-10-14 결정, 기획서의 '투명 헤더'에서 변경).
+ * - 바탕은 옅은 반투명 + 블러.
  *   헤더 아래 구역의 data-header-theme(dark/light)에 따라 바탕 톤과 글자색을 함께 전환.
  * - 아래로 스크롤하면 숨김, 위로 스크롤하면 재등장.
  * - 현재 페이지는 메뉴 글자 위 4px 점(헤더 글자색과 같은 색).
@@ -134,7 +134,7 @@ export function Header() {
                     >
                       {item.label}
                     </Link>
-                    {/* 하위 메뉴 — 마우스를 올리거나 키보드로 포커스가 들어오면 펼쳐진다(2026-10-16 ABOUT › COMPANY · STORY) */}
+                    {/* 하위 메뉴 — 마우스를 올리거나 키보드로 포커스가 들어오면 펼쳐진다 */}
                     {item.children && (
                       <div className="invisible absolute left-1/2 top-full -translate-x-1/2 pt-3 opacity-0 transition-[opacity,visibility] duration-200 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
                         <ul

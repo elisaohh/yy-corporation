@@ -2,7 +2,7 @@
  * ABOUT › STORY (/about/story) — 뉴스레터 YY NOTES 게시판(최신 호가 위).
  * 글은 storyPosts에 추가한다. 이미지는 자료/10_STORY/<slug>-NN.jpg → node scripts/build-story-images.mjs
  * 본문은 블록 목록(blocks)으로 쓴다 — 아래 StoryBlock 종류 참고. 지어낸 글 · 실적은 넣지 않는다.
- * 2026-10-19: 사용자 제공 뉴스레터 HTML(Vol.01 · Vol.02)의 문구를 그대로 옮김(메일 머리 · 바닥 · 수신거부 영역은 제외).
+ * Vol.01 · Vol.02는 뉴스레터 HTML의 문구를 그대로 옮겼다(메일 머리 · 바닥 · 수신거부 영역 제외).
  */
 
 export type StoryImage = { src: string; alt: string; width: number; height: number };

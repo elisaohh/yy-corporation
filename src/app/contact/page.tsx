@@ -10,12 +10,12 @@ export const metadata: Metadata = { title: "Contact" };
 
 /** 네이버 지도 — 확정된 회사 주소로 검색 결과를 연다(버튼) */
 const naverMapUrl = (address: string) => `https://map.naver.com/p/search/${encodeURIComponent(address)}`;
-/** 화면에 보이는 지도 — 구글 지도 퍼가기(API 키 불필요). 네이버 지도 퍼가기는 API 키가 있어야 해서 2026-10-16 구글로 표시 */
+/** 화면에 보이는 지도 — 구글 지도 퍼가기(API 키 불필요). 네이버 지도 퍼가기는 API 키가 필요하다 */
 const mapEmbedUrl = (address: string) => `https://maps.google.com/maps?q=${encodeURIComponent(address)}&z=16&hl=ko&output=embed`;
 
 /**
  * CONTACT — 큰 영문 타이틀 + 짧은 한글 소개 → PC: 왼쪽 오시는 길 · 회사 정보 / 오른쪽 문의 폼. 모바일: 폼 먼저 (기획서 2.0 부록 G).
- * 지도: 구글 지도 퍼가기로 실제 지도를 보여 주고, 네이버 지도 버튼으로 연결한다(2026-10-16). 문의 폼은 시연용(실제 전송 없음).
+ * 지도: 구글 지도 퍼가기로 보여 주고, 네이버 지도 버튼으로 연결한다. 문의 폼은 아직 실제 전송 없음(InquiryForm 참고).
  */
 export default function ContactPage() {
   // 값이 없는 항목(팩스 · 상담 시간)은 표시하지 않는다

@@ -5,7 +5,7 @@ import { sortedStoryPosts, storyIntro } from "@/data/story";
 
 export const metadata: Metadata = { title: "Story" };
 
-/** ABOUT › STORY (2026-10-16) — 회사 이야기 · 소식. 글은 data/story.ts */
+/** ABOUT › STORY — 뉴스레터 YY NOTES 목록. 글은 data/story.ts */
 export default function AboutStoryPage() {
   return (
     <>

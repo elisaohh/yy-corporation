@@ -10,8 +10,8 @@ import { aboutVisuals, business, story, vision, type AboutVisual } from "@/data/
 gsap.registerPlugin(ScrollTrigger);
 
 /**
- * ABOUT (2026-10-15 전면 리디자인 — Chapter Transition + Visual Storytelling)
- *   제목 영역 — 공용 PageIntro(미스트 a안)를 about/page.tsx에서 그대로 사용.
+ * ABOUT › COMPANY 본문 — Story · Vision · Business
+ *   제목 영역 — 공용 PageIntro(미스트 a안)를 about/company/page.tsx에서 사용.
  *   01 Story    — 흰 바탕, 35/65 에디토리얼. 왼쪽 제목은 섹션 안에서만 sticky. 강조 문장 + 이미지 2장.
  *   02 Vision   — 미스트, 35/65. 왼쪽 비전 문장(글로벌 턴키 파트너에만 포인트 띠). 오른쪽 두 축은 '제목 | 본문' 행.
  *   03 Business — 흰 바탕, 사업 4개를 이미지 · 텍스트 교차 블록으로.

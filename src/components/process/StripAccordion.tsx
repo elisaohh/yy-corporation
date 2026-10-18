@@ -43,7 +43,7 @@ function useSwipe(onStep: (dir: 1 | -1) => void) {
 }
 
 /**
- * PACKAGING TURN-KEY 02 · 03 사진 — 펼쳐지는 띠(2026-10-16 B안 확정): 공정 사진을 세로 띠로 나란히 두고, 마우스를 올린 띠가 넓어지며 사진 전체 · 이름이 보인다.
+ * PACKAGING TURN-KEY 02 · 03 사진 — 펼쳐지는 띠: 공정 사진을 세로 띠로 나란히 두고, 마우스를 올린 띠가 넓어지며 사진 전체 · 이름이 보인다.
  * 나머지 띠는 좁아져 영문 이름만 세로로 남는다. 터치: 좌우로 밀기 · 띠 누르기. 키보드: 띠마다 포커스, ← →.
  */
 export function StripAccordion({ label, items }: { label: string; items: TrackItem[] }) {

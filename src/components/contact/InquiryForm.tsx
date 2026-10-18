@@ -7,7 +7,7 @@ import { contactCopy } from "@/data/content";
 import { getProductById, productInquiryLabel } from "@/data/products";
 
 /**
- * 문의 폼 — 기획서 2.0 부록 G + 2026-10-14 결정.
+ * 문의 폼 — 기획서 2.0 부록 G.
  * 필수: 회사명·브랜드명 · 담당자명 · 이메일 · 연락처 · 문의 내용 · 개인정보 동의
  * 선택: 관심 제품 · 예상 발주 수량   (문의 유형 · 파일 첨부는 첫 버전에서 제외)
  *

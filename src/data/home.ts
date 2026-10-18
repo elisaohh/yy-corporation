@@ -2,12 +2,12 @@ import type { AssetId } from "./assets";
 import type { Copy } from "./content";
 
 /**
- * HOME 문구 · 구성 데이터 — 2026-10-14 HOME 개편안(사용자 승인) 기준.
+ * HOME 문구 · 구성 데이터.
  * 순서: 브랜드 인트로 → 회사 소개(FIND·DRESS·MATCH·DELIVER 통합) → 공정 모션 → PRODUCT 컬렉션 → 슬로건 → CTA
  * status: final(확정) / draft(임시 초안 — 교체 예정) / missing(미정)
  */
 
-/* ── ① 히어로 — 2026-10-15 개편: 사용자 제공 사진(병 3개 · 물방울) + 기존 타이포(Inter · Pretendard) ── */
+/* ── ① 히어로 — 사진(병 3개 · 물방울) + 타이포(Inter · Pretendard) ── */
 export const hero = {
   eyebrow: "COSMETIC PACKAGING PARTNER",
   /** 영문 대형 제목 — 화면에서는 대문자로 표시 */
@@ -56,7 +56,7 @@ export const processScene = {
   dropperCap: "dropperCap" as AssetId,
   dropperPipette: "dropperPipette" as AssetId,
   /** 라벨이 피펫을 가리는 구간(캔버스 높이 대비 %) — proc-label 실측 */
-  labelBand: { top: 48.8, bottom: 75.4 }, // proc-label(부식 후 라벨, 2026-10-15 SOLENNE 교체) 실측 780–1206행
+  labelBand: { top: 48.8, bottom: 75.4 }, // proc-label(부식 후 라벨) 실측 780–1206행 — 라벨 이미지를 바꾸면 다시 잰다
   /** 체결 후 함께 등장하는 실제 제품 (기준병 양옆) */
   expandTo: ["YS-SRRR15-01_02", "YS-SRRR30-02_01", "YS-SRRR30-04_01", "YS-SRRR50-02_01"] as AssetId[],
 };

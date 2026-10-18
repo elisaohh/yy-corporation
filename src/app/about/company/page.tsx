@@ -7,8 +7,8 @@ import { aboutIntro } from "@/data/about";
 export const metadata: Metadata = { title: "Company" };
 
 /**
- * ABOUT › COMPANY (/about/company, 2026-10-16 /about에서 이동) — 미스트 제목 영역 → Story · Vision · Business 세 파트 → CTA. 회사 정보는 푸터.
- * 본문은 2026-10-15 전면 리디자인(AboutSections), 제목 영역은 공용 PageIntro 유지.
+ * ABOUT › COMPANY (/about/company) — 미스트 제목 영역 → Story · Vision · Business 세 파트 → CTA. 회사 정보는 푸터.
+ * 본문은 AboutSections, 제목 영역은 공용 PageIntro.
  */
 export default function AboutCompanyPage() {
   return (

@@ -6,7 +6,7 @@ import { OneStopSystem } from "@/components/process/OneStopSystem";
 import { processIntro } from "@/data/process";
 
 /**
- * 머리 영역(D안) 배경 — 유리 성형기 영상(2026-10-16 사용자 제공, 자료/09_PROCESS/process-intro.mp4).
+ * 머리 영역 배경 — 유리 성형기 영상(자료/09_PROCESS/process-intro.mp4).
  * 8초 이후 장면만 반복하고, 빛나는 유리병 줄 쪽으로 1.25배 확대(원본 1920×1080 → 화질 유지 범위).
  * 영상이 준비될 때까지는 차콜 바탕, 모션 줄이기에서는 8초 장면에서 멈춤.
  */

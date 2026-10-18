@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import { PageIntro } from "@/components/layout/PageIntro";
 import { ProductCatalog } from "@/components/product/ProductCatalog";
 
-/** 머리 영역(D안) 배경 이미지 — 교체할 때 이 경로만 바꾼다 */
+/** 머리 영역 배경 이미지 — 교체할 때 이 경로만 바꾼다 */
 const INTRO_IMAGE = "/assets/hero/hero-base.webp";
 
 export const metadata: Metadata = { title: "Product" };

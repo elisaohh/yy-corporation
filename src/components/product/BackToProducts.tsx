@@ -7,7 +7,7 @@ import { hasProducts } from "@/data/products";
 
 /**
  * 뒤로가기 화살표 — 떠나온 카테고리 탭의 제품 목록으로 돌아간다.
- * (2026-10-14 결정: 글자 없이 화살표만. 화면 낭독기는 aria-label로 안내)
+ * (글자 없이 화살표만. 화면 낭독기는 aria-label로 안내)
  */
 export function BackToProducts() {
   const from = useSearchParams().get("from");

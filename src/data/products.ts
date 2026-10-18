@@ -3,7 +3,7 @@ import { productImageIds } from "./productImages";
 /**
  * 제품 데이터 — 기획서 2.0 §4.3 스키마.
  *
- * 2026-10-14 기준: 제공받은 유리병 5종 (자료/03_제품).
+ * 유리병 5종 (자료/03_제품).
  * - 제품명은 확인 전까지 제품 코드를 그대로 쓴다.
  * - 규격은 확인된 자료만 넣는다. 현재 확인된 것은 YS-SRRR20-01(자료/01_기준유리병/치수) 하나뿐.
  *   코드의 숫자로 용량을 추정해 넣지 않는다.
@@ -34,7 +34,7 @@ export interface Product {
   specSource?: string;
 }
 
-/** MOQ · 재질 기본값 — 제품별 자료가 없을 때 (2026-10-15 사용자 지시) */
+/** MOQ · 재질 기본값 — 제품별 자료가 없을 때 */
 const DEFAULT_MOQ = "5,000";
 const DEFAULT_MATERIAL = "유리";
 
@@ -51,7 +51,6 @@ function glassBottle(code: string, spec: Partial<Product> = {}): Product {
     dimensions: null,
     isPlaceholder: false,
     ...spec,
-    // 2026-10-15 사용자 지시: MOQ · 재질 자료가 없으면 5,000 · 유리로 표시
     moq: spec.moq ?? DEFAULT_MOQ,
     material: spec.material ?? DEFAULT_MATERIAL,
   };

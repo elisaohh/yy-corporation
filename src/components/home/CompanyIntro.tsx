@@ -3,9 +3,9 @@ import { Reveal } from "@/components/motion/Reveal";
 import { companyIntro, services } from "@/data/home";
 
 /**
- * ② 짧은 회사 소개 — 화면 1개, 고정 없음 (2026-10-14 HOME 개편안).
- * FIND · DRESS · MATCH · DELIVER를 이 섹션에 통합했다(기존 가로 스크롤 삭제).
- * 기획서 1.2 "HOME에 회사 소개 넣지 않음"에서 사용자 결정으로 변경 — ABOUT과 겹치지 않게 짧게 둔다.
+ * ② 짧은 회사 소개 — 화면 1개, 고정 없음.
+ * FIND · DRESS · MATCH · DELIVER 목록 포함.
+ * ABOUT과 겹치지 않게 짧게 둔다.
  */
 export function CompanyIntro() {
   return (

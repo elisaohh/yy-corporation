@@ -9,7 +9,7 @@ import { StripAccordion, type TrackItem } from "@/components/process/StripAccord
 gsap.registerPlugin(ScrollTrigger);
 
 /**
- * PACKAGING TURN-KEY (2026-10-16 ONE-STOP SYSTEM에서 이름 변경) — 01 유리 성형 · 02 후가공 · 03 부자재 · 04 입고 및 납품.
+ * PACKAGING TURN-KEY — 01 유리 성형 · 02 후가공 · 03 부자재 · 04 입고 및 납품.
  * 01 · 04: 왼쪽 글 · 오른쪽 사진 두 장 겹침 배치.
  * 02 · 03: 항목별 사진(후가공 4 · 부자재 3)을 가로로 이어 붙인 띠 — StripAccordion(펼쳐지는 띠 — 마우스를 올린 띠가 넓어짐, 터치는 밀기 · 누르기).
  *          실사가 준비되기 전에는 사진 자리에 "실사 준비 중" 칸이 보인다 — 사진은 tracks의 src만 채우면 된다.
@@ -53,7 +53,7 @@ const sections: Section[] = [
     title: "후가공",
     en: "SURFACE FINISHING",
     description: "코팅·인쇄·부식·라벨 등 다양한 후가공을 통해 브랜드에 맞는 색상과 표면 질감을 구현합니다.",
-    // 사진: 현장 사진을 바탕으로 편집한 이미지(2026-10-19, 자료/02_후가공/작업사진/{coating,printing,etching,labeling}-01.jpg)
+    // 사진: 자료/02_후가공/작업사진/{coating,printing,etching,labeling}-01.jpg
     kind: "track",
     items: [
       { en: "COATING", ko: "코팅", src: `${BASE}/coating-01.webp`, alt: "스프레이 건으로 유리병에 코팅을 뿌리는 설비" },
@@ -65,7 +65,7 @@ const sections: Section[] = [
   {
     title: "부자재",
     en: "COMPONENTS",
-    // 문구: ABOUT · OUR BUSINESS 02(사용자 제공 문구)
+    // 문구: ABOUT · OUR BUSINESS 02와 같음
     description: "유리용기와의 결합과 호환성을 고려하여 캡, 펌프, 스포이드 등 다양한 부자재를 함께 제안합니다.",
     // 스포이드 · 유리관: 현장 사진을 바탕으로 편집(dropper-01 · tube-01). 펌프 · 스프레이: 생성 이미지(pump-01 · spray-01)
     kind: "track",

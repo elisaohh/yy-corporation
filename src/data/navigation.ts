@@ -24,7 +24,7 @@ export const mainNav: NavItem[] = [
   { label: "CONTACT", href: "/contact", description: "문의" },
 ];
 
-/** 헤더 · 모바일 메뉴 — HOME은 로고로 이동하므로 뺀다(2026-10-15 사용자 요청). 푸터는 mainNav 전체 */
+/** 헤더 · 모바일 메뉴 · 푸터 — HOME은 로고로 이동하므로 뺀다 */
 export const headerNav: NavItem[] = mainNav.filter((item) => item.href !== "/");
 
 export function isActivePath(pathname: string, href: string): boolean {

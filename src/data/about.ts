@@ -87,7 +87,7 @@ export const expertise = [
 export const expertiseSource = "엑셀 ABOUT 시트 ② 회사 소개 · ③ 기업 비전, YY NOTES Vol.01";
 
 /**
- * OUR BUSINESS (2026-10-15 사용자 제공 문구) — 머리말 + 사업 영역 4가지
+ * OUR BUSINESS — 머리말 + 사업 영역 4가지
  * title은 단어 단위로 나눠 스크롤에 따라 한 단어씩 진해진다.
  */
 export const business = {
@@ -123,7 +123,7 @@ export const business = {
 };
 
 /**
- * ABOUT 리디자인(2026-10-15) 이미지 — public/assets/about (scripts/build-about-images.mjs)
+ * ABOUT 이미지 — public/assets/about (scripts/build-about-images.mjs)
  * ⚠ 모두 사용자가 제공한 생성 이미지다. 실제 YY CORPORATION 제품 · 생산 시설 사진이 아니므로 그렇게 설명하지 않는다.
  * position: 모바일에서 잘릴 때 지킬 핵심 피사체 위치(object-position)
  */

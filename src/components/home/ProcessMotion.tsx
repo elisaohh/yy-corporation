@@ -21,7 +21,7 @@ gsap.registerPlugin(ScrollTrigger);
  * 완료 후 제품 이미지 확장 없이 다음 PRODUCT 섹션으로 이어진다.
  */
 
-/** 유리 피펫 불투명도 — 낮을수록 유리처럼 비친다(2026-10-15 요청) */
+/** 유리 피펫 불투명도 — 낮을수록 유리처럼 비친다 */
 
 const PIPETTE_OPACITY = 0.28;
 
@@ -36,7 +36,7 @@ export function ProcessMotion() {
   const sectionRef = useRef<HTMLElement>(null);
   /** 공정 이름을 누르면 해당 단계로 이동할 때 쓰는 타임라인 */
   const tlRef = useRef<gsap.core.Timeline | null>(null);
-  /** 모바일(1024px 미만): 스크롤 고정 대신 공정 이름을 누르면 그 장면으로 재생(2026-10-19) */
+  /** 모바일(1024px 미만): 스크롤 고정 대신 공정 이름을 누르면 그 장면으로 재생 */
   const tapMode = useRef(false);
 
   const steps = finishingProcesses;

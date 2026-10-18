@@ -87,7 +87,7 @@ export type LogoPlacement = keyof typeof logoPlacement;
 export const logoAlt = "YY CORPORATION";
 
 /**
- * 로고 색 버전 (2026-10-14 결정)
+ * 로고 색 버전
  * - official: 공식 키컬러. 헤더·메뉴·인트로·푸터 등 "로고로서" 쓰는 모든 자리에 사용한다.
  * - monoCharcoal / monoWhite: 원본 사본에서 fill 값 두 개만 바꾼 파생본(형태 동일).
  *   로고 자리에는 쓰지 않고, 이후 디자인 단계에서 반투명 그래픽 요소로만 활용한다.

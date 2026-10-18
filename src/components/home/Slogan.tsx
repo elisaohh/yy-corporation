@@ -4,7 +4,7 @@ import { Pending } from "@/components/ui/Pending";
 import { slogan } from "@/data/home";
 
 /**
- * ⑤ 슬로건 '병 하나, 처음부터 끝까지' — 2026-10-15 A안 확정.
+ * ⑤ 슬로건 '병 하나, 처음부터 끝까지'.
  * 미스트 배경 + 굵은 글씨 + 반투명 로고 그래픽(단색 파생본 — 그래픽 전용 규칙).
  */
 export function Slogan() {

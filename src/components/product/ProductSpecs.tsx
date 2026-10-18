@@ -2,7 +2,7 @@ import { Pending } from "@/components/ui/Pending";
 import type { Product } from "@/data/products";
 
 /**
- * 규격 표 — 제품 코드 · 용량 · 사이즈 (기획서 2.0 §4.3). 재질 · MOQ는 2026-10-16 사용자 요청으로 표시하지 않는다(데이터는 products.ts에 유지).
+ * 규격 표 — 제품 코드 · 용량 · 사이즈 (기획서 2.0 §4.3). 재질 · MOQ는 표시하지 않는다(데이터는 products.ts에 유지).
  * 병목 규격은 값이 있을 때만 표시한다. 값이 없으면 "—"로 두고 임의 값을 넣지 않는다.
  */
 export function ProductSpecs({ product }: { product: Product }) {
