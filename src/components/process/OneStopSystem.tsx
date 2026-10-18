@@ -160,8 +160,6 @@ export function OneStopSystem() {
             </article>
           ))}
         </div>
-
-        <p className="mt-8 text-[12px] leading-[1.7] text-ash">현장 사진은 생산 및 관리 환경을 보여주는 참고 자료이며, 각 항목의 실제 작업 장면을 의미하지 않습니다. 후가공 · 부자재 사진은 현장 사진을 바탕으로 편집했거나 이해를 돕기 위해 생성한 이미지입니다.</p>
       </div>
     </section>
   );

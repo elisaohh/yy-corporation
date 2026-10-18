@@ -12,7 +12,7 @@ import { AssetImage } from "@/components/media/AssetImage";
 
 import { processScene } from "@/data/home";
 
-import { exampleNotice, finishingProcesses } from "@/data/process";
+import { finishingProcesses } from "@/data/process";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -437,10 +437,7 @@ export function ProcessMotion() {
 
           </div>
 
-          <p className="mt-4 text-[13px] text-charcoal/70 lg:hidden">공정 이름을 누르면 표면이 바뀌어요.</p>
-          <p className="mt-6 max-w-[36ch] text-[12px] leading-snug text-ash lg:mt-10">{exampleNotice}</p>
-
-          <Link href="/process" className="link-en mt-2 hidden lg:inline-flex">
+          <Link href="/process" className="link-en mt-10 hidden lg:inline-flex">
 
             PROCESS →
 
