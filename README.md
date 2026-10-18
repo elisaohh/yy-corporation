@@ -1,7 +1,9 @@
 # YY CORPORATION 웹사이트 프로토타입
 
 화장품 패키징 B2B 기업 YY CORPORATION의 인터랙티브 웹사이트 프로토타입입니다.
-기획 기준은 `기획서.md`(v2.0), 결정 기록은 `docs/decisions.md`, 자산 현황은 `docs/asset-inventory.md`에 있습니다.
+**처음 보는 분은 `docs/HANDOFF.md`(인수인계 문서)부터 읽어 주세요** — 구조 · 콘텐츠 수정 위치 · 이미지 파이프라인 · 디자인 토큰 · 모션 · 남은 요청사항이 정리돼 있습니다.
+
+기획 기준은 `기획서.md`(v2.0), 결정 기록은 `docs/decisions.md`, 로컬 수정 방법은 `docs/local-editing.md`에 있습니다.
 
 ## 실행
 
