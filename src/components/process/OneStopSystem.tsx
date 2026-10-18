@@ -53,13 +53,13 @@ const sections: Section[] = [
     title: "후가공",
     en: "SURFACE FINISHING",
     description: "코팅·인쇄·부식·라벨 등 다양한 후가공을 통해 브랜드에 맞는 색상과 표면 질감을 구현합니다.",
-    // 실사(2026-10-16 사용자 제공: 자료/02_후가공/작업사진/{coating,printing,etching,labeling}-01.jpg → build-onestop-photos)
+    // 사진: 현장 사진을 바탕으로 편집한 이미지(2026-10-19, 자료/02_후가공/작업사진/{coating,printing,etching,labeling}-01.jpg)
     kind: "track",
     items: [
-      { en: "COATING", ko: "코팅", src: `${BASE}/coating-01.webp`, alt: "코팅 라인에 걸린 유리병과 작업자" },
-      { en: "PRINTING", ko: "인쇄", src: `${BASE}/printing-01.webp`, alt: "인쇄기가 늘어선 작업장과 작업자" },
-      { en: "ETCHING", ko: "부식", src: `${BASE}/etching-01.webp`, alt: "부식 설비 컨베이어 위의 유리병" },
-      { en: "LABELING", ko: "라벨", src: `${BASE}/labeling-01.webp`, alt: "라벨 설비 앞에서 작업하는 작업자와 트레이에 놓인 유리병" },
+      { en: "COATING", ko: "코팅", src: `${BASE}/coating-01.webp`, alt: "스프레이 건으로 유리병에 코팅을 뿌리는 설비" },
+      { en: "PRINTING", ko: "인쇄", src: `${BASE}/printing-01.webp`, alt: "초록색 실크인쇄 설비 앞의 작업자 뒷모습" },
+      { en: "ETCHING", ko: "부식", src: `${BASE}/etching-01.webp`, alt: "부식 설비 컨베이어에 거꾸로 꽂힌 유리병" },
+      { en: "LABELING", ko: "라벨", src: `${BASE}/labeling-01.webp`, alt: "갈색 유리병에 라벨을 붙이는 설비" },
     ],
   },
   {
@@ -67,12 +67,13 @@ const sections: Section[] = [
     en: "COMPONENTS",
     // 문구: ABOUT · OUR BUSINESS 02(사용자 제공 문구)
     description: "유리용기와의 결합과 호환성을 고려하여 캡, 펌프, 스포이드 등 다양한 부자재를 함께 제안합니다.",
-    // 스포이드: 실사(dropper-01). 펌프 · 스프레이: 사용자 제공 생성 이미지(pump-01 · spray-01, 2026-10-16) — 실제 작업 장면 아님
+    // 스포이드 · 유리관: 현장 사진을 바탕으로 편집(dropper-01 · tube-01). 펌프 · 스프레이: 생성 이미지(pump-01 · spray-01)
     kind: "track",
     items: [
-      { en: "DROPPER", ko: "스포이드", src: `${BASE}/dropper-01.webp`, alt: "스포이드 부자재를 조립 · 검수하는 작업대" },
-      { en: "PUMP", ko: "펌프", src: `${BASE}/pump-01.webp`, alt: "작업대에 줄지어 세워 둔 펌프 부자재와 작업자 — 생성 이미지" },
-      { en: "SPRAY", ko: "스프레이", src: `${BASE}/spray-01.webp`, alt: "스프레이에 투명 캡을 끼우는 손 — 생성 이미지" },
+      { en: "DROPPER", ko: "스포이드", src: `${BASE}/dropper-01.webp`, alt: "스포이드 고무를 금형에서 떼어 내는 작업" },
+      { en: "GLASS TUBE", ko: "유리관", src: `${BASE}/tube-01.webp`, alt: "불꽃으로 유리관을 가열하는 성형 설비" },
+      { en: "PUMP", ko: "펌프", src: `${BASE}/pump-01.webp`, alt: "작업대에 줄지어 세워 둔 펌프 부자재와 작업자" },
+      { en: "SPRAY", ko: "스프레이", src: `${BASE}/spray-01.webp`, alt: "스프레이에 투명 캡을 끼우는 손" },
     ],
   },
   {
@@ -160,7 +161,7 @@ export function OneStopSystem() {
           ))}
         </div>
 
-        <p className="mt-8 text-[12px] leading-[1.7] text-ash">현장 사진은 생산 및 관리 환경을 보여주는 참고 자료이며, 각 항목의 실제 작업 장면을 의미하지 않습니다. 부자재의 펌프 · 스프레이 사진은 이해를 돕기 위한 생성 이미지입니다.</p>
+        <p className="mt-8 text-[12px] leading-[1.7] text-ash">현장 사진은 생산 및 관리 환경을 보여주는 참고 자료이며, 각 항목의 실제 작업 장면을 의미하지 않습니다. 후가공 · 부자재 사진은 현장 사진을 바탕으로 편집했거나 이해를 돕기 위해 생성한 이미지입니다.</p>
       </div>
     </section>
   );

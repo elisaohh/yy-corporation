@@ -36,6 +36,8 @@ export function ProcessMotion() {
   const sectionRef = useRef<HTMLElement>(null);
   /** 공정 이름을 누르면 해당 단계로 이동할 때 쓰는 타임라인 */
   const tlRef = useRef<gsap.core.Timeline | null>(null);
+  /** 모바일(1024px 미만): 스크롤 고정 대신 공정 이름을 누르면 그 장면으로 재생(2026-10-19) */
+  const tapMode = useRef(false);
 
   const steps = finishingProcesses;
 
@@ -127,11 +129,14 @@ export function ProcessMotion() {
 
         // 휠/터치 입력을 가로채지 않으므로 역스크롤도 자연스럽게 복원된다.
 
+        // 모바일: 고정 · 스크롤 연결 없이 멈춘 타임라인 — 공정 이름을 누르면 그 장면까지 재생(goTo)
+        tapMode.current = !desktop;
         const tl = gsap.timeline({
 
           defaults: { ease: "none" },
+          paused: !desktop,
 
-          scrollTrigger: {
+          scrollTrigger: !desktop ? undefined : {
 
             trigger: section,
 
@@ -237,10 +242,15 @@ export function ProcessMotion() {
         // MATCH 완료 후 잠깐 완성된 병을 보여주고 다음 PRODUCT로 연결.
         // 마지막 화면을 별도로 오래 붙잡지 않고, 스크롤을 되돌리면 역재생된다.
         tl.addLabel(`step${steps.length}`, match + 1.95);
-        const finish = match + 2.1;
-        tl.to(panel, { autoAlpha: 0, y: -12, duration: 0.55, ease: "sine.inOut" }, finish)
-          .to(stage, { autoAlpha: 0, y: -22, duration: 0.7, ease: "sine.inOut" }, finish + 0.1)
-          .addLabel("end");
+        if (desktop) {
+          const finish = match + 2.1;
+          tl.to(panel, { autoAlpha: 0, y: -12, duration: 0.55, ease: "sine.inOut" }, finish)
+            .to(stage, { autoAlpha: 0, y: -22, duration: 0.7, ease: "sine.inOut" }, finish + 0.1)
+            .addLabel("end");
+        } else {
+          // 모바일: 화면에 들어오면 첫 공정(COATING)까지 한 번 재생 — 이후는 누를 때마다
+          ScrollTrigger.create({ trigger: stage, start: "top 65%", once: true, onEnter: () => tl.tweenTo("step0", { duration: 1.6, ease: "power2.inOut" }) });
+        }
 
 
       },
@@ -255,11 +265,16 @@ export function ProcessMotion() {
     };
   }, []);
 
-  /** 공정 이름 클릭 → 그 공정이 끝난 장면으로 스크롤 */
+  /** 공정 이름 클릭 → 데스크톱: 그 공정이 끝난 장면으로 스크롤 / 모바일: 그 장면까지 재생(앞 · 뒤 모두) */
   const goTo = (i: number) => {
-    const st = tlRef.current?.scrollTrigger;
-    if (!st) return;
-    window.scrollTo({ top: st.labelToScroll(`step${i}`), behavior: "smooth" });
+    const tl = tlRef.current;
+    if (!tl) return;
+    if (tapMode.current) {
+      tl.tweenTo(`step${i}`, { duration: 1.4, ease: "power2.inOut" });
+      return;
+    }
+    const st = tl.scrollTrigger;
+    if (st) window.scrollTo({ top: st.labelToScroll(`step${i}`), behavior: "smooth" });
   };
 
   return (
@@ -422,6 +437,7 @@ export function ProcessMotion() {
 
           </div>
 
+          <p className="mt-4 text-[13px] text-charcoal/70 lg:hidden">공정 이름을 누르면 표면이 바뀌어요.</p>
           <p className="mt-6 max-w-[36ch] text-[12px] leading-snug text-ash lg:mt-10">{exampleNotice}</p>
 
           <Link href="/process" className="link-en mt-2 hidden lg:inline-flex">
