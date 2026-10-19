@@ -15,7 +15,7 @@
 | 시간 토큰 | fast 200ms · base 300ms · page 400ms · reveal 600ms |
 | PC / 모바일 기준 | 레이아웃 768px(`md`) · 1200px(`lg`). **HOME 히어로 마우스 · 공정 모션 고정은 1024px 이상 + 마우스(pointer: fine)** |
 | 동작 줄이기 | OS의 "동작 줄이기(prefers-reduced-motion: reduce)"가 켜져 있으면 **모든 모션을 끄고 완성된 화면을 바로 보여 줌**(CSS 전체 `transition/animation 0.01ms`, GSAP 모션은 시작하지 않음) |
-| 검수용 | 주소에 `?still` → 등장 모션 없이 완성 화면(캡처 · 피그마 가져오기용) |
+| 검수용 | 주소에 `?still` → 로딩 · 등장 모션 · 공정 모션 고정 없이 완성 화면(캡처 · 피그마 가져오기용, 배포 사이트에서도 동작) |
 | GSAP 기본 | `gsap.matchMedia()`로 PC · 모바일 · 동작 줄이기를 나눠 등록하고, 화면 크기가 바뀌면 자동으로 다시 등록 |
 
 ---

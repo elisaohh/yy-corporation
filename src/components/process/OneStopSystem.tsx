@@ -4,6 +4,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useRef } from "react";
 import { Reveal } from "@/components/motion/Reveal";
+import { isStill } from "@/lib/still";
 import { StripAccordion, type TrackItem } from "@/components/process/StripAccordion";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -98,6 +99,7 @@ export function OneStopSystem() {
     if (!section) return;
     const mm = gsap.matchMedia();
     mm.add("(prefers-reduced-motion: no-preference)", () => {
+      if (isStill()) return;
       gsap.utils.toArray<HTMLElement>("[data-shift]", section).forEach((el) => {
         const shift = Number(el.dataset.shift);
         if (!shift) return;

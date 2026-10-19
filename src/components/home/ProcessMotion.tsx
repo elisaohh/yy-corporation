@@ -13,6 +13,7 @@ import { AssetImage } from "@/components/media/AssetImage";
 import { processScene } from "@/data/home";
 
 import { finishingProcesses } from "@/data/process";
+import { isStill } from "@/lib/still";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -90,9 +91,9 @@ export function ProcessMotion() {
 
 
 
-        if (context.conditions?.reduce) {
+        if (context.conditions?.reduce || isStill()) {
 
-          // 모션 줄이기: 라벨 표면 + 체결된 스포이드, 목록만 정지 상태로
+          // 모션 줄이기 · ?still: 라벨 표면 + 체결된 스포이드, 목록만 정지 상태로(고정 없음)
 
           gsap.set(layers, { clipPath: "inset(0% 0% 0% 0%)" });
 
