@@ -1,9 +1,11 @@
 "use client";
 
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useId, useRef, useState, type ChangeEvent, type FormEvent } from "react";
 import { Pending } from "@/components/ui/Pending";
 import { contactCopy } from "@/data/content";
+import { privacyConsentSummary } from "@/data/privacy";
 import { getProductById, productInquiryLabel } from "@/data/products";
 
 /**
@@ -231,11 +233,17 @@ export function InquiryForm() {
         <details className="ml-8 text-[13px] text-ash">
           <summary className="w-fit cursor-pointer py-1 underline underline-offset-4">수집 항목과 이용 목적 보기</summary>
           <div className="mt-2 border-l border-stone pl-4 leading-[1.7]">
-            {contactCopy.privacySummary ?? (
-              <>
-                개인정보 수집 · 이용 안내문은 확정 후 반영됩니다. <Pending label="문구 추후 확정" />
-              </>
-            )}
+            <dl className="grid gap-1">
+              {privacyConsentSummary.map(([k, v]) => (
+                <div key={k} className="grid grid-cols-[64px_minmax(0,1fr)] gap-3">
+                  <dt>{k}</dt>
+                  <dd className="text-charcoal/80">{v}</dd>
+                </div>
+              ))}
+            </dl>
+            <Link href="/privacy" target="_blank" className="mt-2 inline-block underline underline-offset-4 hover:text-charcoal">
+              개인정보 처리방침 전문 보기
+            </Link>
           </div>
         </details>
         {consentError && (

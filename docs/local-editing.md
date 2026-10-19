@@ -32,6 +32,7 @@ npm.cmd run dev
 | PROCESS TURN-KEY 4항목 · 사진 | `src/components/process/OneStopSystem.tsx` 위쪽 `sections` |
 | PROCESS · PRODUCT 제목 배경 | `src/app/process/page.tsx`의 `INTRO_VIDEO`, `src/app/products/page.tsx`의 `INTRO_IMAGE` |
 | CONTACT 문구 · 문의 결과 안내 | `src/data/content.ts` |
+| 개인정보 처리방침 · 문의 폼 동의 요약 | `src/data/privacy.ts` |
 | 회사 정보 (주소 · 전화 · 이메일 — 푸터 · CONTACT 공통) | `src/data/company.ts` |
 | 색 · 글꼴 · 간격 | `src/app/globals.css` 맨 위 `@theme` |
 | 로고 위치별 배정 · 크기 | `src/data/brand.ts` |
@@ -106,7 +107,8 @@ npm.cmd run build
 - 기준병 치수 확정: 37.0 × 75.8(치수 파일) vs 38.0 × 74.4(제품규격표)
 - HOME 공정 모션 인쇄 단독 이미지(현재 코팅 후 인쇄로 대체)
 - 재질 · MOQ를 제품 화면에 다시 표시할지
-- 현장 사진 공개 권한 · 개인정보처리방침 — `docs/asset-inventory.md` "공개 전 확인할 것"
+- 현장 사진 공개 권한 — `docs/asset-inventory.md` "공개 전 확인할 것"
+- 개인정보 처리방침 제5조 수탁자 · 위탁업무 `[ ]` 칸 채우기(문의 접수 서비스 확정 후)
 - `/logo-check` 페이지 · 미사용 코드는 배포 전 삭제 — `docs/HANDOFF.md` 11장
 - 기능 추가 요청(STORY · PRODUCT 관리, 문의 전송) — `docs/HANDOFF.md` 12장
 - 결정 기록: `docs/decisions.md`, 자산 현황: `docs/asset-inventory.md`, 원본 쓰임: `자료/README.md`

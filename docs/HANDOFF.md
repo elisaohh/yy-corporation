@@ -76,6 +76,7 @@ docs/                    이 문서 · 모션 명세(MOTION.md) · 결정 기록
 | `/products/[slug]` | 제품 상세(갤러리 · 규격 · 문의 버튼) | `app/products/[slug]/page.tsx` |
 | `/process` | 제목(배경 영상) → From Idea to Delivery(흐름도) → PACKAGING TURN-KEY 4항목 → CTA | `components/process/*`, `data/process.ts` |
 | `/contact` | 지도(구글 퍼가기 + 네이버 지도 버튼) · 회사 정보 · 문의 폼 | `app/contact/page.tsx`, `components/contact/InquiryForm.tsx` |
+| `/privacy` | 개인정보 처리방침(14개 조항 · 목차, 시행일 2026.11.19) — 푸터 · 문의 폼 동의란에서 연결 | `app/privacy/page.tsx`, `data/privacy.ts` |
 
 메뉴: 헤더 ABOUT(▾ COMPANY · STORY) · PRODUCT · PROCESS · CONTACT — `data/navigation.ts` 한 곳에서 헤더 · 모바일 메뉴 · 푸터가 함께 바뀝니다. HOME은 로고로 이동합니다.
 
@@ -93,6 +94,7 @@ docs/                    이 문서 · 모션 명세(MOTION.md) · 결정 기록
 | PROCESS TURN-KEY 항목 · 사진 | `src/components/process/OneStopSystem.tsx` 상단 `sections` |
 | PROCESS · PRODUCT 제목 배경 | 각 `app/*/page.tsx` 상단 `INTRO_VIDEO` / `INTRO_IMAGE` |
 | CONTACT 문구 · 문의 결과 안내 | `src/data/content.ts` |
+| 개인정보 처리방침 전문 · 문의 폼 동의 요약 | `src/data/privacy.ts` |
 | 로고 파일 · 크기 | `src/data/brand.ts` |
 | 문구 상태 | `status: final / draft / missing` — 미확정 문구는 draft로 두고 docs에서 관리 |
 
@@ -204,7 +206,7 @@ docs/                    이 문서 · 모션 명세(MOTION.md) · 결정 기록
 | 항목 | 현재 상태 |
 |---|---|
 | 문의 폼 | **실제 전송 안 됨**. 입력 검증 · 제품 자동 채움(`?product=`)까지만 동작하고, 보내기 후 "데모 화면입니다" 안내가 나옵니다(`submitInquiry` 함수만 교체하면 되도록 분리) |
-| 개인정보 | 수집 · 이용 동의 문구(`privacySummary`)가 비어 있고, 개인정보처리방침 페이지가 없습니다 |
+| 개인정보 | 처리방침 페이지(`/privacy`)와 문의 폼 동의 요약 있음. ⚠ 제5조 수탁자 · 위탁업무의 `[ ]` 칸은 실제 외부 서비스(문의 저장 · 메일 발송 등)가 정해지면 채워야 합니다 |
 | 콘텐츠 관리 | CMS 없음 — 모든 글 · 제품이 코드 안에 있습니다 |
 | 지도 | 구글 지도 퍼가기(API 키 불필요). 네이버 지도를 화면에 넣으려면 네이버 클라우드 지도 API 키가 필요합니다 |
 | 제목 배경 영상 | 7MB(앞 8초는 쓰지 않음). 잘라서 압축하면 2~3MB로 줄일 수 있습니다(ffmpeg) |
@@ -244,7 +246,7 @@ docs/                    이 문서 · 모션 명세(MOTION.md) · 결정 기록
 - 보내기 → **담당 메일(sales@yycorp.co.kr) 수신** + 문의자에게 접수 확인 메일
 - 문의 내역 저장(관리 화면에서 목록 · 상태 관리)
 - 스팸 방지(Cloudflare Turnstile / reCAPTCHA, 전송 횟수 제한)
-- 개인정보 수집 · 이용 동의 문구 확정 + 동의 기록 저장
+- 개인정보 동의 기록 저장(동의 문구 · 처리방침은 준비됨 — 사용하는 외부 서비스를 처리방침 제5조 · 제6조에 반영)
 - 첨부 파일(참고 이미지 · 도면) 업로드 — 선택
 - 제품 상세의 "문의" 버튼 → 제품 자동 채움은 이미 동작합니다
 
@@ -252,7 +254,6 @@ docs/                    이 문서 · 모션 명세(MOTION.md) · 결정 기록
 
 | 우선 | 제안 | 이유 |
 |---|---|---|
-| 높음 | **개인정보처리방침 페이지 + 푸터 링크** | 문의 폼으로 개인정보를 받으므로 법적으로 필요 |
 | 높음 | **도메인 · 호스팅 · 배포 자동화**(예: Vercel + GitHub 연결) | 지금은 로컬 실행만 가능 |
 | 높음 | **SEO 기본 세팅** — 페이지별 제목 · 설명, OG 이미지(공유 미리보기), sitemap.xml, robots.txt, 네이버 서치어드바이저 · 구글 서치콘솔 등록 | B2B 검색 유입 |
 | 높음 | 방문 분석(GA4 또는 네이버 애널리틱스) + 문의 전환 측정 | 어떤 제품 · 글이 문의로 이어지는지 확인 |

@@ -18,5 +18,4 @@ export const contactCopy = {
   demoNotice: "이 페이지는 시연용입니다. 보내기를 눌러도 문의가 실제로 전송되지 않습니다.",
   demoResultTitle: "데모 화면입니다.",
   demoResultBody: "입력하신 내용은 저장되거나 전송되지 않았습니다. 실제 문의는 회사 대표 연락처로 해 주세요.",
-  privacySummary: null as string | null,
 };

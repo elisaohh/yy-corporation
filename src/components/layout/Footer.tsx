@@ -82,10 +82,13 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="container-yy border-t border-stone py-6 text-[12px] text-ash">
+      <div className="container-yy flex flex-wrap items-center justify-between gap-x-6 gap-y-2 border-t border-stone py-6 text-[12px] text-ash">
         <p className="font-en tracking-[0.04em]">
           © {year} {copyrightName}. All rights reserved.
         </p>
+        <Link href="/privacy" className="inline-flex min-h-8 items-center font-semibold text-charcoal underline-offset-4 hover:underline">
+          개인정보 처리방침
+        </Link>
       </div>
     </footer>
   );
