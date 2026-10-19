@@ -11,7 +11,7 @@ import { productImageAssets } from "./productImages";
  *
  * src가 null이면 화면에는 "임시" 표시가 붙은 자리표시자가 나온다.
  * 스톡 사진이나 존재하지 않는 제품 이미지를 넣지 않는다.
- * 공개 권한이 확인되지 않은 자료(공장 사진 등)는 public/ 에 두지 않는다 — docs/asset-candidates.md 참고.
+ * 현장 사진 등 공개 전에 확인할 사항은 docs/asset-inventory.md "공개 전 확인할 것" 참고.
  */
 
 export type AssetStatus = "placeholder" | "final";
@@ -49,7 +49,7 @@ const baseAssets = {
     width: 1920,
     height: 1080,
     status: "placeholder",
-    note: "기준 유리병 YS-SRRR20-01 기반 포스터 제작 예정",
+    note: "heroMode \"poster\"일 때만 사용 — 기준 유리병 YS-SRRR30-04 기반 포스터(미제작)",
   },
   heroPosterMobile: {
     kind: "image",

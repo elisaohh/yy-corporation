@@ -1,78 +1,105 @@
-# 자산 목록
+# 자산 목록 (2026-10-19 기준)
 
-상태: **final** 실제 자료 / **placeholder** 임시 / **missing** 아직 없음 / **보류** 권한 확인 전 비공개
+원본은 `자료/` 폴더(Git 제외, `.gitignore`)에 두고, 사이트에는 `public/assets/`의 웹용 사본만 씁니다.
+원본 파일별 쓰임 · 다시 만드는 명령은 `자료/README.md`, 변환 방법 요약은 `docs/HANDOFF.md` 7장에 있습니다.
 
-원본 자료는 `자료/` 폴더에 두고 Git에서 제외한다(`.gitignore`). 사이트에는 `public/`의 웹용 사본만 쓴다.
+구분: **실제** 실제 제품 · 현장 사진 / **편집** 현장 사진을 바탕으로 편집 / **생성** 생성 이미지
 
-## 브랜드
+## 브랜드 (`public/assets/brand/`, `src/data/brand.ts`)
 
-| 파일 (public/) | 원본 (/LOGO) | 용도 | 상태 |
-|---|---|---|---|
-| assets/brand/yy-logo-basic-corp.svg | 기본 로고.svg | PC·모바일 헤더, 모바일 메뉴 | final |
-| assets/brand/yy-logo-vertical-corporation.svg | 세로 로고(1).svg | 로더 | final |
-| assets/brand/yy-logo-horizontal-corporation.svg | 가로 로고(1).svg | 푸터 | final |
-| assets/brand/yy-logo-horizontal-korean.svg | 가로 로고(2).svg | 예비 | final |
-| assets/brand/yy-logo-vertical-korean.svg | 세로 로고(2).svg | 예비 | final |
-| assets/brand/yy-logo-vertical-corp.svg | 세로 로고(3).svg | 예비 | final |
-
-- 사본은 원본과 바이트 단위로 동일(`cmp` 확인). `.gitattributes`에서 줄바꿈 변환을 막았다.
-
-### 파생본 (로고 자리에는 사용하지 않음)
-
-| 파일 (public/assets/brand/derived/) | 변경 내용 | 상태 |
+| 파일 | 원본 (`LOGO/`) | 용도 |
 |---|---|---|
-| yy-logo-*--mono-charcoal.svg (6개) | 스타일의 fill 값 2개 → #2b2b2a. path·viewBox 동일 | 반투명 그래픽 전용 |
-| yy-logo-*--mono-white.svg (6개) | 스타일의 fill 값 2개 → #ffffff. path·viewBox 동일 | 반투명 그래픽 전용 |
+| yy-logo-horizontal-corporation.svg | 가로 로고(1).svg | 헤더 · 모바일 메뉴 · 푸터 |
+| yy-logo-vertical-corporation.svg | 세로 로고(1).svg | 로딩 화면 |
+| yy-logo-basic-corp.svg | 기본 로고.svg | 예비 |
+| yy-logo-horizontal-korean.svg · yy-logo-vertical-korean.svg · yy-logo-vertical-corp.svg | 가로(2) · 세로(2) · 세로(3) | 예비 |
+| derived/yy-logo-*--mono-charcoal.svg · --mono-white.svg (각 6개) | 위 로고의 단색 파생본(fill만 변경) | 반투명 그래픽 전용(로고 자리에는 쓰지 않음) |
 
-## 기준 유리병 (data/reference.ts)
+- 사본은 원본과 바이트 단위로 동일. 위치별 로고 배정은 `brand.ts`에서 바꿉니다.
 
-| 항목 | 값 | 출처 |
+## HOME (`public/assets/hero/`, `src/data/assets.ts` · `home.ts`)
+
+| 파일 | 용도 | 구분 | 원본 → 명령 |
+|---|---|---|---|
+| hero-base.webp, hero-drop-1~14.webp | 히어로 — 병 층 + 떠다니는 물방울 14개 | 생성 | `자료/07_히어로/` → `build-hero-layers.mjs` |
+| proc-clear · proc-coating · proc-printing · proc-etching · proc-label.webp | 공정 모션 병 장면 5장(900×1600, 같은 좌표) | 생성 | `자료/01_기준유리병/사진/YS-SRRR30-04*.png` → `build-process-images.mjs` |
+| dropper.webp → dropper-cap · dropper-pipette.webp | 공정 모션 스포이드(캡 · 피펫 분리, 피펫 200px 축소) | — | `build-dropper-parts.mjs` |
+
+- 공정 모션 코팅 = 분홍 그라데이션, 인쇄 = 코팅 위 인쇄(인쇄 단독 이미지 없음), 라벨 = 부식 후 라벨.
+- 라벨이 피펫을 가리는 높이 `home.ts`의 `labelBand` = 48.8~75.4%(라벨 이미지를 바꾸면 다시 잼).
+- `assets.ts`의 `heroPoster` · `heroPosterMobile`은 `heroMode: "poster"`일 때만 쓰는 자리(현재 `float`라 미사용, 파일 없음).
+
+## 기준 유리병 (`src/data/reference.ts`)
+
+| 항목 | 값 |
+|---|---|
+| 제품 코드 | YS-SRRR30-04 · 30ml · 병목 18파이 |
+| 치수 | ⚠ 미확정 — 치수 파일 37.0 × 75.8 vs 제품규격표 38.0 × 74.4 (확인 전까지 화면에 표시하지 않음) |
+
+## PRODUCT (`public/assets/products/<코드>/`, `src/data/products.ts` · `productImages.ts`)
+
+원본 `자료/03_제품/제품사진/<코드>_<컷>.png` → `<코드>_<컷>.webp` + `-thumb.webp` (`build-product-images.mjs`)
+
+| 제품 코드 | 컷 | 규격 | 구분 |
+|---|---|---|---|
+| YS-SRRR15-01 | 01 · 02 · 03 · 04 | 15ml · 31.5 × 64.0 · Ø18 | 실제 |
+| YS-SRRR20-01 | 01 · 02 · 03 · 04 | 20ml · 33.7 × 68.7 · Ø18 | 실제 |
+| YS-SRRR30-02 | 01 · 02 · 03 · 04 | 30ml · 38.0 × 71.3 · Ø18 | 실제 |
+| YS-SRRR30-04 | 01 · 02 · 03 · 04 | 30ml · 38.0 × 74.4 · Ø18 | 실제 |
+| YS-SRRR50-02 | 01 · 02 · 03 · 04 | 50ml · 38.0 × 99.2 · Ø18 | 실제 |
+
+- 규격 출처: `자료/03_제품/제품규격/제품규격.txt`(가로 × 세로).
+- 컷: 01 스포이드 결합 정면 · 02 병 단독 · 03 분리 · 04 색상 · 질감 변형(한 이미지에 3종 — 개별 제품 아님).
+- 원본이 600px — 고해상도(1600px 이상) 원본을 받으면 스크립트를 다시 실행합니다.
+- 재질 · MOQ 값은 데이터에만 있고 화면에는 표시하지 않습니다.
+- PRODUCT 머리 영역 배경은 HOME 히어로 사진(`hero-base.webp`, 생성)을 씁니다(`app/products/page.tsx`의 `INTRO_IMAGE`).
+
+## ABOUT (`public/assets/about/`, `src/data/about.ts` `aboutVisuals`)
+
+| 파일 | 용도 | 구분 |
 |---|---|---|
-| 제품 코드 | YS-SRRR20-01 | 자료/01_기준유리병 |
-| 용량 | 20ml (기획서의 30ml에서 변경) | 치수 메모 · 2026-10-14 결정 |
-| 병목 | 18파이 | 치수 메모 |
-| 크기 | 33.7 × 68.7 (가로 × 세로, 단위 표기 없음) | 치수 메모 · 사용자 확인 |
-| 3D 기준 사진 | YS-SRRR20-01 _01 결합 정면 · _02 병 단독 · _03 분리 (600px) | 자료/03_제품 |
-| 미확인 | 바닥 두께, 어깨 곡률, 스포이드 길이 · 벌브 지름 · 유리관 길이 | — |
+| 01a-story-main.webp · 01b-story-sub.webp | Story 사진 2장 | 생성 |
+| 02-glass-packaging · 03-component-sourcing · 04-decoration · 05-global-sourcing.webp | Business 4항목 | 생성 |
 
-## 제품 사진 (data/productImages.ts)
+원본 `자료/08_ABOUT/*-generated.*` → `build-about-images.mjs`. 실제 YY 제품 · 시설로 소개하지 않습니다.
 
-원본 `자료/03_제품/제품사진/*.png` → 사본 `public/assets/products/<코드>/<코드>_<컷>.webp` + `-thumb.webp`
-(`node scripts/build-product-images.mjs`, 원본 PNG 약 7MB → WebP 약 376KB)
+## PROCESS (`public/assets/process/`)
 
-| 제품 코드 | 컷 | 규격 | 상태 |
-|---|---|---|---|
-| YS-SRRR15-01 | 02 · 03 · 04 (01 없음 → 02를 대표로 사용) | 미확인 | final (600px) |
-| YS-SRRR20-01 | 01 · 02 · 03 · 04 | 20ml · 33.7×68.7 · MOQ 5,000 · 유리 · 넥 18파이 | final (600px) |
-| YS-SRRR30-02 | 01 · 02 · 03 · 04 | 미확인 | final (600px) |
-| YS-SRRR30-04 | 01 · 02 · 03 · 04 | 미확인 | final (600px) |
-| YS-SRRR50-02 | 01 · 02 · 03 · 04 | 미확인 | final (600px) |
+| 파일 | 용도 | 구분 |
+|---|---|---|
+| process-intro.mp4 (1920×1080, 7MB) | 제목 배경 영상 — 8초 이후 반복 · 1.25배 확대 | 실제 |
+| process-flow.png | From Idea to Delivery 흐름도 | — |
+| onestop/glass-01 · glass-02.webp | TURN-KEY 01 유리 성형 | 실제 |
+| onestop/coating · printing · etching · labeling-01.webp | 02 후가공 4칸 | 편집 |
+| onestop/dropper-01 · tube-01.webp | 03 부자재 — 스포이드(고무) · 유리관 | 편집 |
+| onestop/pump-01 · spray-01.webp | 03 부자재 — 펌프 · 스프레이 | 생성 |
+| onestop/delivery-01 · delivery-02.webp | 04 입고 및 납품 | 실제 |
 
-- 컷 규칙: 01 스포이드 결합 정면 · 02 병 단독 · 03 분리 · 04 색상·질감 변형(한 이미지에 3종, 개별 제품 아님).
-- 흰 배경(15-01, 20-01, 30-02_04)과 투명 배경이 섞여 있어 화면에서는 multiply 혼합으로 카드 바탕에 맞춘다.
-- 원본이 600px라 상세 큰 이미지에서 다소 흐릴 수 있음 → 고해상도(1600px 이상) 원본 확보 시 스크립트 재실행.
+원본 `자료/02_후가공/작업사진/<종류>-01.jpg` → `build-onestop-photos.mjs`. 영상은 `자료/09_PROCESS/`에서 같은 이름으로 복사.
+화면의 "생성 · 편집 이미지" 안내 문구는 회사 요청으로 표시하지 않습니다.
 
-## 이미지 · 영상 · 3D (data/assets.ts)
+## STORY (`public/assets/story/`, `src/data/story.ts`)
 
-| ID | 용도 | 상태 | 필요한 자료 |
-|---|---|---|---|
-| heroPoster · heroPosterMobile | HOME 인트로 포스터 | missing | 기준병 기반 렌더/촬영 |
-| svcFind · svcDress · svcMatch · svcDeliver | HOME 사업 역량 이미지 | placeholder (회색 도형) | 3D 제품 + 그래픽 제작 |
-| (공정 사진) | PROCESS | missing | 코팅 · 인쇄 · 부식 · 라벨 결과 사진, 공식 후가공 목록 |
-| (3D 모델) | HOME · PROCESS | missing | 기준병 사진 기반 제작 예정 |
+| 파일 | 용도 |
+|---|---|
+| vol01-01 · vol01-02.webp | YY NOTES Vol.01 — 한강 노을 · 이달의 프리몰드 병 |
+| vol02-01 · vol02-02.webp | YY NOTES Vol.02 — 나무 그늘 · 세 단어 이미지 |
 
-## 공개 보류
+뉴스레터 HTML 안의 사진을 꺼낸 것(가장 작은 사진 528px — 원본보다 키우지 않음). `자료/10_STORY/` → `build-story-images.mjs`.
 
-- 작업 사진 15장 — `docs/asset-candidates.md` 참고. 소유 관계 · 공개 권한 확인 전 사이트 미적용.
+## 회사 정보 (`src/data/company.ts`)
 
-## 회사 정보 (data/company.ts)
+- 상호 · 주소 · 대표번호 · 이메일 — 확인 완료(`confirmed`). 팩스 · 상담 시간은 값이 없어 표시하지 않습니다.
+- 출처: 기존 사이트 푸터(`자료/04_회사정보/회사정보.png`).
 
-- 출처: 기존 사이트 푸터 캡처(`자료/04_회사정보/회사정보.png`). 상태 **unverified** — 화면에 "기존 사이트 기준 · 최신 확인 필요" 표시.
-- 상호 · 대표 · 사업자등록번호 · 주소 · 대표번호 · 이메일 있음. 팩스 · 운영 시간 없음(표시하지 않음).
-- 개인정보처리방침 · 이용약관: 기존 문서 확보 전까지 작성 · 공개하지 않음.
+## 공개 전 확인할 것
 
-## 폴더
+1. **현장 사진 속 시설의 소유 관계** — YY 소유 공장인지 협력 생산처인지. 협력처라면 "자사 공장"으로 읽히는 문구를 쓰지 않습니다(현재 문구는 지킴).
+2. **웹사이트 공개 사용 허락** — 현장 사진 · 영상 촬영처의 허락, 사진 속 작업자(뒷모습 포함)의 동의.
+3. **타사 상호 · 설비 표기 노출** — 편집 이미지에서 대부분 지웠지만 배포 전 한 번 더 확인.
+4. **생성 · 편집 이미지 고지** — 안내 문구를 뺀 상태입니다. 광고 · 표시 관련 문제가 없을지 회사에서 판단이 필요합니다.
+5. **개인정보처리방침 · 이용약관** — 문의 폼 운영 전에 필요합니다(아직 없음).
 
-- `public/assets/brand` 로고 · `public/assets/products` 제품 사진 사본 · `public/assets/placeholders` 임시 도형
-- `public/assets/process` 공정 사진 · `public/assets/hero` 인트로 · `public/assets/models` 3D 모델 (비어 있음)
-- `public/references` 3D 제작 참고(사이트에 노출하지 않음 — 단, public 폴더라 주소로 접근 가능하므로 공개 권한 확인된 자료만)
+## 사용하지 않는 원본 (`자료/_보관/`)
+
+이전 기준병(SRRR30-01) 장면, 안 쓰는 공정 장면, 예전 현장 사진 갤러리 원본(`현장-NN.jpg`), 편집 전 현장 사진(`*-현장원본.jpg`), ABOUT 이전 후보(Pexels), 뉴스레터 로고 등. 목록은 `자료/README.md` 마지막 표.

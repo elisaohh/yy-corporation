@@ -30,29 +30,26 @@ npm run dev
 
 ```text
 src/
-  app/              페이지 (HOME, about, products, process, contact)
-  components/
-    brand/          로고
-    layout/         헤더, 모바일 메뉴, 푸터, TOP 버튼
-    ui/             공통 UI (확인 필요 표시 등)
-  config/site.ts    인트로 방식, 데모 폼, 임시 표시 등 전역 설정
-  data/             메뉴, 로고, 회사 정보, 카테고리, 자산 등록부
-  lib/fonts.ts      Inter + Pretendard
-public/assets/      로고, 제품, 공정, 인트로, 3D 자산
+  app/              페이지 — HOME, about/company, about/story, products, process, contact
+  components/       layout(헤더 · 메뉴 · 푸터 · 머리 영역) · home · about · story · product · process · contact
+  data/             콘텐츠 — 메뉴, 문구, 제품, 뉴스레터, 회사 정보, 이미지 등록부
+  config/site.ts    전역 설정(히어로 방식, 데모 폼, 임시 표시)
+  lib/              폰트(Inter + Pretendard), ?still 도우미
+scripts/            이미지 · 영상 변환(자료/ → public/assets/)
+public/assets/      사이트에 쓰는 로고 · 사진 · 영상
+docs/               HANDOFF(인수인계) · decisions(결정 기록) · asset-inventory(자산 목록) · local-editing(수정 방법)
+자료/               원본 사진 · 영상 — Git에 없음, 별도 전달 (자료/README.md)
 ```
 
-## 자료 교체
+## 콘텐츠 · 자료 바꾸기
 
-- **로고**: `public/assets/brand/`의 파일을 교체하거나 `src/data/brand.ts`의 경로를 바꿉니다. 위치별 로고 배정도 같은 파일에서 바꿉니다.
-- **회사 정보**: `src/data/company.ts`에 확인된 값만 입력합니다. 비어 있으면 화면에 "확인 필요"가 표시됩니다.
-- **이미지·영상·3D**: 파일을 `public/assets/<분류>/`에 넣고 `src/data/assets.ts`의 `src`와 `status`를 바꿉니다.
-- **임시 표시 끄기**: `src/config/site.ts`의 `showPlaceholderLabels`를 `false`로 바꿉니다.
+- 문구 · 제품 · 뉴스레터: `src/data/`의 해당 파일 — 위치 표는 `docs/HANDOFF.md` 5장.
+- 사진 · 영상: 원본을 `자료/`에 같은 이름으로 넣고 `scripts/`의 변환 명령 실행 — `docs/HANDOFF.md` 7장, `자료/README.md`.
+- 로고: `public/assets/brand/` 파일 또는 `src/data/brand.ts`.
+- 회사 정보: `src/data/company.ts` — 푸터 · CONTACT에 함께 반영.
 
-## 현재 단계
+## 현재 상태 (2026-10-19)
 
-1. 공통 기반 — 헤더 · 모바일 메뉴 · 푸터 · 페이지 전환 · 5개 경로 ✓
-2. 정보 흐름 — PRODUCT 목록(탭 · LOAD MORE · 빈 카테고리) · 상세(갤러리 · 규격 · 문의) · CONTACT(자동 입력 · 검증 · 데모 안내) ✓
-3. HOME 첫 시안 — 인트로(포스터 자리) · 임시 전환 · 슬로건 · FIND/DRESS/MATCH/DELIVER · 대표 제품 · 차콜 CTA ✓
-4. 모션 · 3D — 인트로 고정 연출, 반사광 전환, 가로 스크롤, PROCESS 동기화 (예정)
-
-제품은 모두 기능 검증용 임시 데이터입니다. 문의 폼은 실제로 전송되지 않는 데모입니다.
+- 화면 · 모션 · 반응형(390px 모바일까지) · 콘텐츠 구조 완료. 뉴스레터 YY NOTES Vol.01 · 02 게시.
+- **문의 폼은 실제로 전송되지 않는 데모**입니다(입력 검증 · 제품 자동 채움까지 동작).
+- 콘텐츠 관리(CMS) · 문의 전송 · 개인정보처리방침 · 배포는 다음 단계 — `docs/HANDOFF.md` 12장 요청사항.

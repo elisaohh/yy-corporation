@@ -23,27 +23,36 @@ npm.cmd run dev
 
 | 바꾸고 싶은 것 | 파일 |
 |---|---|
-| HOME 문구 (회사 소개, CTA, 슬로건, 히어로) | `src/data/home.ts` |
-| ABOUT 문구 | `src/data/about.ts` |
-| PROCESS 소개 · 현장 문구 · 공정 설명 | `src/data/process.ts` |
-| 제품 목록 · 규격 · 이름 | `src/data/products.ts` |
-| 회사 정보 (주소 · 전화 · 이메일) | `src/data/company.ts` |
-| 공정 이름 · 설명 · 단계 | `src/data/process.ts` |
+| 메뉴 · ABOUT 하위 메뉴(COMPANY · STORY) | `src/data/navigation.ts` |
+| HOME 문구 (히어로, 회사 소개, 공정 모션 장면, 슬로건, CTA) | `src/data/home.ts` |
+| ABOUT › COMPANY 문구 · 사진 | `src/data/about.ts` |
+| ABOUT › STORY 뉴스레터 글 | `src/data/story.ts` (작성 형식은 `docs/HANDOFF.md` 6장) |
+| 제품 목록 · 규격 · 이름 · 카테고리 | `src/data/products.ts` · `categories.ts` · `productImages.ts` |
+| PROCESS 소개 · 공정 이름 · 단계 | `src/data/process.ts` |
+| PROCESS TURN-KEY 4항목 · 사진 | `src/components/process/OneStopSystem.tsx` 위쪽 `sections` |
+| PROCESS · PRODUCT 제목 배경 | `src/app/process/page.tsx`의 `INTRO_VIDEO`, `src/app/products/page.tsx`의 `INTRO_IMAGE` |
+| CONTACT 문구 · 문의 결과 안내 | `src/data/content.ts` |
+| 회사 정보 (주소 · 전화 · 이메일 — 푸터 · CONTACT 공통) | `src/data/company.ts` |
 | 색 · 글꼴 · 간격 | `src/app/globals.css` 맨 위 `@theme` |
 | 로고 위치별 배정 · 크기 | `src/data/brand.ts` |
-| 이미지 경로 | `src/data/assets.ts` |
-| "임시" · "확인 필요" 표시 끄기 | `src/config/site.ts` → `showPlaceholderLabels: false` |
+| 이미지 등록부(HOME 공정 모션 등) | `src/data/assets.ts` |
+| "임시" · "확인 필요" 표시 켜기/끄기 | `src/config/site.ts` → `showPlaceholderLabels` |
 
-### 모션 속도 조절
+### 모션 조절
 
-- **히어로** `src/components/home/HeroFloat.tsx` (문구는 `src/data/home.ts`의 `hero`)
-  - 로딩 진행선 `duration: 0.85`, 화면 걷힘 `0.8`, 물방울 자동 움직임 폭 `random(14, 24)`(세로) · `12`(가로) · `6`(회전), 마우스 반응 `nx * 22` 등 숫자를 바꾼다.
-  - 사진 최대 폭 `MAX_W`, 제목 크기 `md:text-[clamp(52px,7.4vw,122px)]`
-- **피펫 불투명도** 공정 모션 `ProcessMotion.tsx`의 `PIPETTE_OPACITY`
-- **공정 모션** `src/components/home/ProcessMotion.tsx`
-  - `window.innerHeight * (desktop ? 3.4 : 2.6)` → 고정 구간 길이(화면 수). 크면 느려진다.
-  - `scrub: 1.4` → 클수록 스크롤을 더 부드럽게(늦게) 따라온다.
-  - `SWEEP = 1.15`, `STEP = 1.5` → 공정 하나가 지나가는 시간 / 공정 간격.
+- **로딩 · 히어로** `src/components/home/HeroFloat.tsx`
+  - 로고 차오름 `duration: 0.8`, 머무름 `{ duration: 0.6 }`, 커튼 걷힘 `0.9`.
+  - 물방울 떠다니는 폭 `random(14, 24)`(세로) · `12`(가로) · `6`(회전), 마우스 반응 `nx * 22`.
+  - 사진 최대 폭 `MAX_W = 1240`, 제목 크기 `md:text-[clamp(52px,7.4vw,122px)]`.
+- **HOME 공정 모션** `src/components/home/ProcessMotion.tsx`
+  - PC 고정 구간 길이 `window.innerHeight * (desktop ? 4.4 : 3.6)` — 클수록 느려짐.
+  - `scrub: 0.8` 스크롤 따라오는 부드러움, `snap` 공정마다 멈춤.
+  - `SWEEP = 1.5`(공정 하나가 지나가는 시간) · `STEP = 1.9`(공정 간격).
+  - 모바일(1024px 미만)은 고정 없이 공정 이름을 누르면 재생 — 재생 시간 `tweenTo(..., { duration: 1.4 })`.
+  - 피펫 불투명도 `PIPETTE_OPACITY`, 라벨이 피펫을 가리는 높이 `src/data/home.ts`의 `labelBand`.
+- **PROCESS 사진 띠** `src/components/process/StripAccordion.tsx` — 펼친 띠 비율 `flexGrow: on ? 6 : 1`.
+- **PROCESS 제목 영상** `src/app/process/page.tsx`의 `INTRO_VIDEO` — 시작 `start: 8`, 확대 `zoom: 1.25`(1.3 이하 권장), 위치 `focus`.
+- **STORY 한 쪽 카드 수** `src/components/story/StoryBoard.tsx`의 `PER_PAGE = 9`.
 
 ## 4. 이미지 바꾸기
 
@@ -92,11 +101,12 @@ npm.cmd run build
 
 오류 없이 끝나면 배포 가능한 상태다.
 
-## 7. 다음에 할 일 (기록)
+## 7. 남은 확인 · 할 일
 
-- 기준병 치수 확정: 37.0×75.8(치수 파일) vs 38.0×74.4(제품규격표)
-- 인쇄 단독 이미지(현재 코팅 후 인쇄로 대체)
-- SRRR20-01의 MOQ · 재질 출처 확인
-- 공장 사진 공개 권한, 개인정보처리방침 문서
-- `/logo-check` 페이지는 배포 전 삭제
-- 결정 기록: `docs/decisions.md`, 자료 현황: `docs/asset-inventory.md`
+- 기준병 치수 확정: 37.0 × 75.8(치수 파일) vs 38.0 × 74.4(제품규격표)
+- HOME 공정 모션 인쇄 단독 이미지(현재 코팅 후 인쇄로 대체)
+- 재질 · MOQ를 제품 화면에 다시 표시할지
+- 현장 사진 공개 권한 · 개인정보처리방침 — `docs/asset-inventory.md` "공개 전 확인할 것"
+- `/logo-check` 페이지 · 미사용 코드는 배포 전 삭제 — `docs/HANDOFF.md` 11장
+- 기능 추가 요청(STORY · PRODUCT 관리, 문의 전송) — `docs/HANDOFF.md` 12장
+- 결정 기록: `docs/decisions.md`, 자산 현황: `docs/asset-inventory.md`, 원본 쓰임: `자료/README.md`

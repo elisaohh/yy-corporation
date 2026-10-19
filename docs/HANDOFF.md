@@ -60,7 +60,7 @@ src/
   lib/                   폰트 · ?still 도우미
 scripts/                 이미지 · 영상 변환 스크립트(sharp)
 public/assets/           사이트에 실제로 쓰이는 이미지 · 영상(변환 결과)
-docs/                    결정 기록(decisions.md) · 로컬 수정 안내(local-editing.md) · 이 문서
+docs/                    이 문서 · 결정 기록(decisions.md) · 자산 목록(asset-inventory.md) · 로컬 수정 안내(local-editing.md)
 기획서.md                초기 기획서 v2.0 (이후 변경은 docs/decisions.md 우선)
 ```
 
@@ -151,7 +151,7 @@ docs/                    결정 기록(decisions.md) · 로컬 수정 안내(loc
 | 실제 제품 사진 | PRODUCT 제품 사진 |
 | 현장 사진 | PROCESS 유리 성형 · 입고 및 납품, 제목 배경 영상 |
 | 현장 사진을 바탕으로 **편집** | PROCESS 후가공(코팅 · 인쇄 · 부식 · 라벨), 부자재(스포이드 · 유리관) |
-| **생성 이미지** | HOME 히어로 · 공정 모션 병, ABOUT 사진 6장, 부자재 펌프 · 스프레이 |
+| **생성 이미지** | HOME 히어로(PRODUCT 제목 배경으로도 사용) · 공정 모션 병, ABOUT 사진 6장, 부자재 펌프 · 스프레이 |
 
 화면에서 "생성 이미지" 안내 문구는 회사 요청으로 뺐습니다. 실제 제품 · 시설로 소개하는 문구는 쓰지 않습니다.
 
@@ -212,7 +212,7 @@ docs/                    결정 기록(decisions.md) · 로컬 수정 안내(loc
 | 개발용 잔여물 | `app/logo-check`(로고 검토 페이지), `components/layout/StageNotice.tsx`(미사용), `data/about.ts`의 `values` · `expertise`, `data/process.ts`의 `onSite` · `additionalProcesses`, `data/content.ts`의 `demoNotice`(모두 화면 미사용) — 배포 전 삭제 권장 |
 | 뉴스레터 | Vol.01 규격 표에 MOQ(5,000개)가 원문대로 들어 있음(제품 페이지에서는 MOQ를 표시하지 않음) |
 
-결정 이력은 `docs/decisions.md`(날짜순), 수정 방법은 `docs/local-editing.md`를 참고하세요.
+결정 이력은 `docs/decisions.md`(날짜순), 자산별 상태 · 공개 전 확인 사항은 `docs/asset-inventory.md`, 수정 방법은 `docs/local-editing.md`를 참고하세요.
 
 ---
 
