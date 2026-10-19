@@ -33,6 +33,7 @@ npm.cmd run dev
 | PROCESS · PRODUCT 제목 배경 | `src/app/process/page.tsx`의 `INTRO_VIDEO`, `src/app/products/page.tsx`의 `INTRO_IMAGE` |
 | CONTACT 문구 · 문의 결과 안내 | `src/data/content.ts` |
 | 개인정보 처리방침 · 문의 폼 동의 요약 | `src/data/privacy.ts` |
+| 이용약관 | `src/data/terms.ts` |
 | 회사 정보 (주소 · 전화 · 이메일 — 푸터 · CONTACT 공통) | `src/data/company.ts` |
 | 색 · 글꼴 · 간격 | `src/app/globals.css` 맨 위 `@theme` |
 | 로고 위치별 배정 · 크기 | `src/data/brand.ts` |

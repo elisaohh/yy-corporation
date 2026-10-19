@@ -1,21 +1,10 @@
 /**
  * 개인정보 처리방침 (/privacy) — 회사가 제공한 전문을 그대로 옮긴다(문구 임의 수정 금지).
- * 블록: p 문단 · h 번호 소제목 · ul 점 목록 · ol 번호 목록 · rows 연락처 표
+ * 블록 구조는 data/legal.ts
  * ⚠ 제5조 수탁자 · 위탁업무의 [ ] 부분은 실제 외부 서비스가 정해지면 채운다.
  */
 
-export type PrivacyBlock =
-  | { p: string }
-  | { h: string }
-  | { ul: string[] }
-  | { ol: string[] }
-  | { rows: [string, string][]; title?: string };
-
-export interface PrivacyArticle {
-  no: number;
-  title: string;
-  body: PrivacyBlock[];
-}
+import type { LegalArticle } from "./legal";
 
 export const privacyPolicy = {
   title: "개인정보 처리방침",
@@ -209,7 +198,7 @@ export const privacyPolicy = {
         { p: "③ 변경 전 개인정보 처리방침은 정보주체가 확인할 수 있도록 관리합니다." },
       ],
     },
-  ] satisfies PrivacyArticle[],
+  ] satisfies LegalArticle[],
 };
 
 /** 문의 폼 동의란에 보여 줄 요약 — 위 제2조 · 제3조에서 그대로 가져옴 */

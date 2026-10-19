@@ -77,6 +77,7 @@ docs/                    이 문서 · 모션 명세(MOTION.md) · 결정 기록
 | `/process` | 제목(배경 영상) → From Idea to Delivery(흐름도) → PACKAGING TURN-KEY 4항목 → CTA | `components/process/*`, `data/process.ts` |
 | `/contact` | 지도(구글 퍼가기 + 네이버 지도 버튼) · 회사 정보 · 문의 폼 | `app/contact/page.tsx`, `components/contact/InquiryForm.tsx` |
 | `/privacy` | 개인정보 처리방침(14개 조항 · 목차, 시행일 2026.11.19) — 푸터 · 문의 폼 동의란에서 연결 | `app/privacy/page.tsx`, `data/privacy.ts` |
+| `/terms` | 이용약관(17개 조항 · 부칙, 2026.11.19 시행) — 푸터에서 연결 | `app/terms/page.tsx`, `data/terms.ts` (두 문서 공통 화면: `components/legal/LegalDocument.tsx`) |
 
 메뉴: 헤더 ABOUT(▾ COMPANY · STORY) · PRODUCT · PROCESS · CONTACT — `data/navigation.ts` 한 곳에서 헤더 · 모바일 메뉴 · 푸터가 함께 바뀝니다. HOME은 로고로 이동합니다.
 
@@ -95,6 +96,7 @@ docs/                    이 문서 · 모션 명세(MOTION.md) · 결정 기록
 | PROCESS · PRODUCT 제목 배경 | 각 `app/*/page.tsx` 상단 `INTRO_VIDEO` / `INTRO_IMAGE` |
 | CONTACT 문구 · 문의 결과 안내 | `src/data/content.ts` |
 | 개인정보 처리방침 전문 · 문의 폼 동의 요약 | `src/data/privacy.ts` |
+| 이용약관 전문 | `src/data/terms.ts` |
 | 로고 파일 · 크기 | `src/data/brand.ts` |
 | 문구 상태 | `status: final / draft / missing` — 미확정 문구는 draft로 두고 docs에서 관리 |
 
@@ -208,6 +210,7 @@ docs/                    이 문서 · 모션 명세(MOTION.md) · 결정 기록
 | 문의 폼 | **실제 전송 안 됨**. 입력 검증 · 제품 자동 채움(`?product=`)까지만 동작하고, 보내기 후 "데모 화면입니다" 안내가 나옵니다(`submitInquiry` 함수만 교체하면 되도록 분리) |
 | 개인정보 | 처리방침 페이지(`/privacy`)와 문의 폼 동의 요약 있음. ⚠ 제5조 수탁자 · 위탁업무의 `[ ]` 칸은 실제 외부 서비스(문의 저장 · 메일 발송 등)가 정해지면 채워야 합니다 |
 | 콘텐츠 관리 | CMS 없음 — 모든 글 · 제품이 코드 안에 있습니다 |
+| 사진 저장 막기 | 사진 · 영상 위 마우스 오른쪽 메뉴, 끌어서 저장, 휴대폰 길게 눌러 저장을 막음(`layout/ImageGuard.tsx`, `globals.css`). **화면 캡처와 개발자 도구로 파일 받기는 웹에서 막을 수 없음.** 링크가 걸린 사진(제품 카드 등)에서도 오른쪽 메뉴가 막혀 "새 탭에서 열기"는 안 됨 |
 | 지도 | 구글 지도 퍼가기(API 키 불필요). 네이버 지도를 화면에 넣으려면 네이버 클라우드 지도 API 키가 필요합니다 |
 | 제목 배경 영상 | 7MB(앞 8초는 쓰지 않음). 잘라서 압축하면 2~3MB로 줄일 수 있습니다(ffmpeg) |
 | SEO | 사이트 설명(`config/site.ts` description)이 임시 문장, OG 이미지 · sitemap · robots 없음 |

@@ -86,9 +86,14 @@ export function Footer() {
         <p className="font-en tracking-[0.04em]">
           © {year} {copyrightName}. All rights reserved.
         </p>
-        <Link href="/privacy" className="inline-flex min-h-8 items-center font-semibold text-charcoal underline-offset-4 hover:underline">
-          개인정보 처리방침
-        </Link>
+        <p className="flex gap-5">
+          <Link href="/terms" className="inline-flex min-h-8 items-center underline-offset-4 hover:text-charcoal hover:underline">
+            이용약관
+          </Link>
+          <Link href="/privacy" className="inline-flex min-h-8 items-center font-semibold text-charcoal underline-offset-4 hover:underline">
+            개인정보 처리방침
+          </Link>
+        </p>
       </div>
     </footer>
   );

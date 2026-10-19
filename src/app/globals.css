@@ -68,6 +68,13 @@
   body {
     overflow-x: clip;
   }
+  /* 사진 · 영상 쉽게 저장하기 막기(끌기 · 휴대폰 길게 눌러 저장) — components/layout/ImageGuard.tsx와 함께 */
+  img,
+  video {
+    -webkit-user-drag: none;
+    -webkit-touch-callout: none;
+    user-select: none;
+  }
 
   body {
     background: var(--color-paper);
