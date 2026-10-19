@@ -46,8 +46,8 @@ const sections: Section[] = [
     kind: "overlap",
     height: 62,
     photos: [
-      { src: `${BASE}/glass-01.webp`, w: 960, h: 720, left: 0, top: 0, width: 70, shift: 0 },
-      { src: `${BASE}/glass-02.webp`, w: 960, h: 720, left: 52, top: 23, width: 48, shift: -24 },
+      { src: `${BASE}/glass-01.webp`, w: 1004, h: 788, left: 0, top: 0, width: 70, shift: 0 },
+      { src: `${BASE}/glass-02.webp`, w: 1448, h: 1086, left: 52, top: 23, width: 48, shift: -24 },
     ],
   },
   {

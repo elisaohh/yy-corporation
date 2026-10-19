@@ -69,7 +69,7 @@
 |---|---|---|
 | process-intro.mp4 (1920×1080, 7MB) | 제목 배경 영상 — 8초 이후 반복 · 1.25배 확대 | 실제 |
 | process-flow.png | From Idea to Delivery 흐름도 | — |
-| onestop/glass-01 · glass-02.webp | TURN-KEY 01 유리 성형 | 실제 |
+| onestop/glass-01 · glass-02.webp | TURN-KEY 01 유리 성형 | 편집(밀대 · 공구 제거) |
 | onestop/coating · printing · etching · labeling-01.webp | 02 후가공 4칸 | 편집 |
 | onestop/dropper-01 · tube-01.webp | 03 부자재 — 스포이드(고무) · 유리관 | 편집 |
 | onestop/pump-01 · spray-01.webp | 03 부자재 — 펌프 · 스프레이 | 생성 |
