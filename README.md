@@ -37,7 +37,7 @@ src/
   lib/              폰트(Inter + Pretendard), ?still 도우미
 scripts/            이미지 · 영상 변환(자료/ → public/assets/)
 public/assets/      사이트에 쓰는 로고 · 사진 · 영상
-docs/               HANDOFF(인수인계) · decisions(결정 기록) · asset-inventory(자산 목록) · local-editing(수정 방법)
+docs/               HANDOFF(인수인계) · MOTION(모션 명세) · decisions(결정 기록) · asset-inventory(자산 목록) · local-editing(수정 방법)
 자료/               원본 사진 · 영상 — Git에 없음, 별도 전달 (자료/README.md)
 ```
 

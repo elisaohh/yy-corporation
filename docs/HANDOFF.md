@@ -60,7 +60,7 @@ src/
   lib/                   폰트 · ?still 도우미
 scripts/                 이미지 · 영상 변환 스크립트(sharp)
 public/assets/           사이트에 실제로 쓰이는 이미지 · 영상(변환 결과)
-docs/                    이 문서 · 결정 기록(decisions.md) · 자산 목록(asset-inventory.md) · 로컬 수정 안내(local-editing.md)
+docs/                    이 문서 · 모션 명세(MOTION.md) · 결정 기록(decisions.md) · 자산 목록(asset-inventory.md) · 로컬 수정 안내(local-editing.md)
 기획서.md                초기 기획서 v2.0 (이후 변경은 docs/decisions.md 우선)
 ```
 
@@ -178,6 +178,8 @@ docs/                    이 문서 · 결정 기록(decisions.md) · 자산 목
 - 버튼 · 링크: `btn btn-primary` / `btn-secondary`, 영문 링크는 `link-en`.
 
 ## 9. 모션
+
+> 시간 · 이징 · 순서까지 담은 상세 명세는 **`docs/MOTION.md`** (다른 플랫폼에서 다시 구현할 때 기준).
 
 | 위치 | 동작 | 파일 |
 |---|---|---|
