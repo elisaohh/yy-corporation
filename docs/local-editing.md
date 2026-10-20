@@ -26,7 +26,7 @@ npm.cmd run dev
 | 메뉴 · ABOUT 하위 메뉴(COMPANY · STORY) | `src/data/navigation.ts` |
 | HOME 문구 (히어로, 회사 소개, 공정 모션 장면, 슬로건, CTA) | `src/data/home.ts` |
 | ABOUT › COMPANY 문구 · 사진 | `src/data/about.ts` |
-| ABOUT › STORY 뉴스레터 글 | `src/data/story.ts` (작성 형식은 `docs/HANDOFF.md` 6장) |
+| ABOUT › STORY 뉴스레터 글 | 메일 HTML 파일을 `content/story/vol-NN.html`로 넣기 (`docs/HANDOFF.md` 6장) |
 | 제품 목록 · 규격 · 이름 · 카테고리 | `src/data/products.ts` · `categories.ts` · `productImages.ts` |
 | PROCESS 소개 · 공정 이름 · 단계 | `src/data/process.ts` |
 | PROCESS TURN-KEY 4항목 · 사진 | `src/components/process/OneStopSystem.tsx` 위쪽 `sections` |
@@ -67,7 +67,6 @@ npm.cmd run dev
 | 스포이드 캡 · 피펫 분리 | `node scripts/build-dropper-parts.mjs` |
 | PROCESS 턴키 사진 (`자료/02_후가공/작업사진/glass-01.jpg` … `spray-01.jpg`) | `node scripts/build-onestop-photos.mjs` |
 | ABOUT 사진 (`자료/08_ABOUT/`) | `node scripts/build-about-images.mjs` |
-| STORY 뉴스레터 사진 (`자료/10_STORY/vol01-01.jpg` …) · 글은 `src/data/story.ts` | `node scripts/build-story-images.mjs` |
 | PROCESS 제목 배경 영상 (`자료/09_PROCESS/process-intro.mp4`) | `public/assets/process/process-intro.mp4`에 같은 이름으로 복사 (시작 8초 · 확대는 `src/app/process/page.tsx`의 `INTRO_VIDEO`) |
 | 히어로 사진 (`자료/07_히어로/히어로_병_물방울.webp`) → 병 층 + 물방울 분리 | `node scripts/build-hero-layers.mjs` |
 

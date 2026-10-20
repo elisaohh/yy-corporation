@@ -39,7 +39,7 @@ src/
     page.tsx             HOME
     about/               /about → /about/company 로 이동
       company/           ABOUT › COMPANY (회사 소개)
-      story/             ABOUT › STORY (뉴스레터 목록) · [slug]/ 상세
+      story/             ABOUT › STORY (뉴스레터 목록) · [slug]/ 상세 · [slug]/cover 대표 사진
     products/            PRODUCT 목록 · [slug]/ 상세
     process/             PROCESS
     contact/             CONTACT
@@ -58,6 +58,7 @@ src/
   data/                  ★ 콘텐츠 — 문구 · 제품 · 메뉴 · 회사 정보 · 이미지 등록부
   config/site.ts         전역 설정(히어로 방식 · 데모 폼 · 임시 표시)
   lib/                   폰트 · ?still 도우미
+content/story/           뉴스레터 원본 HTML(vol-NN.html) — STORY 글
 scripts/                 이미지 · 영상 변환 스크립트(sharp)
 public/assets/           사이트에 실제로 쓰이는 이미지 · 영상(변환 결과)
 docs/                    이 문서 · 모션 명세(MOTION.md) · 결정 기록(decisions.md) · 자산 목록(asset-inventory.md) · 로컬 수정 안내(local-editing.md)
@@ -70,8 +71,8 @@ docs/                    이 문서 · 모션 명세(MOTION.md) · 결정 기록
 |---|---|---|
 | `/` | HOME — 로딩(로고) → 히어로(떠다니는 병 · 물방울) → 회사 소개(FIND · DRESS · MATCH · DELIVER) → 공정 모션 → 제품 → 슬로건 → CTA | `app/page.tsx`, `components/home/*`, `data/home.ts` |
 | `/about/company` | 제목(미스트) → Story → Vision → Business → CTA | `components/about/AboutSections.tsx`, `data/about.ts` |
-| `/about/story` | YY NOTES 카드 목록(9개씩, 페이지 번호 `?page=N`) | `components/story/StoryBoard.tsx`, `data/story.ts` |
-| `/about/story/[slug]` | 뉴스레터 상세(블록 렌더링) · 이전/다음 호 | `app/about/story/[slug]/page.tsx` |
+| `/about/story` | YY NOTES 카드 목록(9개씩, 페이지 번호 `?page=N`) — `content/story/*.html`에서 자동 생성 | `components/story/StoryBoard.tsx`, `lib/newsletter.ts` |
+| `/about/story/[slug]` | 뉴스레터 상세(원본 HTML 그대로, 메일 하단 숨김) · 이전/다음 호 | `app/about/story/[slug]/page.tsx` |
 | `/products` | 제품 목록(카테고리 필터 · 12개씩 LOAD MORE) | `components/product/ProductCatalog.tsx`, `data/products.ts` |
 | `/products/[slug]` | 제품 상세(갤러리 · 규격 · 문의 버튼) | `app/products/[slug]/page.tsx` |
 | `/process` | 제목(배경 영상) → From Idea to Delivery(흐름도) → PACKAGING TURN-KEY 4항목 → CTA | `components/process/*`, `data/process.ts` |
@@ -89,7 +90,7 @@ docs/                    이 문서 · 모션 명세(MOTION.md) · 결정 기록
 | 회사 정보(주소 · 전화 · 이메일, 푸터 · CONTACT 공통) | `src/data/company.ts` |
 | HOME 문구 · 회사 소개 4항목 · 공정 모션 장면 · CTA | `src/data/home.ts` |
 | ABOUT 문구 · 이미지 | `src/data/about.ts` |
-| STORY 뉴스레터 글 | `src/data/story.ts` (작성 방법은 6장) |
+| STORY 뉴스레터 글 | `content/story/vol-NN.html` 파일 추가 (6장) |
 | 제품 · 카테고리 · 사진 컷 | `src/data/products.ts` · `categories.ts` · `productImages.ts` |
 | PROCESS 공정 목록 · 머리말 | `src/data/process.ts` |
 | PROCESS TURN-KEY 항목 · 사진 | `src/components/process/OneStopSystem.tsx` 상단 `sections` |
@@ -102,36 +103,24 @@ docs/                    이 문서 · 모션 명세(MOTION.md) · 결정 기록
 
 **원칙(지금까지 지켜 온 것)**: 회사가 준 자료에 없는 사실 · 실적 · 수치는 만들지 않습니다. 값이 없으면 비워 두고 `Pending`(—)으로 표시합니다.
 
-## 6. STORY(뉴스레터) 글 구조
+## 6. STORY(뉴스레터) 올리기
 
-`src/data/story.ts`의 `storyPosts` 배열에 한 호씩 추가합니다. 목록은 `vol`(호수)이 큰 순서로 자동 정렬됩니다.
+뉴스레터는 **메일로 보낸 원본 HTML 파일을 그대로** 보여 줍니다. 사이트용으로 옮겨 적거나 사진을 따로 꺼낼 필요가 없습니다.
 
-```ts
-{
-  slug: "yy-notes-vol-03",          // 주소: /about/story/yy-notes-vol-03
-  vol: 3,
-  title: "글 제목",
-  issue: "2026.11",                 // 발행 시기(표시용)
-  summary: "카드에 보이는 한 줄 요약",
-  cover: { src: "/assets/story/vol03-01.webp", alt: "…", width: 1104, height: 998 },
-  blocks: [ /* 아래 블록들을 순서대로 */ ],
-}
-```
+1. 받은 HTML 파일을 `content/story/vol-03.html`처럼 **호수 번호로 이름을 바꿔** 넣습니다.
+2. 배포하면 끝입니다. 목록 카드와 상세 페이지(`/about/story/yy-notes-vol-03`)가 자동으로 생깁니다.
 
-| 블록 `type` | 용도 |
+| 자동으로 읽는 것 | HTML에서 가져오는 곳 |
 |---|---|
-| `p` | 본문 문단 |
-| `note` | 작은 회색 글(서명 · 출처) |
-| `image` | 사진(원본보다 크게 늘리지 않음) |
-| `heading` | 꼭지 — 영문 라벨 · 한글 머리 · 큰 제목 |
-| `spec` | 규격 표(두 단) |
-| `rows` | 줄 목록(용어 · 설명 · 보조) |
-| `cta` | 버튼(메일 양식 링크 등) + 보조 링크 |
-| `columns` | 두 단, 각 단에 블록 |
+| 호수 | 파일 이름의 번호(`vol-03` → Vol.03, 큰 번호가 맨 앞) |
+| 제목 | 메일 제목(`<title>`)에서 "(광고)"와 "\| …" 뒷부분을 뺀 것 |
+| 요약 | 메일 미리보기 문구(숨겨진 첫 문단) |
+| 발행 시기 | 메일 머리의 "Vol.NN · 2026.10" |
+| 대표 사진 | 본문 첫 번째 사진(빌드 시 `/about/story/<주소>/cover`로 만들어짐) |
 
-- 사진: `자료/10_STORY/vol03-01.jpg`로 저장 → `node scripts/build-story-images.mjs`.
-- Vol.01 · 02는 뉴스레터 HTML(메일용)의 문구를 그대로 옮겼습니다. 메일 머리 · 바닥글 · 수신거부는 뺐습니다.
-- **현재는 코드 수정 → 빌드 → 배포**로만 올릴 수 있습니다(→ 12장 요청사항 1).
+- 상세 페이지는 메일 한 장을 종이처럼 가운데 두고(폭 600px 메일 디자인 그대로), **메일 하단(회사 정보 · 로고 · 홈페이지 · 수신거부 · 맺음말)은 자동으로 숨깁니다.**
+- 하단을 숨기는 기준은 지금 메일 틀(하단 회사 정보 칸)에 맞춰져 있습니다. 메일 디자인 틀을 바꾸면 `src/lib/newsletter.ts`의 기준도 맞춰 주세요.
+- 관련 코드: `src/lib/newsletter.ts`(읽기 · 정리), `components/story/NewsletterFrame.tsx`(틀 — 높이 자동, 스크립트 실행 안 함), `components/story/StoryBoard.tsx`(목록).
 
 ## 7. 이미지 · 영상
 
@@ -145,7 +134,6 @@ docs/                    이 문서 · 모션 명세(MOTION.md) · 결정 기록
 | 스포이드 캡 · 피펫 분리 | `public/assets/hero/dropper.webp` | `node scripts/build-dropper-parts.mjs` |
 | ABOUT 사진 6장 | `자료/08_ABOUT/` | `node scripts/build-about-images.mjs` |
 | PROCESS TURN-KEY 사진 | `자료/02_후가공/작업사진/종류-01.jpg` | `node scripts/build-onestop-photos.mjs` |
-| STORY 사진 | `자료/10_STORY/` | `node scripts/build-story-images.mjs` |
 | PROCESS 제목 배경 영상 | `자료/09_PROCESS/process-intro.mp4` | `public/assets/process/`에 같은 이름으로 복사 |
 
 **이미지 성격(오해 소지 주의)**
@@ -227,12 +215,10 @@ docs/                    이 문서 · 모션 명세(MOTION.md) · 결정 기록
 
 ### 요청 1. STORY — 뉴스레터를 하나씩 올릴 수 있도록
 
-뉴스레터가 **매주 1편** 발행될 예정입니다. 지금은 `src/data/story.ts`를 코드로 고쳐야 해서, 담당자가 직접 올릴 수 있는 방법이 필요합니다.
+뉴스레터가 **매주 1편** 발행될 예정입니다. 지금은 메일 HTML 파일을 `content/story/`에 넣고 배포하면 올라가지만(6장), 담당자가 개발 도구 없이 직접 올릴 수 있는 방법이 필요합니다.
 
-- 관리 화면(또는 헤드리스 CMS)에서 글 작성: 제목 · 호수 · 발행 시기 · 요약 · 대표 이미지 · 본문
-- 본문은 지금의 블록 구조(문단 · 사진 · 꼭지 제목 · 규격 표 · 목록 · 버튼 · 두 단)를 그대로 쓸 수 있게
-- **메일용 뉴스레터 HTML을 붙여 넣으면 블록으로 변환**해 주는 기능이 있으면 가장 편합니다(Vol.01 · 02를 이 방식으로 옮겼음)
-- 이미지 업로드 시 자동 리사이즈 · webp 변환(원본보다 키우지 않기)
+- 관리 화면에서 **메일 HTML 파일 업로드(또는 붙여 넣기)만으로 게시** — 제목 · 요약 · 발행 시기 · 대표 사진은 지금처럼 HTML에서 자동으로 읽기
+- 필요하면 제목 · 요약 · 대표 사진을 손으로 고칠 수 있게
 - 미리보기 · 예약 발행 · 비공개(초안) 상태
 - 목록 카드 · 페이지 번호 · 상세 디자인은 지금 것을 유지
 

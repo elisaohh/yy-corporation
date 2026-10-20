@@ -78,14 +78,9 @@
 원본 `자료/02_후가공/작업사진/<종류>-01.jpg` → `build-onestop-photos.mjs`. 영상은 `자료/09_PROCESS/`에서 같은 이름으로 복사.
 화면의 "생성 · 편집 이미지" 안내 문구는 회사 요청으로 표시하지 않습니다.
 
-## STORY (`public/assets/story/`, `src/data/story.ts`)
+## STORY (`content/story/`)
 
-| 파일 | 용도 |
-|---|---|
-| vol01-01 · vol01-02.webp | YY NOTES Vol.01 — 한강 노을 · 이달의 프리몰드 병 |
-| vol02-01 · vol02-02.webp | YY NOTES Vol.02 — 나무 그늘 · 세 단어 이미지 |
-
-뉴스레터 HTML 안의 사진을 꺼낸 것(가장 작은 사진 528px — 원본보다 키우지 않음). `자료/10_STORY/` → `build-story-images.mjs`.
+뉴스레터 원본 HTML(`vol-01.html`, `vol-02.html`)을 그대로 보여 줍니다. 사진은 HTML 안에 들어 있어 따로 저장하지 않으며, 목록 카드의 대표 사진은 빌드 시 첫 번째 사진으로 만들어집니다(`/about/story/<주소>/cover`).
 
 ## 회사 정보 (`src/data/company.ts`)
 

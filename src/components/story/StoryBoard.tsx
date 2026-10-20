@@ -3,7 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { formatIssue, volLabel, type StoryPost } from "@/data/story";
+import { formatIssue, volLabel } from "@/data/story";
+import type { Newsletter } from "@/lib/newsletter";
 
 /** 한 쪽에 보이는 카드 수 — 데스크톱 3열 × 3줄 */
 const PER_PAGE = 9;
@@ -12,7 +13,7 @@ const PER_PAGE = 9;
  * STORY 목록 — 카드(대표 사진 · 호수 · 발행 시기 · 제목 · 요약), 최신 호가 앞.
  * 아래 페이지 번호(1 2 3 …)로 넘긴다. 현재 쪽은 주소 ?page=N 에 남아 뒤로 가기 · 공유 시 유지된다.
  */
-export function StoryBoard({ posts }: { posts: StoryPost[] }) {
+export function StoryBoard({ posts }: { posts: Newsletter[] }) {
   const pages = Math.max(1, Math.ceil(posts.length / PER_PAGE));
   const [page, setPage] = useState(1);
   const topRef = useRef<HTMLDivElement>(null);
@@ -66,7 +67,8 @@ export function StoryBoard({ posts }: { posts: StoryPost[] }) {
                     <span className="relative block aspect-[4/3] overflow-hidden bg-card">
                       {post.cover && (
                         <Image
-                          src={post.cover.src}
+                          src={post.cover}
+                          unoptimized
                           alt=""
                           fill
                           sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 100vw"
