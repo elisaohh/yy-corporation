@@ -77,7 +77,7 @@ export function InquiryForm() {
   const resultRef = useRef<HTMLDivElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
 
-  // PRODUCT 상세에서 넘어오면 제품명 · 코드 자동 입력
+  // PRODUCT 상세에서 넘어오면 제품 코드 자동 입력
   useEffect(() => {
     const id = params.get("product");
     const product = id ? getProductById(id) : undefined;
@@ -182,7 +182,7 @@ export function InquiryForm() {
       </div>
       <div className="grid gap-6 md:grid-cols-2">
         {textField("product", "관심 제품", {
-          hint: prefilled ? "선택하신 제품이 자동으로 입력되었습니다. 수정할 수 있습니다." : "제품명이나 코드를 적어 주세요.",
+          hint: prefilled ? "선택하신 제품이 자동으로 입력되었습니다. 수정할 수 있습니다." : "제품 코드를 적어 주세요.",
         })}
         {textField("quantity", "예상 발주 수량", { hint: "예: 5,000개" })}
       </div>

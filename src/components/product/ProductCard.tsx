@@ -46,12 +46,9 @@ export function ProductCard({ product, fromCategory, linkRef }: ProductCardProps
         )}
       </div>
       <div className="mt-4 grid gap-1">
-        <h3 className="text-[15px] leading-snug font-medium tracking-[-0.01em]">{product.name}</h3>
+        <h3 className="font-en text-[15px] leading-snug font-medium tracking-[-0.01em]">{product.code ?? product.name}</h3>
         <p className="font-en text-[13px] tabular-nums text-ash">
-          <span className="sr-only">제품 코드 </span>
-          {product.code ?? "—"}
-          <span aria-hidden="true"> · </span>
-          <span className="sr-only">, 용량 </span>
+          <span className="sr-only">용량 </span>
           {product.capacity ?? "—"}
         </p>
       </div>

@@ -65,7 +65,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
           <Link href={`/contact?product=${product.id}`} className="btn btn-primary mt-10 w-full">
             문의하기
           </Link>
-          <p className="mt-3 text-[13px] text-ash">문의 폼에 이 제품의 이름과 코드가 자동으로 입력됩니다.</p>
+          <p className="mt-3 text-[13px] text-ash">문의 폼에 이 제품의 코드가 자동으로 입력됩니다.</p>
         </div>
       </div>
     </section>
