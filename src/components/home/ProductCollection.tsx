@@ -3,6 +3,9 @@ import { Reveal } from "@/components/motion/Reveal";
 import { ProductCard } from "@/components/product/ProductCard";
 import { products } from "@/data/products";
 
+/** 홈에 보여 줄 제품 수 — 넓은 화면 한 줄(5칸). 순서는 products.ts 배열 순서 */
+const HOME_COUNT = 5;
+
 /**
  * ④ PRODUCT 컬렉션 — 공정 모션 끝의 "실제 제품으로 확장"을 이어받아 등록된 제품 전체를 보여 준다.
  * 카드는 PRODUCT 페이지와 같은 컴포넌트(상세 · 문의 연결 그대로).
@@ -28,7 +31,7 @@ export function ProductCollection() {
         </div>
 
         <ul className="mt-12 grid grid-cols-2 gap-x-4 gap-y-10 md:mt-16 md:grid-cols-3 md:gap-x-6 lg:grid-cols-5">
-          {products.map((product, index) => (
+          {products.slice(0, HOME_COUNT).map((product, index) => (
             <Reveal as="li" key={product.id} delay={70 * index}>
               <ProductCard product={product} />
             </Reveal>

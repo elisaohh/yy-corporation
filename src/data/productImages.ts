@@ -23,6 +23,8 @@ export const productImageCuts: Record<string, string[]> = {
   "YS-SRRR30-02": ["01", "02", "03", "04"],
   "YS-SRRR30-04": ["01", "02", "03", "04"],
   "YS-SRRR50-02": ["01", "02", "03", "04"],
+  "SL-SRSS30-01": ["01", "02", "03", "04"],
+  "SL-SRSS50-01": ["01", "02", "03", "04"],
 };
 
 export const productImageAssets: Record<string, MediaAsset> = Object.fromEntries(

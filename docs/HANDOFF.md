@@ -202,7 +202,7 @@ docs/                    이 문서 · 모션 명세(MOTION.md) · 결정 기록
 | 지도 | 구글 지도 퍼가기(API 키 불필요). 네이버 지도를 화면에 넣으려면 네이버 클라우드 지도 API 키가 필요합니다 |
 | 제목 배경 영상 | 7MB(앞 8초는 쓰지 않음). 잘라서 압축하면 2~3MB로 줄일 수 있습니다(ffmpeg) |
 | SEO | 사이트 설명(`config/site.ts` description)이 임시 문장, OG 이미지 · sitemap · robots 없음 |
-| 제품 | 5종, 이름 = 제품 코드, 규격은 확인된 것만. DROPPER · CAP · ACCESSORIES 카테고리는 제품이 없음 |
+| 제품 | 유리병 7종(YS-SRRR 5 · SL-SRSS 2), 화면에는 코드만(이름 없음), 규격은 확인된 것만, 사이즈는 숫자만(가로 × 세로 표기 없음), 홈에는 앞 5종. DROPPER · CAP · ACCESSORIES 카테고리는 제품이 없음 |
 | 미확정 문구 | HOME CTA 등 `status: "draft"` 문구 — docs에서 관리 |
 | 개발용 잔여물 | `app/logo-check`(로고 검토 페이지), `components/layout/StageNotice.tsx`(미사용), `data/about.ts`의 `values` · `expertise`, `data/process.ts`의 `onSite` · `additionalProcesses`, `data/content.ts`의 `demoNotice`(모두 화면 미사용) — 배포 전 삭제 권장 |
 | 뉴스레터 | Vol.01 규격 표에 MOQ(5,000개)가 원문대로 들어 있음(제품 페이지에서는 MOQ를 표시하지 않음) |

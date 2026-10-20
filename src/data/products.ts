@@ -3,7 +3,7 @@ import { productImageIds } from "./productImages";
 /**
  * 제품 데이터 — 기획서 2.0 §4.3 스키마.
  *
- * 유리병 5종 (자료/03_제품).
+ * 유리병 7종 (자료/03_제품).
  * - 화면에는 제품 코드만 쓴다. 제품명(내부 이름)은 절대 넣지 않는다 — 데이터에도 두지 않는다.
  * - 규격은 확인된 자료만 넣는다. 현재 확인된 것은 YS-SRRR20-01(자료/01_기준유리병/치수) 하나뿐.
  *   코드의 숫자로 용량을 추정해 넣지 않는다.
@@ -66,13 +66,13 @@ const SPEC_SOURCE = "자료/03_제품/제품규격/제품규격.txt";
 export const products: Product[] = [
   glassBottle("YS-SRRR15-01", {
     capacity: "15ml",
-    dimensions: "31.5 × 64.0 (가로 × 세로)",
+    dimensions: "31.5 × 64.0",
     neck: "Ø18",
     specSource: SPEC_SOURCE,
   }),
   glassBottle("YS-SRRR20-01", {
     capacity: "20ml",
-    dimensions: "33.7 × 68.7 (가로 × 세로)",
+    dimensions: "33.7 × 68.7",
     moq: "5,000",
     material: "유리",
     neck: "Ø18",
@@ -80,20 +80,32 @@ export const products: Product[] = [
   }),
   glassBottle("YS-SRRR30-02", {
     capacity: "30ml",
-    dimensions: "38.0 × 71.3 (가로 × 세로)",
+    dimensions: "38.0 × 71.3",
     neck: "Ø18",
     specSource: SPEC_SOURCE,
   }),
   glassBottle("YS-SRRR30-04", {
     capacity: "30ml",
-    dimensions: "38.0 × 74.4 (가로 × 세로)",
+    dimensions: "38.0 × 74.4",
     neck: "Ø18",
     specSource: SPEC_SOURCE,
   }),
   glassBottle("YS-SRRR50-02", {
     capacity: "50ml",
-    dimensions: "38.0 × 99.2 (가로 × 세로)",
+    dimensions: "38.0 × 99.2",
     neck: "Ø18",
+    specSource: SPEC_SOURCE,
+  }),
+  glassBottle("SL-SRSS30-01", {
+    capacity: "30ml",
+    dimensions: "39.5 × 73.0",
+    neck: "Ø18",
+    specSource: SPEC_SOURCE,
+  }),
+  glassBottle("SL-SRSS50-01", {
+    capacity: "50ml",
+    dimensions: "44.3 × 86.6",
+    neck: "Ø20",
     specSource: SPEC_SOURCE,
   }),
 ];
