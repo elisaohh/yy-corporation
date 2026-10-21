@@ -1,7 +1,7 @@
 import { productCategories } from "@/data/categories";
 
 /**
- * 관리 화면(/admin, Decap CMS) 설정.
+ * 예비 관리 화면(/admin/cms, Decap CMS) 설정 — 평소에는 사이트 위 편집(/admin 로그인)을 쓴다.
  * 저장하면 GitHub 저장소에 바로 기록되고, Vercel이 사이트를 다시 만들어 1~2분 뒤 반영된다(서버 · DB 없음).
  */
 

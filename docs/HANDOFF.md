@@ -207,7 +207,7 @@ docs/                    이 문서 · 모션 명세(MOTION.md) · 결정 기록
 | SEO | 사이트 설명(`config/site.ts` description)이 임시 문장, OG 이미지 · sitemap · robots 없음 |
 | 제품 | 유리병 7종(YS-SRRR 5 · SL-SRSS 2), 화면에는 코드만(이름 없음), 규격은 확인된 것만, 사이즈는 숫자만(가로 × 세로 표기 없음), 홈에는 "홈에 보이기"를 켠 제품. DROPPER · CAP · ACCESSORIES 카테고리는 제품이 없음 |
 | 미확정 문구 | HOME CTA 등 `status: "draft"` 문구 — docs에서 관리 |
-| 개발용 잔여물 | `app/logo-check`(로고 검토 페이지), `components/layout/StageNotice.tsx`(미사용), `data/about.ts`의 `values` · `expertise`, `data/process.ts`의 `onSite` · `additionalProcesses`, `data/content.ts`의 `demoNotice`(모두 화면 미사용) — 배포 전 삭제 권장 |
+| 개발용 잔여물 | `app/logo-check`(로고 검토 페이지), `components/layout/StageNotice.tsx`(미사용), `data/about.ts`의 `values` · `expertise`, `data/process.ts`의 `onSite` · `additionalProcesses`, `data/reference.ts`(모두 화면 미사용) — 배포 전 삭제 권장 |
 | 뉴스레터 | Vol.01 규격 표에 MOQ(5,000개)가 원문대로 들어 있음(제품 페이지에서는 MOQ를 표시하지 않음) |
 
 결정 이력은 `docs/decisions.md`(날짜순), 자산별 상태 · 공개 전 확인 사항은 `docs/asset-inventory.md`, 수정 방법은 `docs/local-editing.md`를 참고하세요.
