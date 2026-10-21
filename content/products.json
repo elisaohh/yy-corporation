@@ -127,6 +127,22 @@
         "/assets/products/YS-SRSS30-03_mvhlgi7e2.webp",
         "/assets/products/YS-SRSS30-03_mvhlgi7e3.webp"
       ]
+    },
+    {
+      "code": "YS-SRSSS50-03",
+      "category": "glass-bottle",
+      "capacity": "50ml",
+      "dimensions": "50.0 x 72.3",
+      "material": "유리",
+      "neck": "Ø18",
+      "description": "",
+      "home": false,
+      "images": [
+        "/assets/products/YS-SRSSS50-03_mvhlhz6b0.webp",
+        "/assets/products/YS-SRSSS50-03_mvhlhz6b1.webp",
+        "/assets/products/YS-SRSSS50-03_mvhlhz6b2.webp",
+        "/assets/products/YS-SRSSS50-03_mvhlhz6b3.webp"
+      ]
     }
   ]
 }
