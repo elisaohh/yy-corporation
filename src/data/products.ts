@@ -1,15 +1,10 @@
-import { productImageIds } from "./productImages";
+import data from "../../content/products.json";
 
 /**
- * 제품 데이터 — 기획서 2.0 §4.3 스키마.
- *
- * 유리병 7종 (자료/03_제품).
+ * 제품 데이터 — content/products.json(관리 화면 /admin에서 고친다)을 읽어 화면용으로 바꾼다.
  * - 화면에는 제품 코드만 쓴다. 제품명(내부 이름)은 절대 넣지 않는다 — 데이터에도 두지 않는다.
- * - 규격은 확인된 자료만 넣는다. 현재 확인된 것은 YS-SRRR20-01(자료/01_기준유리병/치수) 하나뿐.
- *   코드의 숫자로 용량을 추정해 넣지 않는다.
- * - 다른 자료(뉴스레터 등)의 특정 제품 값을 옮겨 쓰지 않는다.
- *
- * 정렬: 배열 순서 = 화면 순서(수동 지정).
+ * - 규격은 확인된 값만 넣는다. 비운 칸은 화면에 "—"로 나온다.
+ * - 목록 순서 = 화면 순서. home이 켜진 제품만 홈 PRODUCT에 나온다(같은 순서).
  */
 
 export interface Product {
@@ -18,97 +13,57 @@ export interface Product {
   name: string;
   /** data/categories.ts 의 slug */
   category: string;
-  /** 첫 번째가 대표 이미지, 두 번째가 호버 이미지 */
+  /** 사진 경로 — 첫 번째가 대표 이미지, 두 번째가 마우스 올림 이미지 */
   images: string[];
   code: string | null;
   capacity: string | null;
   dimensions: string | null;
-  moq: string | null;
   material: string | null;
   /** 병목(Neck) 규격 — 값이 있을 때만 표시 */
   neck?: string | null;
   description?: string | null;
+  /** 홈 PRODUCT에 보일지 */
+  home: boolean;
   /** 기능 검증용 임시 항목 여부 */
   isPlaceholder: boolean;
-  /** 규격 출처 */
-  specSource?: string;
 }
 
-/** MOQ · 재질 기본값 — 제품별 자료가 없을 때 */
-const DEFAULT_MOQ = "5,000";
-const DEFAULT_MATERIAL = "유리";
+interface ProductEntry {
+  code: string;
+  category?: string;
+  capacity?: string;
+  dimensions?: string;
+  material?: string;
+  neck?: string;
+  description?: string;
+  home?: boolean;
+  images?: string[];
+}
 
-function glassBottle(code: string, spec: Partial<Product> = {}): Product {
+const text = (value?: string) => (value && value.trim() ? value.trim() : null);
+
+export const products: Product[] = (data.items as ProductEntry[]).map((item) => {
+  const code = item.code.trim();
   const slug = code.toLowerCase();
   return {
     id: slug,
     slug,
     name: code,
-    category: "glass-bottle",
-    images: productImageIds(code),
+    category: item.category || "glass-bottle",
+    images: (item.images ?? []).filter(Boolean),
     code,
-    capacity: null,
-    dimensions: null,
+    capacity: text(item.capacity),
+    dimensions: text(item.dimensions),
+    material: text(item.material),
+    neck: text(item.neck),
+    description: text(item.description),
+    home: item.home ?? false,
     isPlaceholder: false,
-    ...spec,
-    moq: spec.moq ?? DEFAULT_MOQ,
-    material: spec.material ?? DEFAULT_MATERIAL,
   };
-}
+});
 
-/**
- * 규격 출처: 자료/03_제품/제품규격/제품규격.txt (머리글 없는 표)
- *   열: 코드 · 형태 · (내부 이름 — 옮기지 않음) · 용량 · (의미 미확인 값 1.25/2.0 — 표시하지 않음) · 넥 · 가로×세로
- * MOQ · 재질은 SRRR20-01만 확인(자료/01_기준유리병/치수).
- */
-const SPEC_SOURCE = "자료/03_제품/제품규격/제품규격.txt";
-
-export const products: Product[] = [
-  glassBottle("YS-SRRR15-01", {
-    capacity: "15ml",
-    dimensions: "31.5 × 64.0",
-    neck: "Ø18",
-    specSource: SPEC_SOURCE,
-  }),
-  glassBottle("YS-SRRR20-01", {
-    capacity: "20ml",
-    dimensions: "33.7 × 68.7",
-    moq: "5,000",
-    material: "유리",
-    neck: "Ø18",
-    specSource: `${SPEC_SOURCE} · 자료/01_기준유리병/치수`,
-  }),
-  glassBottle("YS-SRRR30-02", {
-    capacity: "30ml",
-    dimensions: "38.0 × 71.3",
-    neck: "Ø18",
-    specSource: SPEC_SOURCE,
-  }),
-  glassBottle("YS-SRRR30-04", {
-    capacity: "30ml",
-    dimensions: "38.0 × 74.4",
-    neck: "Ø18",
-    specSource: SPEC_SOURCE,
-  }),
-  glassBottle("YS-SRRR50-02", {
-    capacity: "50ml",
-    dimensions: "38.0 × 99.2",
-    neck: "Ø18",
-    specSource: SPEC_SOURCE,
-  }),
-  glassBottle("SL-SRSS30-01", {
-    capacity: "30ml",
-    dimensions: "39.5 × 73.0",
-    neck: "Ø18",
-    specSource: SPEC_SOURCE,
-  }),
-  glassBottle("SL-SRSS50-01", {
-    capacity: "50ml",
-    dimensions: "44.3 × 86.6",
-    neck: "Ø20",
-    specSource: SPEC_SOURCE,
-  }),
-];
+/** 홈 PRODUCT에 보일 제품 */
+export const homeProducts = products.filter((product) => product.home);
 
 export function getProduct(slug: string): Product | undefined {
   return products.find((product) => product.slug === slug);

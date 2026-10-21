@@ -14,8 +14,9 @@ export interface Copy {
 export const contactCopy = {
   title: { text: "LET'S WORK TOGETHER.", status: "draft", source: "기획서 2.0 §4.5 초안" } as Copy,
   intro: { text: "제품, 후가공, 예상 수량 등 패키징에 관한 문의를 남겨 주세요.", status: "draft", source: "2026-10-15 임시 초안" } as Copy,
-  /** 데모 상태 안내 — demoNotice는 화면에서 쓰지 않는다. 보내기 후 결과(demoResult*)는 데모임을 알린다 */
-  demoNotice: "이 페이지는 시연용입니다. 보내기를 눌러도 문의가 실제로 전송되지 않습니다.",
-  demoResultTitle: "데모 화면입니다.",
-  demoResultBody: "입력하신 내용은 저장되거나 전송되지 않았습니다. 실제 문의는 회사 대표 연락처로 해 주세요.",
+  /** 보내기 결과 안내 */
+  sentTitle: "문의가 접수되었습니다.",
+  sentBody: "남겨 주신 이메일이나 연락처로 담당자가 연락드리겠습니다.",
+  errorTitle: "문의를 보내지 못했습니다.",
+  errorBody: "잠시 후 다시 보내 주세요. 계속 안 되면 이메일이나 전화로 문의해 주세요.",
 };

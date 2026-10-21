@@ -38,7 +38,7 @@
 
 ## PRODUCT (`public/assets/products/<코드>/`, `src/data/products.ts` · `productImages.ts`)
 
-원본 `자료/03_제품/제품사진/<코드>_<컷>.png` → `<코드>_<컷>.webp` + `-thumb.webp` (`build-product-images.mjs`)
+관리 화면(`/admin`)에서 바로 올리거나, 원본 `자료/03_제품/제품사진/<코드>_<컷>.png` → `public/assets/products/<코드>_<컷>.webp` (`build-product-images.mjs`) 후 관리 화면에서 선택
 
 | 제품 코드 | 컷 | 규격 | 구분 |
 |---|---|---|---|

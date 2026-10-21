@@ -1,52 +1,22 @@
 import type { MediaAsset } from "./assets";
+import data from "../../content/products.json";
 
 /**
- * 제품 사진 등록부 — 웹용 사본(public/assets/products/<코드>/)을 가리킨다.
- * 원본: 자료/03_제품/제품사진 (수정하지 않음). 사본 생성: node scripts/build-product-images.mjs
- *
- * 컷 번호 규칙 (제공 자료 기준)
- *   01 스포이드 결합 정면 · 02 병 단독 · 03 병과 스포이드 분리 · 04 색상·질감 변형 예시
- * ⚠ 04는 "한 장의 이미지 안에 변형 3종"이 함께 있는 구성이다. 개별 제품으로 나누어 등록하지 않는다.
+ * 제품 사진 등록부 — content/products.json의 사진 경로를 자산 ID로 그대로 쓴다.
+ * 사진 파일은 public/assets/products/ (관리 화면에서 올리면 여기에 저장된다).
  */
-
-const VIEW_ALT: Record<string, string> = {
-  "01": "스포이드 결합 정면",
-  "02": "병 단독 정면",
-  "03": "병과 스포이드 분리",
-  "04": "색상·질감 변형 예시 — 한 이미지에 3종",
-};
-
-/** 제품 코드별 사진 컷 번호 */
-export const productImageCuts: Record<string, string[]> = {
-  "YS-SRRR15-01": ["01", "02", "03", "04"],
-  "YS-SRRR20-01": ["01", "02", "03", "04"],
-  "YS-SRRR30-02": ["01", "02", "03", "04"],
-  "YS-SRRR30-04": ["01", "02", "03", "04"],
-  "YS-SRRR50-02": ["01", "02", "03", "04"],
-  "SL-SRSS30-01": ["01", "02", "03", "04"],
-  "SL-SRSS50-01": ["01", "02", "03", "04"],
-};
-
 export const productImageAssets: Record<string, MediaAsset> = Object.fromEntries(
-  Object.entries(productImageCuts).flatMap(([code, cuts]) =>
-    cuts.map((cut) => {
-      const base = `/assets/products/${code}/${code}_${cut}`;
+  data.items.flatMap((item) =>
+    (item.images ?? []).filter(Boolean).map((src, i) => {
       const asset: MediaAsset = {
         kind: "image",
-        src: `${base}.webp`,
-        thumbSrc: `${base}-thumb.webp`,
-        alt: `${code} ${VIEW_ALT[cut] ?? ""}`.trim(),
+        src,
+        alt: `${item.code} 제품 사진 ${i + 1}`,
         width: 600,
         height: 600,
         status: "final",
-        note: cut === "04" ? "한 이미지에 변형 3종 — 개별 제품 아님" : "원본 600px — 고해상도 원본 확보 시 교체",
       };
-      return [`${code}_${cut}`, asset] as const;
+      return [src, asset] as const;
     }),
   ),
 );
-
-/** 제품 코드의 이미지 ID 목록 (컷 번호 순) */
-export function productImageIds(code: string): string[] {
-  return (productImageCuts[code] ?? []).map((cut) => `${code}_${cut}`);
-}

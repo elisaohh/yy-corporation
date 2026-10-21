@@ -33,7 +33,7 @@ src/
   app/              페이지 — HOME, about/company, about/story, products, process, contact
   components/       layout(헤더 · 메뉴 · 푸터 · 머리 영역) · home · about · story · product · process · contact
   data/             콘텐츠 — 메뉴, 문구, 제품, 회사 정보, 이미지 등록부
-content/story/      뉴스레터 원본 HTML(vol-NN.html) — 파일만 넣으면 STORY에 자동 게시
+content/            제품 목록(products.json) · 뉴스레터(story/) — 관리 화면 /admin에서 고침
   config/site.ts    전역 설정(히어로 방식, 데모 폼, 임시 표시)
   lib/              폰트(Inter + Pretendard), ?still 도우미
 scripts/            이미지 · 영상 변환(자료/ → public/assets/)
@@ -45,7 +45,8 @@ docs/               HANDOFF(인수인계) · MOTION(모션 명세) · decisions(
 ## 콘텐츠 · 자료 바꾸기
 
 - 문구 · 제품: `src/data/`의 해당 파일 — 위치 표는 `docs/HANDOFF.md` 5장.
-- 뉴스레터: 메일 HTML을 `content/story/vol-NN.html`로 넣기 — `docs/HANDOFF.md` 6장.
+- 제품 · 홈 노출 · 뉴스레터: 관리 화면 `/admin` — `docs/ADMIN.md`(처음 설정 포함).
+- 문의 메일: Vercel 환경 변수 `RESEND_API_KEY` · `INQUIRY_TO` — `docs/ADMIN.md` 1-2.
 - 사진 · 영상: 원본을 `자료/`에 같은 이름으로 넣고 `scripts/`의 변환 명령 실행 — `docs/HANDOFF.md` 7장, `자료/README.md`.
 - 로고: `public/assets/brand/` 파일 또는 `src/data/brand.ts`.
 - 회사 정보: `src/data/company.ts` — 푸터 · CONTACT에 함께 반영.
