@@ -1,4 +1,4 @@
-# 사이트 편집 · 문의 메일 안내
+# 사이트 편집 안내
 
 사이트 주소 뒤에 `/admin`을 붙여 로그인하면(예: `https://yy-corporation.vercel.app/admin`) **사이트 화면 그대로** 곳곳에 편집 버튼이 생깁니다.
 서버 · 데이터베이스 없이 동작합니다. 저장하면 GitHub 저장소에 바로 기록되고, Vercel이 사이트를 다시 만들어 **1~2분 뒤** 반영됩니다(화면 아래 편집 막대에 "반영 중 → 반영되었습니다"가 보임).
@@ -15,7 +15,7 @@
 - 로그인은 그 브라우저 탭에서만 유지되고, 탭을 닫으면 로그아웃됩니다.
 - 예비 관리 화면(Decap CMS)도 `/admin/cms`에 남아 있습니다(같은 GitHub 로그인).
 
-문의 폼(CONTACT)은 보내기를 누르면 회사 메일로 전달됩니다(아래 1-2 설정 필요).
+문의 폼(CONTACT)은 보내기를 누르면 **방문자의 메일 앱이 열리고** 받는 사람(회사 메일 `src/data/company.ts`) · 제목 · 내용이 채워집니다. 방문자가 메일 앱에서 보내면 회사 메일로 옵니다(설정 필요 없음). 메일 앱이 없는 방문자를 위해 주소 · 내용 복사 버튼이 함께 나옵니다.
 
 ---
 
@@ -42,25 +42,7 @@
 > 회사 도메인으로 바꾸면 1번의 두 주소도 새 도메인으로 바꿔 주세요.
 > 미리보기 주소(브랜치 배포)에서 관리 화면을 쓰려면 `DECAP_AUTH_URL`에 `https://yy-corporation.vercel.app`을 넣습니다(로그인 창은 등록한 주소에서만 열림).
 
-### 1-2. 문의 메일 (Resend — 무료 한도: 하루 100통 · 월 3,000통 정도)
-
-1. [resend.com](https://resend.com) 가입 → **API Keys → Create API Key**
-2. Vercel 환경 변수에 넣습니다.
-
-| 이름 | 값 |
-|---|---|
-| `RESEND_API_KEY` | 만든 API 키 |
-| `INQUIRY_TO` | 문의를 받을 주소(여러 개면 쉼표로). 예: `sales@yycorp.co.kr` |
-| `INQUIRY_FROM` | 보내는 사람 표시. 도메인 인증 후 예: `YY CORPORATION 홈페이지 <no-reply@yycorp.co.kr>` |
-
-3. **회사 도메인 인증(권장)**: Resend → Domains → `yycorp.co.kr` 추가 → 안내되는 DNS 값 몇 줄을 도메인 관리 화면에 입력.
-   - 인증 전에는 `INQUIRY_FROM`을 비워 두면 `onboarding@resend.dev`로 보내지는데, 이때는 **Resend 가입 메일 주소로만** 받을 수 있습니다(시험용).
-4. 환경 변수를 넣거나 바꾼 뒤에는 Vercel → Deployments → 최신 배포 → **Redeploy**를 한 번 눌러야 적용됩니다.
-
-- 받은 문의 메일에 **답장하면 문의하신 분께 바로** 갑니다.
-- 설정 전에는 문의를 보내면 "문의를 보내지 못했습니다" 안내가 나옵니다.
-- 사람에게 보이지 않는 칸(자동 프로그램 걸러내기)과 같은 곳에서 10분에 5번 넘게 보내기 막기가 들어 있습니다.
-- ⚠ 개인정보 처리방침 제5조(위탁)에 메일 발송 업체(Resend)를 적어 주세요(`src/data/privacy.ts`).
+> 환경 변수를 넣거나 바꾼 뒤에는 Vercel → Deployments → 최신 배포 → **Redeploy**를 한 번 눌러야 적용됩니다.
 
 ---
 
@@ -108,7 +90,7 @@
 | 제품 데이터 | `content/products.json` → `src/data/products.ts` |
 | 제품 사진 | `public/assets/products/` |
 | 뉴스레터 | `content/story/vol-NN.json` + `content/story/files/*.html` → `src/lib/newsletter.ts` |
-| 문의 메일 | `src/app/api/inquiry/route.ts`, 검사 규칙 `src/lib/inquiry.ts` |
+| 문의 폼(메일 앱 열기) | `src/components/contact/InquiryForm.tsx`, 검사 규칙 `src/lib/inquiry.ts` |
 
 - **내 컴퓨터에서 시험**: `npm run dev` → `http://localhost:3000/admin` → **내 컴퓨터에서 편집(개발용)** → 내 컴퓨터 파일에 바로 저장(`/api/edit-local`, 운영에서는 꺼져 있음). GitHub에는 직접 올려야 합니다.
 - 예비 관리 화면을 내 컴퓨터에서 쓸 때는 `npm run cms`를 함께 켜고 `/admin/cms`.

@@ -46,7 +46,7 @@ docs/               HANDOFF(인수인계) · MOTION(모션 명세) · decisions(
 
 - 문구 · 제품: `src/data/`의 해당 파일 — 위치 표는 `docs/HANDOFF.md` 5장.
 - 제품 · 홈 노출 · 뉴스레터: `/admin`에서 로그인 → 사이트 화면에서 바로 추가 · 수정 — `docs/ADMIN.md`(처음 설정 포함).
-- 문의 메일: Vercel 환경 변수 `RESEND_API_KEY` · `INQUIRY_TO` — `docs/ADMIN.md` 1-2.
+- 문의 폼: 보내기 → 방문자의 메일 앱이 열림(받는 주소는 `src/data/company.ts`의 email).
 - 사진 · 영상: 원본을 `자료/`에 같은 이름으로 넣고 `scripts/`의 변환 명령 실행 — `docs/HANDOFF.md` 7장, `자료/README.md`.
 - 로고: `public/assets/brand/` 파일 또는 `src/data/brand.ts`.
 - 회사 정보: `src/data/company.ts` — 푸터 · CONTACT에 함께 반영.

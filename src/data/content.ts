@@ -14,9 +14,7 @@ export interface Copy {
 export const contactCopy = {
   title: { text: "LET'S WORK TOGETHER.", status: "draft", source: "기획서 2.0 §4.5 초안" } as Copy,
   intro: { text: "제품, 후가공, 예상 수량 등 패키징에 관한 문의를 남겨 주세요.", status: "draft", source: "2026-10-15 임시 초안" } as Copy,
-  /** 보내기 결과 안내 */
-  sentTitle: "문의가 접수되었습니다.",
-  sentBody: "남겨 주신 이메일이나 연락처로 담당자가 연락드리겠습니다.",
-  errorTitle: "문의를 보내지 못했습니다.",
-  errorBody: "잠시 후 다시 보내 주세요. 계속 안 되면 이메일이나 전화로 문의해 주세요.",
+  /** 보내기 결과 안내 — 메일 앱이 열린 뒤 */
+  openedTitle: "메일 앱에서 보내기를 눌러 주세요.",
+  openedBody: "받는 사람 · 제목 · 내용이 채워진 메일 창이 열렸습니다. 메일 앱이 열리지 않았다면 아래 주소로 문의 내용을 보내 주세요.",
 };

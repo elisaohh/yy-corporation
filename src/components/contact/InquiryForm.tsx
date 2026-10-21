@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useId, useRef, useState, type ChangeEvent, type FormEvent } from "react";
+import { company } from "@/data/company";
 import { contactCopy } from "@/data/content";
 import { privacyConsentSummary } from "@/data/privacy";
 import { getProductById, productInquiryLabel } from "@/data/products";
@@ -13,7 +14,8 @@ import { validateInquiry, type InquiryData, type InquiryErrors, type InquiryFiel
  * 필수: 회사명·브랜드명 · 담당자명 · 이메일 · 연락처 · 문의 내용 · 개인정보 동의
  * 선택: 관심 제품 · 예상 발주 수량   (문의 유형 · 파일 첨부는 첫 버전에서 제외)
  *
- * 보내기 → /api/inquiry가 회사 메일로 전달한다. 검사 규칙은 lib/inquiry.ts(서버와 같은 규칙).
+ * 보내기 → 방문자의 메일 앱이 열리고 받는 사람(회사 메일) · 제목 · 내용이 채워진다. 방문자가 메일 앱에서 보낸다.
+ * 메일 앱이 없을 때를 위해 주소 · 내용 복사 버튼을 함께 보여 준다. 검사 규칙은 lib/inquiry.ts.
  */
 
 type FieldName = InquiryField;
@@ -34,21 +36,25 @@ const ORDER: FieldName[] = ["company", "name", "email", "phone", "product", "qua
 
 const validate = validateInquiry;
 
-/** 서버로 보낸다 — 성공이면 "sent", 서버가 칸 오류를 돌려주면 그 오류, 그 밖에는 "error" */
-async function submitInquiry(data: InquiryData, website: string): Promise<"sent" | "error" | Errors> {
-  try {
-    const res = await fetch("/api/inquiry", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...data, website }),
-    });
-    if (res.ok) return "sent";
-    const body = await res.json().catch(() => null);
-    if (res.status === 422 && body?.errors) return body.errors as Errors;
-    return "error";
-  } catch {
-    return "error";
-  }
+const MAIL_TO = company.email ?? "";
+
+/** 메일 제목 · 본문 */
+function composeMail(data: InquiryData) {
+  const subject = `[홈페이지 문의] ${data.company.trim()} · ${data.name.trim()}${data.product.trim() ? ` · ${data.product.trim()}` : ""}`;
+  const body = [
+    `회사명 · 브랜드명: ${data.company.trim()}`,
+    `담당자명: ${data.name.trim()}`,
+    `이메일: ${data.email.trim()}`,
+    `연락처: ${data.phone.trim()}`,
+    `관심 제품: ${data.product.trim() || "—"}`,
+    `예상 발주 수량: ${data.quantity.trim() || "—"}`,
+    "",
+    "문의 내용:",
+    data.message.trim(),
+    "",
+    "개인정보 수집 · 이용 동의: 예",
+  ].join("\n");
+  return { subject, body };
 }
 
 export function InquiryForm() {
@@ -57,8 +63,8 @@ export function InquiryForm() {
   const [data, setData] = useState<InquiryData>(EMPTY);
   const [errors, setErrors] = useState<Errors>({});
   const [touched, setTouched] = useState<Partial<Record<FieldName, boolean>>>({});
-  const [status, setStatus] = useState<"idle" | "submitting" | "sent" | "error">("idle");
-  const [website, setWebsite] = useState("");
+  const [status, setStatus] = useState<"idle" | "opened">("idle");
+  const [copied, setCopied] = useState<"" | "address" | "body">("");
   const [prefilled, setPrefilled] = useState(false);
   const resultRef = useRef<HTMLDivElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
@@ -74,7 +80,7 @@ export function InquiryForm() {
   }, [params]);
 
   useEffect(() => {
-    if (status === "sent" || status === "error") resultRef.current?.focus();
+    if (status === "opened") resultRef.current?.focus();
   }, [status]);
 
   const fieldId = (name: FieldName) => `${uid}-${name}`;
@@ -83,7 +89,7 @@ export function InquiryForm() {
     const value = name === "consent" ? (event.target as HTMLInputElement).checked : event.target.value;
     const next = { ...data, [name]: value } as InquiryData;
     setData(next);
-    if (status !== "idle" && status !== "submitting") setStatus("idle");
+    if (status === "opened") setStatus("idle");
     if (touched[name] || errors[name]) setErrors((prev) => ({ ...prev, [name]: validate(next)[name] }));
   };
 
@@ -102,21 +108,11 @@ export function InquiryForm() {
       formRef.current?.querySelector<HTMLElement>(`#${CSS.escape(fieldId(first))}`)?.focus();
       return;
     }
-    setStatus("submitting");
-    const result = await submitInquiry(data, website);
-    if (result === "sent") {
-      setData(EMPTY);
-      setTouched({});
-      setPrefilled(false);
-      setStatus("sent");
-    } else if (result === "error") {
-      setStatus("error");
-    } else {
-      setErrors(result);
-      setStatus("idle");
-      const firstServer = ORDER.find((name) => result[name]);
-      if (firstServer) formRef.current?.querySelector<HTMLElement>(`#${CSS.escape(fieldId(firstServer))}`)?.focus();
-    }
+    // 방문자의 메일 앱 열기 — 받는 사람 · 제목 · 내용 채움
+    const { subject, body } = composeMail(data);
+    window.location.href = `mailto:${MAIL_TO}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    setCopied("");
+    setStatus("opened");
   };
 
   const textField = (
@@ -166,7 +162,15 @@ export function InquiryForm() {
 
   const messageError = errors.message;
   const consentError = errors.consent;
-  const submitting = status === "submitting";
+  const copy = async (what: "address" | "body") => {
+    const { subject, body } = composeMail(data);
+    try {
+      await navigator.clipboard.writeText(what === "address" ? MAIL_TO : `${subject}\n\n${body}`);
+      setCopied(what);
+    } catch {
+      setCopied("");
+    }
+  };
 
   return (
     <form ref={formRef} noValidate onSubmit={onSubmit} className="relative grid gap-6">
@@ -251,36 +255,30 @@ export function InquiryForm() {
         )}
       </div>
 
-      {/* 자동 프로그램 걸러내기용 칸 — 사람에게는 보이지 않는다 */}
-      <div aria-hidden="true" className="absolute -left-[9999px] size-px overflow-hidden">
-        <label>
-          웹사이트
-          <input type="text" name="website" tabIndex={-1} autoComplete="off" value={website} onChange={(e) => setWebsite(e.target.value)} />
-        </label>
-      </div>
-
       <div>
-        <button type="submit" disabled={submitting} className="btn btn-primary w-full md:w-auto md:min-w-48">
-          {submitting ? (
-            <>
-              <span className="spinner" aria-hidden="true" />
-              처리 중
-            </>
-          ) : (
-            "문의 보내기"
-          )}
+        <button type="submit" className="btn btn-primary w-full md:w-auto md:min-w-48">
+          메일로 문의 보내기
         </button>
       </div>
 
       <div role="status" aria-live="polite">
-        {(status === "sent" || status === "error") && (
+        {status === "opened" && (
           <div
             ref={resultRef}
             tabIndex={-1}
             className="fade-in bg-mist px-5 py-4 text-[14px] leading-[1.7] shadow-[inset_3px_0_0_var(--color-charcoal)] outline-none"
           >
-            <p className="font-medium">{status === "sent" ? contactCopy.sentTitle : contactCopy.errorTitle}</p>
-            <p className="mt-1 text-ash">{status === "sent" ? contactCopy.sentBody : contactCopy.errorBody}</p>
+            <p className="font-medium">{contactCopy.openedTitle}</p>
+            <p className="mt-1 text-ash">{contactCopy.openedBody}</p>
+            <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1">
+              <span className="font-en">{MAIL_TO}</span>
+              <button type="button" onClick={() => copy("address")} className="min-h-11 underline underline-offset-4 hover:text-charcoal">
+                {copied === "address" ? "주소 복사됨" : "주소 복사"}
+              </button>
+              <button type="button" onClick={() => copy("body")} className="min-h-11 underline underline-offset-4 hover:text-charcoal">
+                {copied === "body" ? "내용 복사됨" : "문의 내용 복사"}
+              </button>
+            </div>
           </div>
         )}
       </div>

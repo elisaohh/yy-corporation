@@ -1,5 +1,5 @@
 /**
- * 문의 폼 데이터와 검사 규칙 — 화면(InquiryForm)과 서버(/api/inquiry)가 같은 규칙을 쓴다.
+ * 문의 폼 데이터와 검사 규칙(InquiryForm).
  */
 
 export interface InquiryData {
@@ -24,7 +24,8 @@ export const INQUIRY_MAX: Record<Exclude<InquiryField, "consent">, number> = {
   phone: 30,
   product: 100,
   quantity: 50,
-  message: 5000,
+  // 메일 앱으로 넘길 수 있는 길이에 맞춤
+  message: 1500,
 };
 
 export function validateInquiry(data: InquiryData): InquiryErrors {
