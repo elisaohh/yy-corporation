@@ -1,116 +1,132 @@
 {
   "items": [
     {
-      "material": "유리",
       "code": "YS-SRRR15-01",
+      "category": "glass-bottle",
+      "capacity": "15ml",
       "dimensions": "31.5 × 64.0",
+      "material": "유리",
+      "neck": "Ø18",
+      "description": "",
+      "home": true,
       "images": [
         "/assets/products/YS-SRRR15-01_01.webp",
         "/assets/products/YS-SRRR15-01_02.webp",
         "/assets/products/YS-SRRR15-01_03.webp",
         "/assets/products/YS-SRRR15-01_04.webp"
-      ],
-      "capacity": "15ml",
-      "description": "",
-      "category": "glass-bottle",
-      "neck": "Ø18",
-      "home": true
+      ]
     },
     {
-      "material": "유리",
       "code": "YS-SRRR20-01",
+      "category": "glass-bottle",
+      "capacity": "20ml",
       "dimensions": "33.7 × 68.7",
+      "material": "유리",
+      "neck": "Ø18",
+      "description": "",
+      "home": true,
       "images": [
         "/assets/products/YS-SRRR20-01_01.webp",
         "/assets/products/YS-SRRR20-01_02.webp",
         "/assets/products/YS-SRRR20-01_03.webp",
         "/assets/products/YS-SRRR20-01_04.webp"
-      ],
-      "capacity": "20ml",
-      "description": "",
-      "category": "glass-bottle",
-      "neck": "Ø18",
-      "home": true
+      ]
     },
     {
-      "material": "유리",
       "code": "YS-SRRR30-02",
+      "category": "glass-bottle",
+      "capacity": "30ml",
       "dimensions": "38.0 × 71.3",
+      "material": "유리",
+      "neck": "Ø18",
+      "description": "",
+      "home": true,
       "images": [
         "/assets/products/YS-SRRR30-02_01.webp",
         "/assets/products/YS-SRRR30-02_02.webp",
         "/assets/products/YS-SRRR30-02_03.webp",
         "/assets/products/YS-SRRR30-02_04.webp"
-      ],
-      "capacity": "30ml",
-      "description": "",
-      "category": "glass-bottle",
-      "neck": "Ø18",
-      "home": true
+      ]
     },
     {
-      "material": "유리",
       "code": "YS-SRRR30-04",
+      "category": "glass-bottle",
+      "capacity": "30ml",
       "dimensions": "38.0 × 74.4",
+      "material": "유리",
+      "neck": "Ø18",
+      "description": "",
+      "home": true,
       "images": [
         "/assets/products/YS-SRRR30-04_01.webp",
         "/assets/products/YS-SRRR30-04_02.webp",
         "/assets/products/YS-SRRR30-04_03.webp",
         "/assets/products/YS-SRRR30-04_04.webp"
-      ],
-      "capacity": "30ml",
-      "description": "",
-      "category": "glass-bottle",
-      "neck": "Ø18",
-      "home": true
+      ]
     },
     {
-      "material": "유리",
       "code": "YS-SRRR50-02",
+      "category": "glass-bottle",
+      "capacity": "50ml",
       "dimensions": "38.0 × 99.2",
+      "material": "유리",
+      "neck": "Ø18",
+      "description": "",
+      "home": true,
       "images": [
         "/assets/products/YS-SRRR50-02_01.webp",
         "/assets/products/YS-SRRR50-02_02.webp",
         "/assets/products/YS-SRRR50-02_03.webp",
         "/assets/products/YS-SRRR50-02_04.webp"
-      ],
-      "capacity": "50ml",
-      "description": "",
-      "category": "glass-bottle",
-      "neck": "Ø18",
-      "home": true
+      ]
     },
     {
-      "material": "유리",
       "code": "SL-SRSS30-01",
+      "category": "glass-bottle",
+      "capacity": "30ml",
       "dimensions": "39.5 × 73.0",
+      "material": "유리",
+      "neck": "Ø18",
+      "description": "",
+      "home": false,
       "images": [
         "/assets/products/SL-SRSS30-01_01.webp",
         "/assets/products/SL-SRSS30-01_02.webp",
         "/assets/products/SL-SRSS30-01_03.webp",
         "/assets/products/SL-SRSS30-01_04.webp"
-      ],
-      "capacity": "30ml",
-      "description": "",
-      "category": "glass-bottle",
-      "neck": "Ø18",
-      "home": false
+      ]
     },
     {
-      "material": "유리",
       "code": "SL-SRSS50-01",
+      "category": "glass-bottle",
+      "capacity": "50ml",
       "dimensions": "44.3 × 86.6",
+      "material": "유리",
+      "neck": "Ø20",
+      "description": "",
+      "home": false,
       "images": [
         "/assets/products/SL-SRSS50-01_01.webp",
         "/assets/products/SL-SRSS50-01_02.webp",
         "/assets/products/SL-SRSS50-01_03.webp",
         "/assets/products/SL-SRSS50-01_04.webp"
-      ],
-      "capacity": "50ml",
-      "description": "",
+      ]
+    },
+    {
+      "code": "YS-SRSS30-03",
       "category": "glass-bottle",
-      "neck": "Ø20",
-      "home": false
+      "capacity": "30ml",
+      "dimensions": "47.0 x 58.0",
+      "material": "유리",
+      "neck": "Ø18",
+      "description": "",
+      "home": false,
+      "images": [
+        "/assets/products/YS-SRSS30-03_mvhlgi7e0.webp",
+        "/assets/products/YS-SRSS30-03_mvhlgi7e1.webp",
+        "/assets/products/YS-SRSS30-03_mvhlgi7e2.webp",
+        "/assets/products/YS-SRSS30-03_mvhlgi7e3.webp"
+      ]
     }
   ]
 }
