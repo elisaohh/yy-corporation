@@ -5,7 +5,7 @@ import { useCallback, useEffect, useRef, useState, type CSSProperties } from "re
 import { ProductCard } from "@/components/product/ProductCard";
 import { siteConfig } from "@/config/site";
 import { allCategory, productCategories } from "@/data/categories";
-import { PRODUCTS_PAGE_SIZE, hasProducts, products } from "@/data/products";
+import { PRODUCTS_PAGE_SIZE, hasProducts, products, type Product } from "@/data/products";
 
 /** 제품이 한 개라도 있는 카테고리만 탭으로 보인다 — 제품이 추가되면 자동으로 나타난다 */
 const tabs = [allCategory, ...productCategories.filter((category) => category.visible && hasProducts(category.slug))];
@@ -17,13 +17,33 @@ const OUT_MS = 200;
 const STAGGER_MS = 45;
 const STAGGER_MAX = 8;
 
-function filterBy(slug: string) {
+/** 용량 숫자(ml) — "30ml" → "30". 용량이 없거나 ml가 아니면 null */
+const mlOf = (product: Product) => product.capacity?.match(/(\d+(?:\.\d+)?)\s*ml/i)?.[1] ?? null;
+
+function inCategory(slug: string) {
   return slug === allCategory.slug ? products : products.filter((p) => p.category === slug);
 }
 
+/** 그 종류 제품에 있는 용량만 — 작은 것부터 */
+function mlChoicesOf(slug: string) {
+  return [...new Set(inCategory(slug).map(mlOf).filter((ml): ml is string => ml !== null))].sort((a, b) => Number(a) - Number(b));
+}
+
+/** 목록 상태 = 종류 + 용량(없으면 전체) */
+const keyOf = (category: string, ml: string | null) => `${category}|${ml ?? ""}`;
+const parseKey = (key: string) => {
+  const [category, ml] = key.split("|");
+  return { category, ml: ml || null };
+};
+
+function filterBy(key: string) {
+  const { category, ml } = parseKey(key);
+  return inCategory(category).filter((p) => !ml || mlOf(p) === ml);
+}
+
 /**
- * PRODUCT 목록 — 카테고리 탭 + 그리드 + LOAD MORE + 빈 카테고리 안내.
- * 선택한 탭은 URL(?category=)에 저장해 상세에서 돌아와도 유지된다.
+ * PRODUCT 목록 — 종류(카테고리) 탭 + 용량(ml) 필터 + 그리드 + LOAD MORE + 빈 카테고리 안내.
+ * 선택은 URL(?category= · ?ml=)에 저장해 상세에서 돌아와도 유지된다. 용량 버튼은 그 종류 제품에 있는 용량만 나온다.
  *
  * 탭 전환: 탭 표시는 즉시 바뀌고, 목록은 0.2초 동안 흐려진 뒤
  * 새 카드가 살짝 아래에서 떠오르며 순서대로 나타난다. 전환 중에는 높이를 고정해 화면이 출렁이지 않게 한다.
@@ -33,7 +53,11 @@ export function ProductCatalog() {
   const pathname = usePathname();
   const params = useSearchParams();
   const requested = params.get("category") ?? allCategory.slug;
-  const active = validSlugs.has(requested) ? requested : allCategory.slug;
+  const activeCategory = validSlugs.has(requested) ? requested : allCategory.slug;
+  const mlChoices = mlChoicesOf(activeCategory);
+  const requestedMl = params.get("ml");
+  const activeMl = requestedMl && mlChoices.includes(requestedMl) ? requestedMl : null;
+  const active = keyOf(activeCategory, activeMl);
 
   const [displayed, setDisplayed] = useState(active);
   const [fadingOut, setFadingOut] = useState(false);
@@ -44,6 +68,7 @@ export function ProductCatalog() {
   const [visibleCount, setVisibleCount] = useState(PRODUCTS_PAGE_SIZE);
 
   const listWrapRef = useRef<HTMLDivElement>(null);
+  const mlRowRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLAnchorElement | null)[]>([]);
   const focusIndex = useRef<number | null>(null);
   const releaseTimer = useRef<number | undefined>(undefined);
@@ -75,6 +100,13 @@ export function ProductCatalog() {
 
   useEffect(() => () => window.clearTimeout(releaseTimer.current), []);
 
+  // 고른 용량 버튼이 휴대폰 화면 밖에 있으면 보이게(가로 스크롤만)
+  useEffect(() => {
+    const row = mlRowRef.current;
+    const on = row?.querySelector<HTMLElement>('[aria-pressed="true"]');
+    if (row && on) row.scrollLeft = Math.max(0, on.offsetLeft - row.clientWidth + on.offsetWidth + 16);
+  }, [activeMl, activeCategory]);
+
   // LOAD MORE 후 새로 나타난 첫 카드로 포커스 이동(키보드 사용자)
   useEffect(() => {
     if (focusIndex.current !== null) {
@@ -83,13 +115,18 @@ export function ProductCatalog() {
     }
   }, [visibleCount]);
 
-  const selectTab = useCallback(
-    (slug: string) => {
-      const query = slug === allCategory.slug ? "" : `?category=${slug}`;
-      router.replace(`${pathname}${query}`, { scroll: false });
+  const go = useCallback(
+    (category: string, ml: string | null) => {
+      const query = new URLSearchParams();
+      if (category !== allCategory.slug) query.set("category", category);
+      if (ml) query.set("ml", ml);
+      const qs = query.toString();
+      router.replace(`${pathname}${qs ? `?${qs}` : ""}`, { scroll: false });
     },
     [pathname, router],
   );
+  /** 종류를 바꾸면 고른 용량은 그 종류에도 있을 때만 유지 */
+  const selectTab = (slug: string) => go(slug, activeMl && mlChoicesOf(slug).includes(activeMl) ? activeMl : null);
 
   const loadMore = () => {
     focusIndex.current = visibleCount;
@@ -101,7 +138,8 @@ export function ProductCatalog() {
   const shown = filtered.slice(0, visibleCount);
   const activeCount = filterBy(active).length;
   const mobileCols = siteConfig.productMobileColumns === 1 ? "grid-cols-1" : "grid-cols-2";
-  const activeLabel = tabs.find((tab) => tab.slug === active);
+  const activeLabel = tabs.find((tab) => tab.slug === activeCategory);
+  const shownFrom = parseKey(displayed);
 
   const enterStyle = (index: number): { className: string; style?: CSSProperties } => {
     if (animateFrom === null || index < animateFrom) return { className: "" };
@@ -118,7 +156,7 @@ export function ProductCatalog() {
           className="-mx-[var(--gutter)] flex gap-7 overflow-x-auto px-[var(--gutter)] [scrollbar-width:none] md:mx-0 md:gap-9 md:px-0"
         >
           {tabs.map((tab) => {
-            const isActive = tab.slug === active;
+            const isActive = tab.slug === activeCategory;
             return (
               <button
                 key={tab.slug}
@@ -135,9 +173,37 @@ export function ProductCatalog() {
           })}
         </div>
         <p className="pb-3 text-[13px] text-ash" aria-live="polite">
-          {activeLabel?.labelKo} 제품 {activeCount}개
+          {activeLabel?.labelKo}
+          {activeMl ? ` · ${activeMl}ml` : ""} 제품 {activeCount}개
         </p>
       </div>
+
+      {mlChoices.length > 1 && (
+        <div
+          role="group"
+          aria-label="용량"
+          ref={mlRowRef}
+          className="-mx-[var(--gutter)] mt-5 flex items-center gap-1.5 overflow-x-auto px-[var(--gutter)] [scrollbar-width:none] md:mx-0 md:gap-2 md:px-0"
+        >
+          <span className="mr-1.5 shrink-0 text-[13px] text-ash md:mr-2">용량</span>
+          {[null, ...mlChoices].map((ml) => {
+            const on = ml === activeMl;
+            return (
+              <button
+                key={ml ?? "all"}
+                type="button"
+                aria-pressed={on}
+                onClick={() => go(activeCategory, ml)}
+                className={`inline-flex h-9 shrink-0 items-center rounded-full border px-3 font-en md:px-4 text-[13px] tabular-nums transition-colors duration-200 ${
+                  on ? "border-charcoal bg-charcoal text-paper" : "border-stone text-ash hover:border-charcoal hover:text-charcoal"
+                }`}
+              >
+                {ml ? `${ml}ml` : "ALL"}
+              </button>
+            );
+          })}
+        </div>
+      )}
 
       <div
         ref={listWrapRef}
@@ -167,7 +233,8 @@ export function ProductCatalog() {
                   <li key={product.id} className={enter.className} style={enter.style}>
                     <ProductCard
                       product={product}
-                      fromCategory={displayed === allCategory.slug ? undefined : displayed}
+                      fromCategory={shownFrom.category === allCategory.slug ? undefined : shownFrom.category}
+                      fromMl={shownFrom.ml ?? undefined}
                       linkRef={(el) => {
                         cardRefs.current[index] = el;
                       }}

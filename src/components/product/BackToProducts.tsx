@@ -6,13 +6,17 @@ import { productCategories } from "@/data/categories";
 import { hasProducts } from "@/data/products";
 
 /**
- * 뒤로가기 화살표 — 떠나온 카테고리 탭의 제품 목록으로 돌아간다.
+ * 뒤로가기 화살표 — 떠나온 종류 탭 · 용량 필터의 제품 목록으로 돌아간다.
  * (글자 없이 화살표만. 화면 낭독기는 aria-label로 안내)
  */
 export function BackToProducts() {
-  const from = useSearchParams().get("from");
-  const valid = from && productCategories.some((category) => category.slug === from) && hasProducts(from);
-  return <BackArrow href={valid ? `/products?category=${from}` : "/products"} />;
+  const params = useSearchParams();
+  const from = params.get("from");
+  const ml = params.get("ml");
+  const query = new URLSearchParams();
+  if (from && productCategories.some((category) => category.slug === from) && hasProducts(from)) query.set("category", from);
+  if (ml && /^\d+(\.\d+)?$/.test(ml)) query.set("ml", ml);
+  return <BackArrow href={`/products${query.size ? `?${query}` : ""}`} />;
 }
 
 /** Suspense 대기 중에 같은 자리를 차지하는 링크 */

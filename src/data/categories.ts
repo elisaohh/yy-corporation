@@ -1,7 +1,7 @@
 /**
  * 제품 카테고리. 탭은 이 배열을 그대로 렌더링하므로, 카테고리를 추가할 때는
  * 항목만 추가하면 된다(예: 취급이 확인된 뒤의 플라스틱 용기).
- * 기획서 2.0 부록 D: ALL / GLASS BOTTLE / DROPPER / CAP / ACCESSORIES
+ * 종류: ALL / BOTTLE / JAR / DROPPER / CAP / ACCESSORIES (기획서 2.0 부록 D의 GLASS BOTTLE을 BOTTLE · JAR로 나눔, 2026-10-21)
  */
 
 export interface ProductCategory {
@@ -19,7 +19,8 @@ export interface ProductCategory {
 }
 
 export const productCategories: ProductCategory[] = [
-  { slug: "glass-bottle", label: "GLASS BOTTLE", labelKo: "유리용기", visible: true },
+  { slug: "glass-bottle", label: "BOTTLE", labelKo: "병", visible: true },
+  { slug: "jar", label: "JAR", labelKo: "단지(크림 용기)", visible: true },
   { slug: "dropper", label: "DROPPER", labelKo: "드로퍼", visible: true },
   { slug: "cap", label: "CAP", labelKo: "캡", visible: true },
   { slug: "accessories", label: "ACCESSORIES", labelKo: "부자재", visible: true },

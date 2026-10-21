@@ -8,6 +8,8 @@ interface ProductCardProps {
   product: Product;
   /** 상세에서 돌아올 카테고리 탭 (ALL이면 생략) */
   fromCategory?: string;
+  /** 상세에서 돌아올 용량 필터 */
+  fromMl?: string;
   /** LOAD MORE 후 첫 새 카드로 포커스를 옮길 때 사용 */
   linkRef?: (el: HTMLAnchorElement | null) => void;
 }
@@ -17,9 +19,12 @@ interface ProductCardProps {
  * 호버 시 두 번째 사진으로 크로스페이드 + 미세 확대 (기획서 2.0 부록 D).
  * 흰 배경 제품 사진은 multiply 혼합으로 카드 바탕에 자연스럽게 섞는다(원본 파일은 그대로).
  */
-export function ProductCard({ product, fromCategory, linkRef }: ProductCardProps) {
+export function ProductCard({ product, fromCategory, fromMl, linkRef }: ProductCardProps) {
   const [primary, secondary] = product.images;
-  const href = `/products/${product.slug}${fromCategory ? `?from=${fromCategory}` : ""}`;
+  const from = new URLSearchParams();
+  if (fromCategory) from.set("from", fromCategory);
+  if (fromMl) from.set("ml", fromMl);
+  const href = `/products/${product.slug}${from.size ? `?${from}` : ""}`;
 
   return (
     <div className="relative">
