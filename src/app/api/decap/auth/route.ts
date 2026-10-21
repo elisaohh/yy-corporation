@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
+import { env } from "@/lib/env";
 
 /** 관리 화면 로그인 1단계 — GitHub 로그인 창으로 보낸다 */
 export const dynamic = "force-dynamic";
 
 export function GET(request: Request) {
-  const id = process.env.GITHUB_OAUTH_ID;
+  const id = env("GITHUB_OAUTH_ID");
   if (!id) return new Response("GITHUB_OAUTH_ID가 설정되지 않았습니다.", { status: 503 });
   const url = new URL(request.url);
   const state = crypto.randomUUID();

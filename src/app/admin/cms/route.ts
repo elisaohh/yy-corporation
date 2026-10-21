@@ -1,4 +1,5 @@
 import { cmsConfig } from "@/lib/cms";
+import { env } from "@/lib/env";
 
 /**
  * 예비 관리 화면(/admin/cms) — Decap CMS. 평소에는 사이트 위 편집(/admin에서 로그인)을 쓴다.
@@ -14,7 +15,7 @@ export function GET(request: Request) {
   const config = cmsConfig({
     branch: process.env.VERCEL_GIT_COMMIT_REF || "main",
     // GitHub 로그인은 GitHub에 등록한 주소에서만 된다 — 다른 주소(미리보기)에서 쓰려면 DECAP_AUTH_URL에 등록한 주소를 넣는다
-    baseUrl: process.env.DECAP_AUTH_URL || origin,
+    baseUrl: env("DECAP_AUTH_URL") || origin,
     local: process.env.NODE_ENV === "development",
   });
   const html = `<!doctype html>

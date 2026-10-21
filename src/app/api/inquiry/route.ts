@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { env } from "@/lib/env";
 import { validateInquiry, type InquiryData } from "@/lib/inquiry";
 
 /**
@@ -45,8 +46,8 @@ export async function POST(request: Request) {
   const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
   if (tooMany(ip)) return NextResponse.json({ ok: false, reason: "rate" }, { status: 429 });
 
-  const key = process.env.RESEND_API_KEY;
-  const to = process.env.INQUIRY_TO?.split(",").map((s) => s.trim()).filter(Boolean) ?? [];
+  const key = env("RESEND_API_KEY");
+  const to = env("INQUIRY_TO")?.split(",").map((s) => s.trim()).filter(Boolean) ?? [];
   if (!key || !to.length) {
     console.error("[inquiry] RESEND_API_KEY 또는 INQUIRY_TO가 설정되지 않았습니다.");
     return NextResponse.json({ ok: false, reason: "config" }, { status: 503 });
@@ -75,7 +76,7 @@ export async function POST(request: Request) {
     method: "POST",
     headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
     body: JSON.stringify({
-      from: process.env.INQUIRY_FROM || "YY CORPORATION 홈페이지 <onboarding@resend.dev>",
+      from: env("INQUIRY_FROM") || "YY CORPORATION 홈페이지 <onboarding@resend.dev>",
       to,
       reply_to: inquiry.email,
       subject: `[홈페이지 문의] ${inquiry.company} · ${inquiry.name}`,

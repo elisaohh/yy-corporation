@@ -1,4 +1,5 @@
 import type { NextRequest } from "next/server";
+import { env } from "@/lib/env";
 
 /** 관리 화면 로그인 2단계 — GitHub가 돌려준 코드를 토큰으로 바꿔 관리 화면 창에 전달한다 */
 export const dynamic = "force-dynamic";
@@ -33,8 +34,8 @@ export async function GET(request: NextRequest) {
     method: "POST",
     headers: { Accept: "application/json", "Content-Type": "application/json" },
     body: JSON.stringify({
-      client_id: process.env.GITHUB_OAUTH_ID,
-      client_secret: process.env.GITHUB_OAUTH_SECRET,
+      client_id: env("GITHUB_OAUTH_ID"),
+      client_secret: env("GITHUB_OAUTH_SECRET"),
       code,
       redirect_uri: `${url.origin}/api/decap/callback`,
     }),
