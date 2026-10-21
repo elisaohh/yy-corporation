@@ -33,7 +33,7 @@ src/
   app/              페이지 — HOME, about/company, about/story, products, process, contact
   components/       layout(헤더 · 메뉴 · 푸터 · 머리 영역) · home · about · story · product · process · contact
   data/             콘텐츠 — 메뉴, 문구, 제품, 회사 정보, 이미지 등록부
-content/            제품 목록(products.json) · 뉴스레터(story/) — 관리 화면 /admin에서 고침
+content/            제품 목록(products.json) · 뉴스레터(story/) — 사이트 위 편집(/admin 로그인)으로 고침
   config/site.ts    전역 설정(히어로 방식, 데모 폼, 임시 표시)
   lib/              폰트(Inter + Pretendard), ?still 도우미
 scripts/            이미지 · 영상 변환(자료/ → public/assets/)
@@ -45,7 +45,7 @@ docs/               HANDOFF(인수인계) · MOTION(모션 명세) · decisions(
 ## 콘텐츠 · 자료 바꾸기
 
 - 문구 · 제품: `src/data/`의 해당 파일 — 위치 표는 `docs/HANDOFF.md` 5장.
-- 제품 · 홈 노출 · 뉴스레터: 관리 화면 `/admin` — `docs/ADMIN.md`(처음 설정 포함).
+- 제품 · 홈 노출 · 뉴스레터: `/admin`에서 로그인 → 사이트 화면에서 바로 추가 · 수정 — `docs/ADMIN.md`(처음 설정 포함).
 - 문의 메일: Vercel 환경 변수 `RESEND_API_KEY` · `INQUIRY_TO` — `docs/ADMIN.md` 1-2.
 - 사진 · 영상: 원본을 `자료/`에 같은 이름으로 넣고 `scripts/`의 변환 명령 실행 — `docs/HANDOFF.md` 7장, `자료/README.md`.
 - 로고: `public/assets/brand/` 파일 또는 `src/data/brand.ts`.

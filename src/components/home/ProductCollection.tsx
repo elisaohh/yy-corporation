@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Reveal } from "@/components/motion/Reveal";
 import { ProductCard } from "@/components/product/ProductCard";
+import { EditButton, EditToolbar } from "@/components/edit/EditContext";
 import { homeProducts } from "@/data/products";
 
 /**
@@ -26,6 +27,11 @@ export function ProductCollection() {
             VIEW ALL PRODUCTS →
           </Link>
         </div>
+
+        <EditToolbar className="mt-8">
+          <EditButton request={{ type: "order" }}>홈 제품 고르기 · 순서</EditButton>
+          <EditButton request={{ type: "product", code: null }}>+ 제품 추가</EditButton>
+        </EditToolbar>
 
         <ul className="mt-12 grid grid-cols-2 gap-x-4 gap-y-10 md:mt-16 md:grid-cols-3 md:gap-x-6 lg:grid-cols-5">
           {homeProducts.map((product, index) => (

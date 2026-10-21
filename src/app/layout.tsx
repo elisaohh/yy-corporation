@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
+import { EditProvider } from "@/components/edit/EditContext";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { ImageGuard } from "@/components/layout/ImageGuard";
@@ -30,13 +31,15 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <a href="#main" className="skip-link">
           본문 바로가기
         </a>
-        <Header />
-        <main id="main" tabIndex={-1} className="outline-none">
-          {children}
-        </main>
-        <Footer />
-        <TopButton />
-        <ImageGuard />
+        <EditProvider>
+          <Header />
+          <main id="main" tabIndex={-1} className="outline-none">
+            {children}
+          </main>
+          <Footer />
+          <TopButton />
+          <ImageGuard />
+        </EditProvider>
       </body>
     </html>
   );

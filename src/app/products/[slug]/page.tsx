@@ -7,6 +7,7 @@ import { ProductGallery } from "@/components/product/ProductGallery";
 import { ProductSpecs } from "@/components/product/ProductSpecs";
 import { Pending } from "@/components/ui/Pending";
 import { productCategories } from "@/data/categories";
+import { EditButton, EditToolbar } from "@/components/edit/EditContext";
 import { getProduct, products } from "@/data/products";
 
 interface PageProps {
@@ -51,6 +52,9 @@ export default async function ProductDetailPage({ params }: PageProps) {
             </p>
           )}
           <h1 className="mt-4 text-[clamp(24px,2.4vw,32px)] leading-[1.3] font-medium tracking-[-0.02em]">{product.name}</h1>
+          <EditToolbar className="mt-4">
+            <EditButton request={{ type: "product", code: product.code }}>이 제품 수정</EditButton>
+          </EditToolbar>
           {product.isPlaceholder && (
             <p className="mt-3">
               <Pending kind="temporary" label="기능 검증용 임시 제품 — 실제 제품 정보 아님" />

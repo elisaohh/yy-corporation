@@ -26,8 +26,8 @@ npm.cmd run dev
 | 메뉴 · ABOUT 하위 메뉴(COMPANY · STORY) | `src/data/navigation.ts` |
 | HOME 문구 (히어로, 회사 소개, 공정 모션 장면, 슬로건, CTA) | `src/data/home.ts` |
 | ABOUT › COMPANY 문구 · 사진 | `src/data/about.ts` |
-| ABOUT › STORY 뉴스레터 글 | 관리 화면 `/admin` → STORY 뉴스레터 (`docs/ADMIN.md`) |
-| 제품 목록 · 규격 · 사진 · 홈 노출 | 관리 화면 `/admin` (`content/products.json`) · 카테고리는 `src/data/categories.ts` |
+| ABOUT › STORY 뉴스레터 글 | `/admin` 로그인 → STORY 화면의 편집 버튼 (`docs/ADMIN.md`) |
+| 제품 목록 · 규격 · 사진 · 홈 노출 | `/admin` 로그인 → PRODUCT 화면의 편집 버튼 (`content/products.json`) · 카테고리는 `src/data/categories.ts` |
 | PROCESS 소개 · 공정 이름 · 단계 | `src/data/process.ts` |
 | PROCESS TURN-KEY 4항목 · 사진 | `src/components/process/OneStopSystem.tsx` 위쪽 `sections` |
 | PROCESS · PRODUCT 제목 배경 | `src/app/process/page.tsx`의 `INTRO_VIDEO`, `src/app/products/page.tsx`의 `INTRO_IMAGE` |

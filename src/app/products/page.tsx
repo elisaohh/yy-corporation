@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { PageIntro } from "@/components/layout/PageIntro";
+import { EditButton, EditToolbar } from "@/components/edit/EditContext";
 import { ProductCatalog } from "@/components/product/ProductCatalog";
 
 /** 머리 영역 배경 이미지 — 교체할 때 이 경로만 바꾼다 */
@@ -24,6 +25,10 @@ export default function ProductsPage() {
         motionTone="light"
         intro={productIntro}
       />
+      <EditToolbar className="container-yy -mt-4 mb-8 md:-mt-6">
+        <EditButton request={{ type: "product", code: null }}>+ 제품 추가</EditButton>
+        <EditButton request={{ type: "order" }}>순서 · 홈 노출</EditButton>
+      </EditToolbar>
       <Suspense fallback={<div className="container-yy min-h-[60svh]" aria-busy="true" />}>
         <ProductCatalog />
       </Suspense>

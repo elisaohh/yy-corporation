@@ -91,8 +91,8 @@ docs/                    이 문서 · 모션 명세(MOTION.md) · 결정 기록
 | 회사 정보(주소 · 전화 · 이메일, 푸터 · CONTACT 공통) | `src/data/company.ts` |
 | HOME 문구 · 회사 소개 4항목 · 공정 모션 장면 · CTA | `src/data/home.ts` |
 | ABOUT 문구 · 이미지 | `src/data/about.ts` |
-| STORY 뉴스레터 글 | **관리 화면 `/admin`** (6장, `docs/ADMIN.md`) |
-| 제품 · 사진 · 홈 노출 | **관리 화면 `/admin`** → `content/products.json` (`docs/ADMIN.md`) |
+| STORY 뉴스레터 글 | **사이트 위 편집** (`/admin` 로그인, 6장, `docs/ADMIN.md`) |
+| 제품 · 사진 · 홈 노출 | **사이트 위 편집** → `content/products.json` (`docs/ADMIN.md`) |
 | 제품 카테고리 | `src/data/categories.ts` |
 | PROCESS 공정 목록 · 머리말 | `src/data/process.ts` |
 | PROCESS TURN-KEY 항목 · 사진 | `src/components/process/OneStopSystem.tsx` 상단 `sections` |
@@ -109,7 +109,7 @@ docs/                    이 문서 · 모션 명세(MOTION.md) · 결정 기록
 
 뉴스레터는 **메일로 보낸 원본 HTML 파일을 그대로** 보여 줍니다. 사이트용으로 옮겨 적거나 사진을 따로 꺼낼 필요가 없습니다.
 
-1. 관리 화면(`/admin`) → STORY 뉴스레터 → **+ 뉴스레터** → 호수 입력, HTML 파일 올리기 → 게시(`docs/ADMIN.md`).
+1. `/admin`에서 로그인 → STORY 화면의 **+ 뉴스레터 올리기** → 호수 확인, HTML 파일 고르기 · 미리보기 → 올리기(`docs/ADMIN.md`).
 2. 1~2분 뒤 목록 카드와 상세 페이지(`/about/story/yy-notes-vol-03`)가 자동으로 생깁니다.
    - 파일로 넣을 때: `content/story/files/`에 HTML, `content/story/vol-03.json`에 `{ "vol": 3, "html": "content/story/files/파일.html", "published": true }`.
 
@@ -200,7 +200,7 @@ docs/                    이 문서 · 모션 명세(MOTION.md) · 결정 기록
 |---|---|
 | 문의 폼 | 보내기 → 회사 메일로 전달(Resend). **Vercel 환경 변수 설정 필요**(`docs/ADMIN.md` 1-2). 문의 내역 저장 · 접수 확인 메일은 없음 |
 | 개인정보 | 처리방침 페이지(`/privacy`)와 문의 폼 동의 요약 있음. ⚠ 제5조 수탁자 · 위탁업무의 `[ ]` 칸은 실제 외부 서비스(문의 저장 · 메일 발송 등)가 정해지면 채워야 합니다 |
-| 콘텐츠 관리 | 관리 화면 `/admin`(Decap CMS, GitHub 로그인) — 제품 · 홈 노출 · 뉴스레터. 그 밖의 문구는 코드 안에 있음 |
+| 콘텐츠 관리 | 사이트 위 편집(`/admin`에서 GitHub 로그인 → 페이지마다 추가 · 수정 버튼) — 제품 · 홈 노출 · 뉴스레터. 예비 관리 화면 `/admin/cms`. 그 밖의 문구는 코드 안에 있음 |
 | 사진 저장 막기 | 사진 · 영상 위 마우스 오른쪽 메뉴, 끌어서 저장, 휴대폰 길게 눌러 저장을 막음(`layout/ImageGuard.tsx`, `globals.css`). **화면 캡처와 개발자 도구로 파일 받기는 웹에서 막을 수 없음.** 링크가 걸린 사진(제품 카드 등)에서도 오른쪽 메뉴가 막혀 "새 탭에서 열기"는 안 됨 |
 | 지도 | 구글 지도 퍼가기(API 키 불필요). 네이버 지도를 화면에 넣으려면 네이버 클라우드 지도 API 키가 필요합니다 |
 | 제목 배경 영상 | 7MB(앞 8초는 쓰지 않음). 잘라서 압축하면 2~3MB로 줄일 수 있습니다(ffmpeg) |
@@ -216,7 +216,7 @@ docs/                    이 문서 · 모션 명세(MOTION.md) · 결정 기록
 
 ## 12. 요청사항
 
-> 2026-10-21: 요청 1 · 2 · 3의 기본 기능은 관리 화면(`/admin`)과 문의 메일로 만들어 두었습니다(`docs/ADMIN.md`). 아래는 원래 요청 내용이며, 남은 것(미리보기 · 예약 발행 · 문의 내역 저장 · 접수 확인 메일 · 첨부 파일 등)을 참고해 주세요.
+> 2026-10-21: 요청 1 · 2 · 3의 기본 기능은 사이트 위 편집(`/admin` 로그인)과 문의 메일로 만들어 두었습니다(`docs/ADMIN.md`). 아래는 원래 요청 내용이며, 남은 것(예약 발행 · 문의 내역 저장 · 접수 확인 메일 · 첨부 파일 등)을 참고해 주세요.
 
 ### 요청 1. STORY — 뉴스레터를 하나씩 올릴 수 있도록
 

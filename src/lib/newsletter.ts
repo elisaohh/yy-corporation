@@ -1,5 +1,6 @@
 import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
+import { cleanNewsletter, parseNewsletter } from "./newsletter-html";
 
 /**
  * STORY 뉴스레터 — 메일로 보낸 원본 HTML을 그대로 쓴다(빌드 시 서버에서만 실행).
@@ -54,11 +55,7 @@ async function read(vol: number) {
 }
 
 function meta(vol: number, html: string): Newsletter {
-  const rawTitle = html.match(/<title>([\s\S]*?)<\/title>/i)?.[1] ?? "";
-  const title = rawTitle.replace(/^\(광고\)\s*/, "").replace(/\s*\|.*$/, "").trim() || `YY NOTES Vol.${vol}`;
-  const summary = (html.match(/<div style="display:none;[^"]*">([\s\S]*?)<\/div>/i)?.[1] ?? "").replace(/&[#\w]+;/g, "").trim();
-  const issue = html.match(/Vol\.\d+[\s\S]{0,40}?(\d{4}\.\d{1,2})/)?.[1] ?? "";
-  const hasImage = /<img src="data:image\//i.test(html);
+  const { title, issue, summary, hasImage } = parseNewsletter(html, vol);
   const slug = slugOf(vol);
   return { slug, vol, title, issue, summary, cover: hasImage ? `/about/story/${slug}/cover` : null };
 }
@@ -81,11 +78,7 @@ export async function loadNewsletter(slug: string): Promise<(Newsletter & { html
     return null;
   }
   const info = meta(vol, html);
-  html = html.replace(
-    /<tr><td style="height:\d+px;line-height:\d+px;font-size:0;">&nbsp;<\/td><\/tr><tr><td class="px" style="padding:0 24px 40px;">[\s\S]*?(?=<\/table><\/td><\/tr><\/table>\s*<\/body>)/,
-    '<tr><td style="height:40px;line-height:40px;font-size:0;">&nbsp;</td></tr>',
-  );
-  html = html.replace(/<head>/i, '<head><base target="_top">');
+  html = cleanNewsletter(html);
   return { ...info, html };
 }
 

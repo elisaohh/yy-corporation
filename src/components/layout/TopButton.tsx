@@ -49,7 +49,7 @@ export function TopButton() {
       className={`label-en fixed right-5 z-40 inline-flex size-12 items-center justify-center rounded-full border border-stone bg-paper/95 text-[11px] text-charcoal backdrop-blur-sm transition-[opacity,transform] duration-300 ease-[var(--ease-yy-out)] hover:border-charcoal md:right-8 ${
         visible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-2 opacity-0"
       }`}
-      style={{ bottom: "calc(20px + env(safe-area-inset-bottom, 0px))" }}
+      style={{ bottom: "calc(20px + var(--edit-bar-h, 0px) + env(safe-area-inset-bottom, 0px))" }}
     >
       TOP
     </button>

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { NewsletterFrame } from "@/components/story/NewsletterFrame";
 import { volLabel } from "@/data/story";
+import { EditButton, EditToolbar } from "@/components/edit/EditContext";
 import { listNewsletters, loadNewsletter } from "@/lib/newsletter";
 
 /** STORY 상세 — 뉴스레터 원본 HTML을 종이 한 장처럼 그대로 보여 준다. content/story에 있는 호만 만든다 */
@@ -31,9 +32,14 @@ export default async function StoryPostPage({ params }: { params: Promise<{ slug
     <article data-header-theme="light" className="bg-mist pb-24 pt-[calc(var(--header-h)+40px)] md:pb-32 md:pt-[calc(var(--header-h)+64px)]">
       <div className="container-yy">
         <div className="mx-auto max-w-[680px]">
-          <Link href="/about/story" className="link-en">
-            ← STORY
-          </Link>
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <Link href="/about/story" className="link-en">
+              ← STORY
+            </Link>
+            <EditToolbar>
+              <EditButton request={{ type: "story", vol: n.vol }}>이 뉴스레터 수정</EditButton>
+            </EditToolbar>
+          </div>
           <h1 className="sr-only">{n.title}</h1>
           {/* 메일 한 장을 종이처럼 — 원본 HTML 그대로(메일 하단 영역만 숨김) */}
           <div className="mt-8 bg-paper shadow-[0_30px_60px_-40px_rgba(43,43,42,0.35)]">

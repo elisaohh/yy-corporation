@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { formatIssue, volLabel } from "@/data/story";
+import { EditButton, EditToolbar } from "@/components/edit/EditContext";
 import type { Newsletter } from "@/lib/newsletter";
 
 /** 한 쪽에 보이는 카드 수 — 데스크톱 3열 × 3줄 */
@@ -52,6 +53,10 @@ export function StoryBoard({ posts }: { posts: Newsletter[] }) {
         <h2 id="story-list-title" className="sr-only">
           이야기 목록
         </h2>
+        <EditToolbar className="mb-10">
+          <EditButton request={{ type: "story", vol: null }}>+ 뉴스레터 올리기</EditButton>
+          <EditButton request={{ type: "stories" }}>숨긴 글 · 전체 관리</EditButton>
+        </EditToolbar>
 
         {posts.length === 0 ? (
           <div className="border-y border-stone py-24 text-center md:py-32">
@@ -62,7 +67,10 @@ export function StoryBoard({ posts }: { posts: Newsletter[] }) {
           <>
             <ul className="grid gap-x-6 gap-y-14 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-16">
               {shown.map((post) => (
-                <li key={post.slug}>
+                <li key={post.slug} className="relative">
+                  <EditButton request={{ type: "story", vol: post.vol }} label={`YY NOTES ${volLabel(post.vol)} 수정`} className="absolute top-3 right-3 z-10">
+                    수정
+                  </EditButton>
                   <Link href={`/about/story/${post.slug}`} className="group block">
                     <span className="relative block aspect-[4/3] overflow-hidden bg-card">
                       {post.cover && (

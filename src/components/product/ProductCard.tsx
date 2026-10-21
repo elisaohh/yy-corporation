@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { EditButton } from "@/components/edit/EditContext";
 import { AssetImage } from "@/components/media/AssetImage";
 import { Pending } from "@/components/ui/Pending";
 import type { Product } from "@/data/products";
@@ -21,37 +22,42 @@ export function ProductCard({ product, fromCategory, linkRef }: ProductCardProps
   const href = `/products/${product.slug}${fromCategory ? `?from=${fromCategory}` : ""}`;
 
   return (
-    <Link ref={linkRef} href={href} className="group block outline-offset-4">
-      <div className="relative aspect-square overflow-hidden bg-card">
-        {primary && (
-          <AssetImage
-            id={primary}
-            decorative
-            className={`absolute inset-[8%] size-[84%] object-contain mix-blend-multiply transition-[opacity,transform] duration-500 ease-[var(--ease-yy-out)] group-hover:scale-[1.02] ${
-              secondary ? "group-hover:opacity-0" : ""
-            }`}
-          />
-        )}
-        {secondary && (
-          <AssetImage
-            id={secondary}
-            decorative
-            className="absolute inset-[8%] size-[84%] scale-[1.02] object-contain mix-blend-multiply opacity-0 transition-[opacity,transform] duration-500 ease-[var(--ease-yy-out)] group-hover:scale-100 group-hover:opacity-100"
-          />
-        )}
-        {product.isPlaceholder && (
-          <span className="absolute left-3 top-3">
-            <Pending kind="temporary" label="기능 검증용" />
-          </span>
-        )}
-      </div>
-      <div className="mt-4 grid gap-1">
-        <h3 className="font-en text-[15px] leading-snug font-medium tracking-[-0.01em]">{product.code ?? product.name}</h3>
-        <p className="font-en text-[13px] tabular-nums text-ash">
-          <span className="sr-only">용량 </span>
-          {product.capacity ?? "—"}
-        </p>
-      </div>
-    </Link>
+    <div className="relative">
+      <Link ref={linkRef} href={href} className="group block outline-offset-4">
+        <div className="relative aspect-square overflow-hidden bg-card">
+          {primary && (
+            <AssetImage
+              id={primary}
+              decorative
+              className={`absolute inset-[8%] size-[84%] object-contain mix-blend-multiply transition-[opacity,transform] duration-500 ease-[var(--ease-yy-out)] group-hover:scale-[1.02] ${
+                secondary ? "group-hover:opacity-0" : ""
+              }`}
+            />
+          )}
+          {secondary && (
+            <AssetImage
+              id={secondary}
+              decorative
+              className="absolute inset-[8%] size-[84%] scale-[1.02] object-contain mix-blend-multiply opacity-0 transition-[opacity,transform] duration-500 ease-[var(--ease-yy-out)] group-hover:scale-100 group-hover:opacity-100"
+            />
+          )}
+          {product.isPlaceholder && (
+            <span className="absolute left-3 top-3">
+              <Pending kind="temporary" label="기능 검증용" />
+            </span>
+          )}
+        </div>
+        <div className="mt-4 grid gap-1">
+          <h3 className="font-en text-[15px] leading-snug font-medium tracking-[-0.01em]">{product.code ?? product.name}</h3>
+          <p className="font-en text-[13px] tabular-nums text-ash">
+            <span className="sr-only">용량 </span>
+            {product.capacity ?? "—"}
+          </p>
+        </div>
+      </Link>
+      <EditButton request={{ type: "product", code: product.code }} label={`${product.code} 수정`} className="absolute top-3 right-3 z-10">
+        수정
+      </EditButton>
+    </div>
   );
 }
