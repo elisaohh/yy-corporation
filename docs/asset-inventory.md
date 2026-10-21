@@ -29,14 +29,14 @@
 - 라벨이 피펫을 가리는 높이 `home.ts`의 `labelBand` = 48.8~75.4%(라벨 이미지를 바꾸면 다시 잼).
 - `assets.ts`의 `heroPoster` · `heroPosterMobile`은 `heroMode: "poster"`일 때만 쓰는 자리(현재 `float`라 미사용, 파일 없음).
 
-## 기준 유리병 (`src/data/reference.ts`)
+## 기준 유리병
 
 | 항목 | 값 |
 |---|---|
 | 제품 코드 | YS-SRRR30-04 · 30ml · 병목 18파이 |
 | 치수 | ⚠ 미확정 — 치수 파일 37.0 × 75.8 vs 제품규격표 38.0 × 74.4 (확인 전까지 화면에 표시하지 않음) |
 
-## PRODUCT (`public/assets/products/<코드>/`, `src/data/products.ts` · `productImages.ts`)
+## PRODUCT (`public/assets/products/`, `content/products.json` — `/admin` 로그인 후 사이트에서 고침)
 
 관리 화면(`/admin`)에서 바로 올리거나, 원본 `자료/03_제품/제품사진/<코드>_<컷>.png` → `public/assets/products/<코드>_<컷>.webp` (`build-product-images.mjs`) 후 관리 화면에서 선택
 
@@ -67,7 +67,7 @@
 
 | 파일 | 용도 | 구분 |
 |---|---|---|
-| process-intro.mp4 (1920×1080, 7MB) | 제목 배경 영상 — 8초 이후 반복 · 1.25배 확대 | 실제 |
+| process-intro.mp4 (1536×864, 3.4MB, H.264) | 제목 배경 영상 — 원본의 8초 이후 · 화면에 보이던 구간만 잘라 반복 | 실제 |
 | process-flow.png | From Idea to Delivery 흐름도 | — |
 | onestop/glass-01 · glass-02.webp | TURN-KEY 01 유리 성형 | 편집(밀대 · 공구 제거) |
 | onestop/coating · printing · etching · labeling-01.webp | 02 후가공 4칸 | 편집 |

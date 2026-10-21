@@ -45,47 +45,6 @@ export const vision = {
   source: "엑셀 ABOUT 시트 ③ 기업 비전",
 };
 
-/** 핵심 가치 — 큰 01/02/03/04 숫자 + 영문 키워드 + 한글 설명(부록 E) */
-export const values = [
-  { key: "Quality", line: "철저한 품질관리" },
-  { key: "Innovation", line: "지속적인 제품 개발" },
-  { key: "Trust", line: "고객과의 신뢰" },
-  { key: "Partnership", line: "함께 성장하는 협력" },
-];
-export const valuesSource = "엑셀 ABOUT 시트 ④ 사업 방향 — 핵심 가치";
-
-/**
- * 전문 역량 — SOURCING / FINISHING / MATCHING / DELIVERY (부록 E).
- * service: HOME의 FIND · DRESS · MATCH · DELIVER와 같은 짝(YY NOTES).
- */
-export const expertise = [
-  {
-    key: "Sourcing",
-    service: "Find",
-    line: "딱 맞는 병을 찾아요",
-    body: "스킨케어(드롭퍼), 크림(헤비보텀), 바디용품 등 트렌드와 용도에 맞는 유리 용기를 기획하고 공급합니다. 글로벌 소싱 네트워크로 경쟁력 있는 단가와 유니크한 디자인을 제안합니다.",
-  },
-  {
-    key: "Finishing",
-    service: "Dress",
-    line: "브랜드의 옷을 입혀요",
-    body: "코팅, 실크스크린, 박, 형압 등 브랜드의 아이덴티티와 감성을 살리는 후가공을 통합 관리합니다.",
-  },
-  {
-    key: "Matching",
-    service: "Match",
-    line: "캡과 드롭퍼, 짝을 맞춰요",
-    body: "유리 용기와 결합 · 호환되는 캡, 펌프, 스포이드 등 맞춤형 부자재를 턴키로 소싱합니다.",
-  },
-  {
-    key: "Delivery",
-    service: "Deliver",
-    line: "문 앞까지 책임져요",
-    body: "품질 검사부터 발주 · 입출고 · 납품까지, 고객의 화장대에 닿기 전까지의 일을 함께합니다.",
-  },
-];
-export const expertiseSource = "엑셀 ABOUT 시트 ② 회사 소개 · ③ 기업 비전, YY NOTES Vol.01";
-
 /**
  * OUR BUSINESS — 머리말 + 사업 영역 4가지
  * title은 단어 단위로 나눠 스크롤에 따라 한 단어씩 진해진다.

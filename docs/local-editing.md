@@ -53,7 +53,7 @@ npm.cmd run dev
   - 모바일(1024px 미만)은 고정 없이 공정 이름을 누르면 재생 — 재생 시간 `tweenTo(..., { duration: 1.4 })`.
   - 피펫 불투명도 `PIPETTE_OPACITY`, 라벨이 피펫을 가리는 높이 `src/data/home.ts`의 `labelBand`.
 - **PROCESS 사진 띠** `src/components/process/StripAccordion.tsx` — 펼친 띠 비율 `flexGrow: on ? 6 : 1`.
-- **PROCESS 제목 영상** `src/app/process/page.tsx`의 `INTRO_VIDEO` — 시작 `start: 8`, 확대 `zoom: 1.25`(1.3 이하 권장), 위치 `focus`.
+- **PROCESS 제목 영상** `src/app/process/page.tsx`의 `INTRO_VIDEO` — 위치 `focus`. 영상 파일은 이미 원본의 8초 이후 · 보이는 구간만 잘라 둔 것이라 `start` · `zoom`은 쓰지 않음.
 - **STORY 한 쪽 카드 수** `src/components/story/StoryBoard.tsx`의 `PER_PAGE = 9`.
 
 ## 4. 이미지 바꾸기
@@ -67,7 +67,7 @@ npm.cmd run dev
 | 스포이드 캡 · 피펫 분리 | `node scripts/build-dropper-parts.mjs` |
 | PROCESS 턴키 사진 (`자료/02_후가공/작업사진/glass-01.jpg` … `spray-01.jpg`) | `node scripts/build-onestop-photos.mjs` |
 | ABOUT 사진 (`자료/08_ABOUT/`) | `node scripts/build-about-images.mjs` |
-| PROCESS 제목 배경 영상 (`자료/09_PROCESS/process-intro.mp4`) | `public/assets/process/process-intro.mp4`에 같은 이름으로 복사 (시작 8초 · 확대는 `src/app/process/page.tsx`의 `INTRO_VIDEO`) |
+| PROCESS 제목 배경 영상 (`자료/09_PROCESS/process-intro.mp4`) | ffmpeg로 변환 → `public/assets/process/process-intro.mp4` (8초 이후 · 보이는 구간 자르기 · HDR→일반 색 · H.264): `ffmpeg -ss 8 -i 원본.mp4 -an -vf "zscale=t=linear:npl=203,format=gbrpf32le,zscale=p=bt709,tonemap=tonemap=hable:desat=0,zscale=t=bt709:m=bt709:r=tv,format=yuv420p,crop=1536:864:192:147,hqdn3d=2:2:5:5" -c:v libx264 -preset slower -crf 28 -tune film -movflags +faststart process-intro.mp4` |
 | 히어로 사진 (`자료/07_히어로/히어로_병_물방울.webp`) → 병 층 + 물방울 분리 | `node scripts/build-hero-layers.mjs` |
 
 공정 장면에 쓰는 파일 이름은 `scripts/build-process-images.mjs` 위쪽 `scenes` 목록에서 바꾼다.
@@ -107,7 +107,6 @@ npm.cmd run build
 - 기준병 치수 확정: 37.0 × 75.8(치수 파일) vs 38.0 × 74.4(제품규격표)
 - HOME 공정 모션 인쇄 단독 이미지(현재 코팅 후 인쇄로 대체)
 - 현장 사진 공개 권한 — `docs/asset-inventory.md` "공개 전 확인할 것"
-- 개인정보 처리방침 제5조 수탁자 · 위탁업무 `[ ]` 칸 채우기(문의 접수 서비스 확정 후)
-- `/logo-check` 페이지 · 미사용 코드는 배포 전 삭제 — `docs/HANDOFF.md` 11장
-- 기능 추가 요청(STORY · PRODUCT 관리, 문의 전송) — `docs/HANDOFF.md` 12장
+- 개인정보 처리방침 제5조 수탁자 · 위탁업무 `[ ]` 칸 — 지금은 외부 서비스 없음(문의 = 메일 앱). 서비스를 쓰게 되면 채우기
+- 사이트 편집(STORY · PRODUCT) — `docs/ADMIN.md`, 남은 요청 — `docs/HANDOFF.md` 12장
 - 결정 기록: `docs/decisions.md`, 자산 현황: `docs/asset-inventory.md`, 원본 쓰임: `자료/README.md`

@@ -10,7 +10,8 @@ import { processIntro } from "@/data/process";
  * 8초 이후 장면만 반복하고, 빛나는 유리병 줄 쪽으로 1.25배 확대(원본 1920×1080 → 화질 유지 범위).
  * 영상이 준비될 때까지는 차콜 바탕, 모션 줄이기에서는 8초 장면에서 멈춤.
  */
-const INTRO_VIDEO = { src: "/assets/process/process-intro.mp4", start: 8, zoom: 1.25, focus: "50% 68%" };
+// 영상은 원본의 8초 이후 · 화면에 보이던 부분(1.25배 확대 구간)만 잘라 H.264로 줄인 것(7MB → 3.4MB)
+const INTRO_VIDEO = { src: "/assets/process/process-intro.mp4", focus: "50% 68%" };
 
 export const metadata: Metadata = { title: "Process" };
 

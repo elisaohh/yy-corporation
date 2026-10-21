@@ -32,7 +32,7 @@ export function IntroVideo({ src, start = 0, zoom = 1, focus = "50% 50%", classN
     const show = () => {
       if (v.currentTime >= start - 0.2) v.dataset.ready = "";
     };
-    const shownOn = ["seeked", "canplay", "playing"] as const;
+    const shownOn = ["loadeddata", "seeked", "canplay", "playing"] as const;
     shownOn.forEach((t) => v.addEventListener(t, show));
     const onMeta = () => {
       toStart();
@@ -47,6 +47,7 @@ export function IntroVideo({ src, start = 0, zoom = 1, focus = "50% 50%", classN
       if (!still) v.play().catch(() => {});
     };
     if (v.readyState >= 1) onMeta();
+    if (v.readyState >= 2) show();
     v.addEventListener("loadedmetadata", onMeta);
     v.addEventListener("timeupdate", onTime);
     v.addEventListener("ended", onEnded);

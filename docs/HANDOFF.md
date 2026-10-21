@@ -43,7 +43,6 @@ src/
     products/            PRODUCT 목록 · [slug]/ 상세
     process/             PROCESS
     contact/             CONTACT
-    logo-check/          ⚠ 로고 검토용 내부 페이지(메뉴 없음) — 배포 전 삭제
     template.tsx         페이지 이동 시 페이드
     globals.css          디자인 토큰 · 공통 유틸리티
   components/
@@ -137,7 +136,7 @@ docs/                    이 문서 · 모션 명세(MOTION.md) · 결정 기록
 | 스포이드 캡 · 피펫 분리 | `public/assets/hero/dropper.webp` | `node scripts/build-dropper-parts.mjs` |
 | ABOUT 사진 6장 | `자료/08_ABOUT/` | `node scripts/build-about-images.mjs` |
 | PROCESS TURN-KEY 사진 | `자료/02_후가공/작업사진/종류-01.jpg` | `node scripts/build-onestop-photos.mjs` |
-| PROCESS 제목 배경 영상 | `자료/09_PROCESS/process-intro.mp4` | `public/assets/process/`에 같은 이름으로 복사 |
+| PROCESS 제목 배경 영상 | `자료/09_PROCESS/process-intro.mp4`(원본 7MB, H.265 HDR) | ffmpeg로 변환해 `public/assets/process/process-intro.mp4`에 저장 — 명령은 `docs/local-editing.md` |
 
 **이미지 성격(오해 소지 주의)**
 
@@ -182,7 +181,7 @@ docs/                    이 문서 · 모션 명세(MOTION.md) · 결정 기록
 | HOME 공정 모션 | **PC**: 화면 고정 + 스크롤로 코팅 → 인쇄 → 부식 → 라벨 → 스포이드 체결(공정 이름 클릭 시 그 장면으로 스크롤). **모바일(<1024px)**: 고정 없음, 공정 이름을 누르면 그 장면까지 재생 | `home/ProcessMotion.tsx`, `data/home.ts` |
 | 공통 | 스크롤 등장(`Reveal`), 페이지 이동 페이드 | `motion/Reveal.tsx`, `app/template.tsx` |
 | ABOUT | 사진 미세 확대 · 형광펜 띠 그어짐 | `about/AboutSections.tsx` |
-| PROCESS 제목 | 배경 영상 8초 이후만 반복 · 1.25배 확대 | `layout/IntroVideo.tsx` |
+| PROCESS 제목 | 배경 영상 반복(원본 8초 이후 · 유리병 쪽 구간만 잘라 둠) | `layout/IntroVideo.tsx` |
 | PROCESS 후가공 · 부자재 | 마우스를 올린 사진 띠가 펼쳐짐(모바일: 밀기 · 누르기, 키보드 ← →) | `process/StripAccordion.tsx` |
 
 - **모든 모션은 "동작 줄이기(prefers-reduced-motion)" 설정을 따릅니다** — 바로 완성 화면으로 보입니다.
@@ -203,11 +202,9 @@ docs/                    이 문서 · 모션 명세(MOTION.md) · 결정 기록
 | 콘텐츠 관리 | 사이트 위 편집(`/admin`에서 GitHub 로그인 → 페이지마다 추가 · 수정 버튼) — 제품 · 홈 노출 · 뉴스레터. 예비 관리 화면 `/admin/cms`. 그 밖의 문구는 코드 안에 있음 |
 | 사진 저장 막기 | 사진 · 영상 위 마우스 오른쪽 메뉴, 끌어서 저장, 휴대폰 길게 눌러 저장을 막음(`layout/ImageGuard.tsx`, `globals.css`). **화면 캡처와 개발자 도구로 파일 받기는 웹에서 막을 수 없음.** 링크가 걸린 사진(제품 카드 등)에서도 오른쪽 메뉴가 막혀 "새 탭에서 열기"는 안 됨 |
 | 지도 | 구글 지도 퍼가기(API 키 불필요). 네이버 지도를 화면에 넣으려면 네이버 클라우드 지도 API 키가 필요합니다 |
-| 제목 배경 영상 | 7MB(앞 8초는 쓰지 않음). 잘라서 압축하면 2~3MB로 줄일 수 있습니다(ffmpeg) |
 | SEO | 사이트 설명(`config/site.ts` description)이 임시 문장, OG 이미지 · sitemap · robots 없음 |
 | 제품 | 유리병 7종(YS-SRRR 5 · SL-SRSS 2), 화면에는 코드만(이름 없음), 규격은 확인된 것만, 사이즈는 숫자만(가로 × 세로 표기 없음), 홈에는 "홈에 보이기"를 켠 제품. DROPPER · CAP · ACCESSORIES 카테고리는 제품이 없음 |
 | 미확정 문구 | HOME CTA 등 `status: "draft"` 문구 — docs에서 관리 |
-| 개발용 잔여물 | `app/logo-check`(로고 검토 페이지), `components/layout/StageNotice.tsx`(미사용), `data/about.ts`의 `values` · `expertise`, `data/process.ts`의 `onSite` · `additionalProcesses`, `data/reference.ts`(모두 화면 미사용) — 배포 전 삭제 권장 |
 | 뉴스레터 | Vol.01 규격 표에 MOQ(5,000개)가 원문대로 들어 있음(제품 페이지에서는 MOQ를 표시하지 않음) |
 
 결정 이력은 `docs/decisions.md`(날짜순), 자산별 상태 · 공개 전 확인 사항은 `docs/asset-inventory.md`, 수정 방법은 `docs/local-editing.md`를 참고하세요.

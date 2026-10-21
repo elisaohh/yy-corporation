@@ -156,6 +156,7 @@
 | 2026-10-21 | 관리 화면 · 문의 메일 (브랜치 feature/admin) | 서버비 없이: Decap CMS(`/admin`, GitHub 로그인, 저장 = 저장소 커밋 → Vercel 재배포)로 제품 · 홈 노출 · 뉴스레터 관리. 제품 데이터 `content/products.json`, 사진 `public/assets/products/` 한 폴더(썸네일 사본 없앰), 뉴스레터 `content/story/vol-NN.json` + `files/*.html`. 문의 = `/api/inquiry` → Resend. 이전 상태는 태그 `v1-before-admin` |
 | 2026-10-21 | 사이트 위 편집 | 별도 관리 화면 대신 **사이트 화면 그대로** 편집(사용자 선택 A안): /admin에서 GitHub 로그인 → 페이지 곳곳에 추가 · 수정 버튼, 오른쪽 편집 창, 아래 편집 막대(반영 상태). 저장 = GitHub API로 커밋 하나, 사진은 브라우저에서 webp로 줄임. Decap은 /admin/cms 예비. 로그인 결과는 이 사이트 창에만 전달 |
 | 2026-10-21 | 문의 폼 → 메일 앱 | Resend(사이트가 직접 발송) 제외 — 회사 도메인 인증이 어려움. 보내기 = mailto(회사 메일 · 제목 · 내용 채움), 주소 · 내용 복사 버튼. 문의 내용 최대 1,500자(메일 앱 주소 길이) |
+| 2026-10-21 | 정리 · 영상 | `/logo-check` · 미사용 코드(StageNotice · reference · about values/expertise · process onSite/additionalProcesses) 삭제. PROCESS 제목 영상 7MB(H.265 HDR) → 3.4MB(H.264): 8초 이후 · 화면에 보이던 1.25배 구간만 잘라 같은 화면 유지, 모든 브라우저 재생. 검색 노출 차단은 상업 사용 전까지 유지 |
 
 ## 브랜드 색 기준 (잠정)
 
