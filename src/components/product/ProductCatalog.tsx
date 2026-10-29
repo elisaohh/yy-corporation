@@ -8,7 +8,7 @@ import { allCategory, productCategories } from "@/data/categories";
 import { PRODUCTS_PAGE_SIZE, hasProducts, products, type Product } from "@/data/products";
 
 /** 제품이 한 개라도 있는 카테고리만 탭으로 보인다 — 제품이 추가되면 자동으로 나타난다 */
-const tabs = [allCategory, ...productCategories.filter((category) => category.visible && hasProducts(category.slug))];
+const tabs = [allCategory, ...productCategories.filter((category) => category.visible && (category.showWhenEmpty || hasProducts(category.slug)))];
 const validSlugs = new Set<string>(tabs.map((tab) => tab.slug));
 
 /** 이전 목록이 흐려지는 시간 */
