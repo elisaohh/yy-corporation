@@ -30,7 +30,7 @@ interface Entry {
   published?: boolean;
 }
 
-const slugOf = (vol: number) => `yy-notes-vol-${String(vol).padStart(2, "0")}`;
+const slugOf = (vol: number) => `yy-letter-vol-${String(vol).padStart(2, "0")}`;
 
 /** 공개된 호 목록(호수 → HTML 파일 경로) — 같은 호수가 둘이면 나중 파일이 이긴다 */
 async function entries(): Promise<Map<number, string>> {

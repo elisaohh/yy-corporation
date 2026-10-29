@@ -72,7 +72,7 @@ export function StoryEditor({ session, vol, onClose, onSaved }: { session: EditS
     setError("");
     try {
       const sha = await saveStory(session, { vol: volNum, published }, isNew || changedFile ? html : null, isNew);
-      onSaved(sha, isNew ? `Vol.${pad(volNum)}을 올렸습니다.` : `Vol.${pad(volNum)}을 저장했습니다.`, published ? `/about/story/yy-notes-vol-${pad(volNum)}` : "/about/story");
+      onSaved(sha, isNew ? `Vol.${pad(volNum)}을 올렸습니다.` : `Vol.${pad(volNum)}을 저장했습니다.`, published ? `/about/story/yy-letter-vol-${pad(volNum)}` : "/about/story");
     } catch (e) {
       setError(e instanceof Error ? e.message : "저장하지 못했습니다.");
       setBusy("");

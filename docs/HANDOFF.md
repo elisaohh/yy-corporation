@@ -110,7 +110,7 @@ docs/                    이 문서 · 모션 명세(MOTION.md) · 결정 기록
 
 1. `content/story/files/`에 메일 HTML(예: `vol-03.html`)을 넣습니다.
 2. `content/story/vol-03.json`에 `{ "vol": 3, "html": "content/story/files/vol-03.html", "published": true }`를 만듭니다.
-3. 배포하면 목록 카드와 상세 페이지(`/about/story/yy-notes-vol-03`)가 자동으로 생깁니다. 주소의 `yy-notes`는 이미 공개된 주소를 유지하려고 그대로 둡니다(뉴스레터 이름은 YY LETTER).
+3. 배포하면 목록 카드와 상세 페이지(`/about/story/yy-letter-vol-03`)가 자동으로 생깁니다. 예전 주소(`yy-notes-vol-NN`)로 들어오면 새 주소로 이동합니다(`next.config.ts`).
 
 | 자동으로 읽는 것 | HTML에서 가져오는 곳 |
 |---|---|
