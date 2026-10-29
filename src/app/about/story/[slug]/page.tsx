@@ -16,7 +16,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const n = await loadNewsletter(slug);
-  return n ? { title: `${n.title} — YY NOTES ${volLabel(n.vol)}`, description: n.summary } : { title: "Story" };
+  return n ? { title: `${n.title} — YY LETTER ${volLabel(n.vol)}`, description: n.summary } : { title: "Story" };
 }
 
 export default async function StoryPostPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -43,7 +43,7 @@ export default async function StoryPostPage({ params }: { params: Promise<{ slug
           <h1 className="sr-only">{n.title}</h1>
           {/* 메일 한 장을 종이처럼 — 원본 HTML 그대로(메일 하단 영역만 숨김) */}
           <div className="mt-8 bg-paper shadow-[0_30px_60px_-40px_rgba(43,43,42,0.35)]">
-            <NewsletterFrame html={n.html} title={`YY NOTES ${volLabel(n.vol)} — ${n.title}`} />
+            <NewsletterFrame html={n.html} title={`YY LETTER ${volLabel(n.vol)} — ${n.title}`} />
           </div>
 
           <nav aria-label="다른 호" className="mt-12 grid gap-6 border-t border-stone pt-8 sm:grid-cols-2">

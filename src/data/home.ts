@@ -12,7 +12,7 @@ export const hero = {
   eyebrow: "COSMETIC PACKAGING PARTNER",
   /** 영문 대형 제목 — 화면에서는 대문자로 표시 */
   title: "From Bottle to Brand",
-  /** 첫 줄은 YY NOTES 공식 문구 */
+  /** 첫 줄은 YY LETTER 공식 문구 */
   lead: "병 하나, 처음부터 끝까지.",
   sub: "브랜드에 맞는 패키징을 함께 만들어갑니다.",
   cta: { label: "Explore our work", href: "/products" },
@@ -27,7 +27,7 @@ export const companyIntro = {
   source: "엑셀 MAIN 시트 '회사 소개 요약'",
 };
 
-/** FIND → DRESS → MATCH → DELIVER (문구 출처: YY NOTES Vol.01 회사 소개) */
+/** FIND → DRESS → MATCH → DELIVER (문구 출처: YY LETTER Vol.01 회사 소개) */
 export interface Service {
   key: string;
   name: string;
@@ -44,7 +44,7 @@ export const services: Service[] = [
   { key: "deliver", name: "DELIVER", line: "문 앞까지 책임져요", scope: "발주 · 입출고 · 납품" },
 ];
 
-export const servicesSource = "YY NOTES Vol.01 회사 소개";
+export const servicesSource = "YY LETTER Vol.01 회사 소개";
 
 /* ── ③ 공정 모션 ── */
 export const processScene = {
@@ -72,7 +72,7 @@ export const cta = {
 export const slogan = {
   lines: ["병 하나,", "처음부터 끝까지"],
   status: "final" as const,
-  source: "기획서 2.0 부록 B2 · YY NOTES Vol.01",
+  source: "기획서 2.0 부록 B2 · YY LETTER Vol.01",
   sub: {
     text: "하나의 용기가 완성되기까지, 브랜드의 생각을 구체적인 형태로 연결합니다.",
     status: "draft",

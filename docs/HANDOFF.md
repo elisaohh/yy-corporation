@@ -1,8 +1,8 @@
 # YY CORPORATION 웹사이트 — 디자인 · 개발 인수인계 문서
 
-> 작성일 2026-10-19 · 저장소 `github.com/elisaohh/yy-corporation` (`main` 브랜치)
+> 작성일 2026-10-19 · 수정 2026-10-29 · 저장소 `github.com/elisaohh/yy-corporation` (`main` 브랜치)
 > 화장품 유리 패키징 B2B 기업 와이와이 코퍼레이션의 회사 웹사이트 **프로토타입**입니다.
-> 화면 · 모션 · 콘텐츠 구조는 완성 단계이고, **콘텐츠 관리(CMS) · 문의 전송 · 운영 설정은 아직 없습니다**(→ 12장 요청사항).
+> 화면 · 모션 · 콘텐츠 구조는 완성 단계이고, **콘텐츠 관리(CMS) · 문의 전송 · 운영 설정은 디자인 업체가 구현합니다**(→ 12장 요청사항).
 
 ---
 
@@ -14,7 +14,7 @@
 | 프레임워크 | Next.js 16 (App Router) · React 19 · TypeScript 5.9 |
 | 스타일 | Tailwind CSS 4 (`src/app/globals.css`의 `@theme` 토큰) |
 | 모션 | GSAP 3.15 + ScrollTrigger |
-| 콘텐츠 | `src/data/*.ts` 파일에 직접 작성(코드 안의 데이터) |
+| 콘텐츠 | `src/data/*.ts`(문구) · `content/`(제품 · 뉴스레터) 파일에 직접 작성 |
 | 이미지 원본 | `자료/` 폴더(**git에 없음**, 별도 전달) → 변환 스크립트 → `public/assets/` |
 | 실행 환경 | Node.js 20.9 이상 |
 
@@ -28,7 +28,7 @@ npm run start      # 빌드 결과 실행
 npm run typecheck  # 타입 검사만
 ```
 
-- 배포: `npm run build` 결과를 Vercel 등 Next.js 호스팅에 올리면 됩니다(서버 기능 없음). 도메인 · 호스팅은 아직 정하지 않았습니다.
+- 배포: 지금은 Vercel이 `main` 브랜치를 자동 배포합니다(Vercel 기본 주소). 정식 도메인은 아직 정하지 않았습니다.
 - 주소 옵션: 주소 뒤에 `?still`을 붙이면 로딩 · 등장 모션 · 공정 모션 고정 없이 완성 화면이 바로 보입니다(검수 · 캡처 · 피그마 가져오기용, 배포 사이트에서도 동작, `src/lib/still.ts`).
 
 ## 3. 폴더 구조
@@ -57,7 +57,7 @@ src/
   data/                  ★ 콘텐츠 — 문구 · 제품 · 메뉴 · 회사 정보 · 이미지 등록부
   config/site.ts         전역 설정(히어로 방식 · 데모 폼 · 임시 표시)
   lib/                   폰트 · ?still 도우미
-content/products.json    제품 목록(관리 화면이 고침)
+content/products.json    제품 목록
 content/story/           뉴스레터 — vol-NN.json(호수 · 파일 · 공개) + files/*.html(메일 원본)
 scripts/                 이미지 · 영상 변환 스크립트(sharp)
 public/assets/           사이트에 실제로 쓰이는 이미지 · 영상(변환 결과)
@@ -71,7 +71,7 @@ docs/                    이 문서 · 모션 명세(MOTION.md) · 결정 기록
 |---|---|---|
 | `/` | HOME — 로딩(로고) → 히어로(떠다니는 병 · 물방울) → 회사 소개(FIND · DRESS · MATCH · DELIVER) → 공정 모션 → 제품 → 슬로건 → CTA | `app/page.tsx`, `components/home/*`, `data/home.ts` |
 | `/about/company` | 제목(미스트) → Story → Vision → Business → CTA | `components/about/AboutSections.tsx`, `data/about.ts` |
-| `/about/story` | YY NOTES 카드 목록(9개씩, 페이지 번호 `?page=N`) — `content/story/*.html`에서 자동 생성 | `components/story/StoryBoard.tsx`, `lib/newsletter.ts` |
+| `/about/story` | YY LETTER 카드 목록(9개씩, 페이지 번호 `?page=N`) — `content/story/*.html`에서 자동 생성 | `components/story/StoryBoard.tsx`, `lib/newsletter.ts` |
 | `/about/story/[slug]` | 뉴스레터 상세(원본 HTML 그대로, 메일 하단 숨김) · 이전/다음 호 | `app/about/story/[slug]/page.tsx` |
 | `/products` | 제품 목록(카테고리 필터 · 12개씩 LOAD MORE) | `components/product/ProductCatalog.tsx`, `data/products.ts` |
 | `/products/[slug]` | 제품 상세(갤러리 · 규격 · 문의 버튼) | `app/products/[slug]/page.tsx` |
@@ -90,13 +90,13 @@ docs/                    이 문서 · 모션 명세(MOTION.md) · 결정 기록
 | 회사 정보(주소 · 전화 · 이메일, 푸터 · CONTACT 공통) | `src/data/company.ts` |
 | HOME 문구 · 회사 소개 4항목 · 공정 모션 장면 · CTA | `src/data/home.ts` |
 | ABOUT 문구 · 이미지 | `src/data/about.ts` |
-| STORY 뉴스레터 글 | **사이트 위 편집** (`/admin` 로그인, 6장, `docs/ADMIN.md`) |
-| 제품 · 사진 · 홈 노출 | **사이트 위 편집** → `content/products.json` (`docs/ADMIN.md`) |
+| STORY 뉴스레터 글 | `content/story/` (6장) |
+| 제품 · 사진 · 홈 노출 | `content/products.json` · 사진 `public/assets/products/` |
 | 제품 카테고리 | `src/data/categories.ts` |
 | PROCESS 공정 목록 · 머리말 | `src/data/process.ts` |
 | PROCESS TURN-KEY 항목 · 사진 | `src/components/process/OneStopSystem.tsx` 상단 `sections` |
 | PROCESS · PRODUCT 제목 배경 | 각 `app/*/page.tsx` 상단 `INTRO_VIDEO` / `INTRO_IMAGE` |
-| CONTACT 문구 · 문의 결과 안내 | `src/data/content.ts` |
+| CONTACT 문구 | `src/data/content.ts` |
 | 개인정보 처리방침 전문 · 문의 폼 동의 요약 | `src/data/privacy.ts` |
 | 이용약관 전문 | `src/data/terms.ts` |
 | 로고 파일 · 크기 | `src/data/brand.ts` |
@@ -108,13 +108,13 @@ docs/                    이 문서 · 모션 명세(MOTION.md) · 결정 기록
 
 뉴스레터는 **메일로 보낸 원본 HTML 파일을 그대로** 보여 줍니다. 사이트용으로 옮겨 적거나 사진을 따로 꺼낼 필요가 없습니다.
 
-1. `/admin`에서 로그인 → STORY 화면의 **+ 뉴스레터 올리기** → 호수 확인, HTML 파일 고르기 · 미리보기 → 올리기(`docs/ADMIN.md`).
-2. 1~2분 뒤 목록 카드와 상세 페이지(`/about/story/yy-notes-vol-03`)가 자동으로 생깁니다.
-   - 파일로 넣을 때: `content/story/files/`에 HTML, `content/story/vol-03.json`에 `{ "vol": 3, "html": "content/story/files/파일.html", "published": true }`.
+1. `content/story/files/`에 메일 HTML(예: `vol-03.html`)을 넣습니다.
+2. `content/story/vol-03.json`에 `{ "vol": 3, "html": "content/story/files/vol-03.html", "published": true }`를 만듭니다.
+3. 배포하면 목록 카드와 상세 페이지(`/about/story/yy-notes-vol-03`)가 자동으로 생깁니다. 주소의 `yy-notes`는 이미 공개된 주소를 유지하려고 그대로 둡니다(뉴스레터 이름은 YY LETTER).
 
 | 자동으로 읽는 것 | HTML에서 가져오는 곳 |
 |---|---|
-| 호수 | 관리 화면에서 넣은 호수(Vol.03, 큰 번호가 맨 앞) |
+| 호수 | `vol-NN.json`의 `vol`(큰 번호가 맨 앞) |
 | 제목 | 메일 제목(`<title>`)에서 "(광고)"와 "\| …" 뒷부분을 뺀 것 |
 | 요약 | 메일 미리보기 문구(숨겨진 첫 문단) |
 | 발행 시기 | 메일 머리의 "Vol.NN · 2026.10" |
@@ -197,9 +197,7 @@ docs/                    이 문서 · 모션 명세(MOTION.md) · 결정 기록
 
 | 항목 | 현재 상태 |
 |---|---|
-| 문의 폼 | 보내기 → 방문자의 메일 앱이 열리고 회사 메일 · 제목 · 내용이 채워짐(방문자가 직접 보냄, 외부 서비스 없음). 메일 앱이 없으면 주소 · 내용 복사. 사이트가 직접 보내는 방식(메일 발송 서비스 + 회사 도메인 인증)은 나중에 |
-| 개인정보 | 처리방침 페이지(`/privacy`)와 문의 폼 동의 요약 있음. ⚠ 제5조 수탁자 · 위탁업무의 `[ ]` 칸은 실제 외부 서비스(문의 저장 · 메일 발송 등)가 정해지면 채워야 합니다 |
-| 콘텐츠 관리 | 사이트 위 편집(`/admin`에서 GitHub 로그인 → 페이지마다 추가 · 수정 버튼) — 제품 · 홈 노출 · 뉴스레터. 예비 관리 화면 `/admin/cms`. 그 밖의 문구는 코드 안에 있음 |
+| 개인정보 | 처리방침 페이지(`/privacy`)와 문의 폼 동의 요약 있음. ⚠ 제5조 수탁자 · 위탁업무의 `[ ]` 칸은 사용할 외부 서비스가 정해지면 채워야 합니다 |
 | 사진 저장 막기 | 사진 · 영상 위 마우스 오른쪽 메뉴, 끌어서 저장, 휴대폰 길게 눌러 저장을 막음(`layout/ImageGuard.tsx`, `globals.css`). **화면 캡처와 개발자 도구로 파일 받기는 웹에서 막을 수 없음.** 링크가 걸린 사진(제품 카드 등)에서도 오른쪽 메뉴가 막혀 "새 탭에서 열기"는 안 됨 |
 | 지도 | 구글 지도 퍼가기(API 키 불필요). 네이버 지도를 화면에 넣으려면 네이버 클라우드 지도 API 키가 필요합니다 |
 | SEO | 사이트 설명(`config/site.ts` description)이 임시 문장, OG 이미지 · sitemap · robots 없음 |
@@ -212,8 +210,6 @@ docs/                    이 문서 · 모션 명세(MOTION.md) · 결정 기록
 ---
 
 ## 12. 요청사항
-
-> 2026-10-21: 요청 1 · 2 · 3의 기본 기능은 사이트 위 편집(`/admin` 로그인)과 메일 앱으로 문의 보내기로 만들어 두었습니다(`docs/ADMIN.md`). 아래는 원래 요청 내용이며, 남은 것(예약 발행 · 사이트가 직접 보내는 문의 메일 · 문의 내역 저장 · 접수 확인 메일 · 첨부 파일 등)을 참고해 주세요.
 
 ### 요청 1. STORY — 뉴스레터를 하나씩 올릴 수 있도록
 
@@ -228,7 +224,7 @@ docs/                    이 문서 · 모션 명세(MOTION.md) · 결정 기록
 
 - 제품 등록 · 수정 · 삭제: 코드 · 카테고리 · 용량 · 사이즈 · 병목 규격 · 설명 · 사진(대표 · 마우스 올림 · 상세 컷)
 - 카테고리(BOTTLE · JAR · DROPPER · CAP · ACCESSORIES) 관리 — 제품이 없는 카테고리는 숨김
-- **HOME 노출 관리**: 지금은 HOME 제품 섹션에 전체 제품이 나옵니다. "HOME에 보이기" 선택과 **순서 지정**(끌어서 정렬)이 필요합니다
+- **HOME 노출 관리**: 지금은 `content/products.json`의 홈 노출 값으로 정합니다. 관리 화면에서 "HOME에 보이기" 선택과 **순서 지정**(끌어서 정렬)이 필요합니다
 - HOME 공정 모션 · 히어로 등 다른 HOME 요소(문구 · 이미지)도 관리 화면에서 바꿀 수 있으면 좋습니다
 - 제품 상세 규격에 재질(유리) 표시, MOQ는 표시하지 않음(데이터만 유지)
 
@@ -245,11 +241,11 @@ docs/                    이 문서 · 모션 명세(MOTION.md) · 결정 기록
 
 | 우선 | 제안 | 이유 |
 |---|---|---|
-| 높음 | **도메인 · 호스팅 · 배포 자동화**(예: Vercel + GitHub 연결) | 지금은 로컬 실행만 가능 |
+| 높음 | **정식 도메인 연결** | 지금은 Vercel 기본 주소 |
 | 높음 | **SEO 기본 세팅** — 페이지별 제목 · 설명, OG 이미지(공유 미리보기), sitemap.xml, robots.txt, 네이버 서치어드바이저 · 구글 서치콘솔 등록 | B2B 검색 유입 |
 | 높음 | 방문 분석(GA4 또는 네이버 애널리틱스) + 문의 전환 측정 | 어떤 제품 · 글이 문의로 이어지는지 확인 |
 | 중간 | **뉴스레터 구독 신청**(STORY · 푸터) + 메일 발송 서비스(스티비 등) 연동 | 매주 발행하는 뉴스레터와 사이트 연결 |
-| 중간 | 제품 검색 · 용량별 필터, 제품 비교 또는 "관심 제품 담아 한 번에 문의" | 제품 수가 늘어날 때 |
+| 중간 | 제품 검색, 제품 비교 또는 "관심 제품 담아 한 번에 문의" | 제품 수가 늘어날 때 |
 | 중간 | 제목 배경 영상 압축 · 정지 화면(poster) 이미지 | 모바일 첫 화면 속도 |
 | 중간 | 영문 페이지(EN) | 해외 고객 대응이 필요하다면 |
 | 낮음 | 네이버 지도 API로 지도 교체 | 국내 이용자 익숙함 |

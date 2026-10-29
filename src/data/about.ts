@@ -1,17 +1,17 @@
 /**
  * ABOUT 문구 — 회사가 직접 작성한 자료에서만 가져온다(새 사실을 만들지 않음).
  *   엑셀: 홈페이지_콘텐츠제작_가이드 ABOUT 시트(고객 작성란) · MAIN 시트
- *   YY NOTES Vol.01 회사 소개
+ *   YY LETTER Vol.01 회사 소개
  * 긴 원문은 문장 단위로 나눠 순서대로 등장시킨다. 표현은 원문 그대로 두고 일부 문장만 발췌했다.
  * 엑셀의 '플라스틱 용기'는 현재 사이트 범위(유리 용기) 밖이라 싣지 않았다.
  */
 
 export const aboutIntro = {
   title: "About",
-  /** YY NOTES 공식 문구 */
+  /** YY LETTER 공식 문구 */
   slogan: "병 하나, 처음부터 끝까지",
   lead: "브랜드에 딱 맞는 병을 찾고, 옷을 입히고, 짝을 맞춰, 문 앞까지 데려다드려요.",
-  source: "YY NOTES Vol.01 회사 소개",
+  source: "YY LETTER Vol.01 회사 소개",
 };
 
 export const story = {

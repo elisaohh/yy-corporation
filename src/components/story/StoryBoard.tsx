@@ -68,7 +68,7 @@ export function StoryBoard({ posts }: { posts: Newsletter[] }) {
             <ul className="grid gap-x-6 gap-y-14 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-16">
               {shown.map((post) => (
                 <li key={post.slug} className="relative">
-                  <EditButton request={{ type: "story", vol: post.vol }} label={`YY NOTES ${volLabel(post.vol)} 수정`} className="absolute top-3 right-3 z-10">
+                  <EditButton request={{ type: "story", vol: post.vol }} label={`YY LETTER ${volLabel(post.vol)} 수정`} className="absolute top-3 right-3 z-10">
                     수정
                   </EditButton>
                   <Link href={`/about/story/${post.slug}`} className="group block">
@@ -85,7 +85,7 @@ export function StoryBoard({ posts }: { posts: Newsletter[] }) {
                       )}
                     </span>
                     <span className="mt-5 flex items-baseline gap-3 border-t border-charcoal pt-4 font-en text-[13px] tabular-nums">
-                      <span className="font-semibold">YY NOTES {volLabel(post.vol)}</span>
+                      <span className="font-semibold">YY LETTER {volLabel(post.vol)}</span>
                       <span className="text-ash">{formatIssue(post.issue)}</span>
                     </span>
                     <span className="mt-3 block text-[clamp(19px,1.6vw,22px)] leading-[1.4] font-bold tracking-[-0.025em] underline-offset-4 [word-break:keep-all] group-hover:underline">

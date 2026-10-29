@@ -223,7 +223,7 @@ export function StoriesManager({ session, onClose, onOpen }: { session: EditSess
         <ul className="border-t border-stone">
           {list.map((s) => (
             <li key={s.vol} className="flex items-center gap-4 border-b border-stone py-3">
-              <span className="font-en text-[15px] font-semibold tabular-nums">YY NOTES Vol.{pad(s.vol)}</span>
+              <span className="font-en text-[15px] font-semibold tabular-nums">YY LETTER Vol.{pad(s.vol)}</span>
               <span className={`text-[13px] ${s.published ? "text-ash" : "font-medium"}`}>{s.published ? "공개" : "숨김"}</span>
               <button type="button" onClick={() => onOpen({ type: "story", vol: s.vol })} className={`${textButton} ml-auto`}>
                 수정

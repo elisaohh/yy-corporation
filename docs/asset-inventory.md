@@ -36,9 +36,9 @@
 | 제품 코드 | YS-SRRR30-04 · 30ml · 병목 18파이 |
 | 치수 | ⚠ 미확정 — 치수 파일 37.0 × 75.8 vs 제품규격표 38.0 × 74.4 (확인 전까지 화면에 표시하지 않음) |
 
-## PRODUCT (`public/assets/products/`, `content/products.json` — `/admin` 로그인 후 사이트에서 고침)
+## PRODUCT (`public/assets/products/`, `content/products.json`)
 
-관리 화면(`/admin`)에서 바로 올리거나, 원본 `자료/03_제품/제품사진/<코드>_<컷>.png` → `public/assets/products/<코드>_<컷>.webp` (`build-product-images.mjs`) 후 관리 화면에서 선택
+원본 `자료/03_제품/제품사진/<코드>_<컷>.png` → `public/assets/products/<코드>_<컷>.webp` (`build-product-images.mjs`) 후 `content/products.json`에 연결
 
 | 제품 코드 | 컷 | 규격 | 구분 |
 |---|---|---|---|

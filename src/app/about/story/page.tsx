@@ -6,7 +6,7 @@ import { listNewsletters } from "@/lib/newsletter";
 
 export const metadata: Metadata = { title: "Story" };
 
-/** ABOUT › STORY — 뉴스레터 YY NOTES 목록(content/story/*.html에서 자동 생성) */
+/** ABOUT › STORY — 뉴스레터 YY LETTER 목록(content/story/*.html에서 자동 생성) */
 export default async function AboutStoryPage() {
   return (
     <>

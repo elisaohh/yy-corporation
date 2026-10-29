@@ -13,7 +13,7 @@ export interface NewsletterMeta {
 /** 제목(<title>에서 "(광고)" · "| …" 제외), 요약(메일 미리보기 문구), 발행 시기(머리의 "Vol.NN · 2026.10"), 사진 유무 */
 export function parseNewsletter(html: string, vol: number): NewsletterMeta {
   const rawTitle = html.match(/<title>([\s\S]*?)<\/title>/i)?.[1] ?? "";
-  const title = rawTitle.replace(/^\(광고\)\s*/, "").replace(/\s*\|.*$/, "").trim() || `YY NOTES Vol.${vol}`;
+  const title = rawTitle.replace(/^\(광고\)\s*/, "").replace(/\s*\|.*$/, "").trim() || `YY LETTER Vol.${vol}`;
   const summary = (html.match(/<div style="display:none;[^"]*">([\s\S]*?)<\/div>/i)?.[1] ?? "").replace(/&[#\w]+;/g, "").trim();
   const issue = html.match(/Vol\.\d+[\s\S]{0,40}?(\d{4}\.\d{1,2})/)?.[1] ?? "";
   return { title, issue, summary, hasImage: /<img src="data:image\//i.test(html) };

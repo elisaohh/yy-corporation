@@ -26,12 +26,12 @@ npm.cmd run dev
 | 메뉴 · ABOUT 하위 메뉴(COMPANY · STORY) | `src/data/navigation.ts` |
 | HOME 문구 (히어로, 회사 소개, 공정 모션 장면, 슬로건, CTA) | `src/data/home.ts` |
 | ABOUT › COMPANY 문구 · 사진 | `src/data/about.ts` |
-| ABOUT › STORY 뉴스레터 글 | `/admin` 로그인 → STORY 화면의 편집 버튼 (`docs/ADMIN.md`) |
-| 제품 목록 · 규격 · 사진 · 홈 노출 | `/admin` 로그인 → PRODUCT 화면의 편집 버튼 (`content/products.json`) · 카테고리는 `src/data/categories.ts` |
+| ABOUT › STORY 뉴스레터 글 | `content/story/` (`docs/HANDOFF.md` 6장) |
+| 제품 목록 · 규격 · 사진 · 홈 노출 | `content/products.json` · 카테고리는 `src/data/categories.ts` |
 | PROCESS 소개 · 공정 이름 · 단계 | `src/data/process.ts` |
 | PROCESS TURN-KEY 4항목 · 사진 | `src/components/process/OneStopSystem.tsx` 위쪽 `sections` |
 | PROCESS · PRODUCT 제목 배경 | `src/app/process/page.tsx`의 `INTRO_VIDEO`, `src/app/products/page.tsx`의 `INTRO_IMAGE` |
-| CONTACT 문구 · 문의 결과 안내 | `src/data/content.ts` |
+| CONTACT 문구 | `src/data/content.ts` |
 | 개인정보 처리방침 · 문의 폼 동의 요약 | `src/data/privacy.ts` |
 | 이용약관 | `src/data/terms.ts` |
 | 회사 정보 (주소 · 전화 · 이메일 — 푸터 · CONTACT 공통) | `src/data/company.ts` |
@@ -107,6 +107,6 @@ npm.cmd run build
 - 기준병 치수 확정: 37.0 × 75.8(치수 파일) vs 38.0 × 74.4(제품규격표)
 - HOME 공정 모션 인쇄 단독 이미지(현재 코팅 후 인쇄로 대체)
 - 현장 사진 공개 권한 — `docs/asset-inventory.md` "공개 전 확인할 것"
-- 개인정보 처리방침 제5조 수탁자 · 위탁업무 `[ ]` 칸 — 지금은 외부 서비스 없음(문의 = 메일 앱). 서비스를 쓰게 되면 채우기
-- 사이트 편집(STORY · PRODUCT) — `docs/ADMIN.md`, 남은 요청 — `docs/HANDOFF.md` 12장
+- 개인정보 처리방침 제5조 수탁자 · 위탁업무 `[ ]` 칸 — 사용할 외부 서비스가 정해지면 채우기
+- 디자인 업체에 맡길 기능 — `docs/HANDOFF.md` 12장
 - 결정 기록: `docs/decisions.md`, 자산 현황: `docs/asset-inventory.md`, 원본 쓰임: `자료/README.md`

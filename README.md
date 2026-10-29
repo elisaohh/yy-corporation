@@ -33,7 +33,7 @@ src/
   app/              페이지 — HOME, about/company, about/story, products, process, contact
   components/       layout(헤더 · 메뉴 · 푸터 · 머리 영역) · home · about · story · product · process · contact
   data/             콘텐츠 — 메뉴, 문구, 제품, 회사 정보, 이미지 등록부
-content/            제품 목록(products.json) · 뉴스레터(story/) — 사이트 위 편집(/admin 로그인)으로 고침
+content/            제품 목록(products.json) · 뉴스레터(story/)
   config/site.ts    전역 설정(히어로 방식, 데모 폼, 임시 표시)
   lib/              폰트(Inter + Pretendard), ?still 도우미
 scripts/            이미지 · 영상 변환(자료/ → public/assets/)
@@ -44,16 +44,14 @@ docs/               HANDOFF(인수인계) · MOTION(모션 명세) · decisions(
 
 ## 콘텐츠 · 자료 바꾸기
 
-- 문구 · 제품: `src/data/`의 해당 파일 — 위치 표는 `docs/HANDOFF.md` 5장.
-- 제품 · 홈 노출 · 뉴스레터: `/admin`에서 로그인 → 사이트 화면에서 바로 추가 · 수정 — `docs/ADMIN.md`(처음 설정 포함).
-- 문의 폼: 보내기 → 방문자의 메일 앱이 열림(받는 주소는 `src/data/company.ts`의 email).
+- 문구: `src/data/`의 해당 파일 — 위치 표는 `docs/HANDOFF.md` 5장.
+- 제품 · 홈 노출: `content/products.json`. 뉴스레터: `content/story/` — `docs/HANDOFF.md` 6장.
 - 사진 · 영상: 원본을 `자료/`에 같은 이름으로 넣고 `scripts/`의 변환 명령 실행 — `docs/HANDOFF.md` 7장, `자료/README.md`.
 - 로고: `public/assets/brand/` 파일 또는 `src/data/brand.ts`.
 - 회사 정보: `src/data/company.ts` — 푸터 · CONTACT에 함께 반영.
 
-## 현재 상태 (2026-10-19)
+## 현재 상태 (2026-10-29)
 
-- 화면 · 모션 · 반응형(390px 모바일까지) · 콘텐츠 구조 완료. 뉴스레터 YY NOTES Vol.01 · 02 게시.
-- **문의 폼은 실제로 전송되지 않는 데모**입니다(입력 검증 · 제품 자동 채움까지 동작).
+- 화면 · 모션 · 반응형(390px 모바일까지) · 콘텐츠 구조 완료. 뉴스레터 YY LETTER Vol.01 · 02 게시.
 - 개인정보 처리방침(`/privacy`) · 이용약관(`/terms`) 게시 — 푸터 · 문의 폼에서 연결. 사진 · 영상은 오른쪽 클릭 · 끌기 · 길게 눌러 저장 차단(화면 캡처는 막을 수 없음).
-- 콘텐츠 관리(CMS) · 문의 전송 · 정식 도메인은 다음 단계 — `docs/HANDOFF.md` 12장 요청사항.
+- 콘텐츠 관리 · 문의 전송 · 정식 도메인은 디자인 업체가 구현 — `docs/HANDOFF.md` 12장 요청사항.

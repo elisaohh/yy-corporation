@@ -203,11 +203,14 @@ export function InquiryForm() {
           onBlur={blur("message")}
           required
           aria-invalid={messageError ? true : undefined}
-          aria-describedby={messageError ? `${fieldId("message")}-error` : undefined}
+          aria-describedby={[`${fieldId("message")}-hint`, messageError ? `${fieldId("message")}-error` : null].filter(Boolean).join(" ")}
           className={`w-full resize-y border bg-paper px-4 py-3 text-[15px] leading-[1.7] text-charcoal transition-[border-color,box-shadow] duration-200 focus:border-charcoal focus:outline-2 focus:outline-offset-0 focus:outline-charcoal ${
             messageError ? "border-charcoal shadow-[inset_3px_0_0_var(--color-point-4008)]" : "border-stone hover:border-ash"
           }`}
         />
+        <p id={`${fieldId("message")}-hint`} className="text-[13px] text-ash">
+          {contactCopy.messageHint}
+        </p>
         {messageError && (
           <p id={`${fieldId("message")}-error`} className="text-[13px] text-charcoal">
             {messageError}
@@ -257,7 +260,7 @@ export function InquiryForm() {
 
       <div>
         <button type="submit" className="btn btn-primary w-full md:w-auto md:min-w-48">
-          메일로 문의 보내기
+          문의 보내기
         </button>
       </div>
 
