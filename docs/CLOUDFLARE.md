@@ -1,6 +1,6 @@
 # Cloudflare Pages로 옮기기 (무료 · 상업용 가능)
 
-지금 사이트(화면 · 모션 · 사이트 위 편집 `/admin`)를 그대로 Cloudflare Pages에서 운영하는 방법입니다.
+지금 사이트(화면 · 모션 · 사이트 위 편집 `/yymanage-k7q`)를 그대로 Cloudflare Pages에서 운영하는 방법입니다.
 코드는 준비되어 있습니다. 아래 순서대로 **가입 · 연결 · 값 입력**만 하면 됩니다.
 
 | 순서 | 할 일 | 누가 |
@@ -56,7 +56,7 @@ https://(회사 도메인)/api/decap/callback
 https://www.(회사 도메인)/api/decap/callback
 ```
 
-→ `https://yy-corporation.pages.dev/admin`에서 GitHub 로그인 → 제품 하나 수정 · 저장 → 아래 막대에 "반영되었습니다"까지 확인.
+→ `https://yy-corporation.pages.dev/yymanage-k7q`에서 GitHub 로그인 → 제품 하나 수정 · 저장 → 아래 막대에 "반영되었습니다"까지 확인.
 
 ## 5. 후이즈 도메인 연결
 
@@ -70,7 +70,7 @@ https://www.(회사 도메인)/api/decap/callback
 
 ## 6. Vercel 끄기
 
-새 도메인에서 화면 · `/admin` 로그인 · 저장이 모두 되면 Vercel 프로젝트를 지우거나 GitHub 연결을 끊습니다(둘 다 켜 두면 저장할 때마다 양쪽에서 빌드됨).
+새 도메인에서 화면 · `/yymanage-k7q` 로그인 · 저장이 모두 되면 Vercel 프로젝트를 지우거나 GitHub 연결을 끊습니다(둘 다 켜 두면 저장할 때마다 양쪽에서 빌드됨).
 
 ---
 
@@ -78,5 +78,5 @@ https://www.(회사 도메인)/api/decap/callback
 
 - 무료 요금제: 상업용 사이트 허용, 방문자 수 제한 사실상 없음, 빌드 월 500회.
 - 저장 후 반영: 1~3분(편집 막대가 Cloudflare 배포 기록을 읽어 "반영되었습니다"를 띄움).
-- Cloudflare에서는 서버 기능 대신 `functions/api/decap/`(로그인 2곳)이 동작하고, 주소 이동 · 캐시는 빌드 때 `out/_redirects` · `out/_headers`로 들어갑니다. 예비 관리 화면 `/admin/cms`는 Cloudflare에서는 쓰지 않습니다.
+- Cloudflare에서는 서버 기능 대신 `functions/api/decap/`(로그인 2곳)이 동작하고, 주소 이동 · 캐시는 빌드 때 `out/_redirects` · `out/_headers`로 들어갑니다. 예비 관리 화면 `/yymanage-k7q/cms`는 Cloudflare에서는 쓰지 않습니다.
 - 내 컴퓨터에서 Cloudflare와 똑같이 시험: `npm run build:cloudflare` → `npx wrangler pages dev out` (로그인 시험용 값은 `.dev.vars`).

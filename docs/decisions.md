@@ -161,6 +161,7 @@
 | 2026-10-29 | 문서 · 뉴스레터 정리 | 문의 메일 기능 · 관리 화면은 디자인 업체가 구현 → 관련 내용을 문서에서 뺌(docs/ADMIN.md · 웹사이트 안내서 PDF 삭제, 코드는 그대로). 뉴스레터 Vol.01 · 02를 새 원본(YY LETTER, 2026.11)으로 교체, 화면 표기 YY NOTES → YY LETTER, 상세 주소 yy-notes-vol-NN → yy-letter-vol-NN(예전 주소는 새 주소로 이동). CONTACT 문의 내용 아래 "참고 사진을 보내 주시면 대체 용기를 제안해 드립니다.", 버튼 "문의 보내기" |
 | 2026-10-29 | PRODUCT 종류 탭 | BOTTLE → GLASS(국문 '유리', 안내 "유리 제품 N개"), BLOW(국문 '브로우') 추가 — 제품이 없어도 탭 표시(`showWhenEmpty`). 주소 값 glass-bottle 유지, 새 종류 주소 값 blow |
 | 2026-10-30 | 호스팅 → Cloudflare Pages 준비 | Vercel 무료는 상업용 불가 → Cloudflare Pages(무료 · 상업용 가능). 정적 완성 파일(npm run build:cloudflare, out/) + 로그인 2곳만 Cloudflare 함수(functions/api/decap/). 편집 막대 반영 표시는 Vercel status · Cloudflare check run 모두 읽음. 뉴스레터 대표 사진 /cover.webp. 설정 안내 docs/CLOUDFLARE.md. 도메인: 후이즈 → DNS를 Cloudflare로 |
+| 2026-10-30 | 관리자 주소 · 문의 메일 | 관리자 로그인 주소 /admin → /yymanage-k7q(짐작 어려운 이름, src/lib/edit/path.ts), 화면은 로고 · 로그인 버튼만(사이트 메뉴 없음). 문의 메일은 접수표 형식([견적 · 제품 문의] 회사 / 담당자 / 제품), 보낸 뒤 안내 상자 삭제. 마케팅 동의 배치는 재검토 중 |
 
 ## 브랜드 색 기준 (잠정)
 

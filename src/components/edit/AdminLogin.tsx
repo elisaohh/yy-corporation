@@ -43,7 +43,7 @@ export function AdminLogin({ branch, local }: { branch: string; local: boolean }
         const { ok, login } = await checkWriteAccess(body.token);
         if (!ok) {
           setState("idle");
-          setError(`${login || "이"} 계정은 편집 권한이 없습니다. 저장소 관리자에게 초대를 요청해 주세요.`);
+          setError("이 계정으로는 로그인할 수 없습니다.");
           return;
         }
         saveSession({ mode: "github", token: body.token, login, branch });
@@ -83,15 +83,15 @@ export function AdminLogin({ branch, local }: { branch: string; local: boolean }
   };
 
   return (
-    <div className="grid max-w-[460px] gap-6">
+    <div className="grid w-full gap-4">
       {signedIn ? (
         <>
-          <Notice>
-            <b className="font-medium">{signedIn}</b> 계정으로 편집 중입니다. 사이트 아무 곳에서나 편집 버튼을 눌러 고칠 수 있습니다.
-          </Notice>
-          <div className="flex flex-wrap gap-3">
-            <button type="button" onClick={() => router.push("/products")} className="btn btn-primary">
-              PRODUCT로 가기
+          <p className="text-[14px] text-ash">
+            <b className="font-medium text-charcoal">{signedIn}</b> 계정으로 로그인되어 있습니다.
+          </p>
+          <div className="grid gap-3">
+            <button type="button" onClick={() => router.push("/")} className="btn btn-primary w-full">
+              사이트로 가기
             </button>
             <button
               type="button"
@@ -99,7 +99,7 @@ export function AdminLogin({ branch, local }: { branch: string; local: boolean }
                 saveSession(null);
                 setSignedIn(null);
               }}
-              className="btn btn-secondary"
+              className="btn btn-secondary w-full"
             >
               로그아웃
             </button>
@@ -107,7 +107,7 @@ export function AdminLogin({ branch, local }: { branch: string; local: boolean }
         </>
       ) : (
         <>
-          <button type="button" onClick={login} disabled={state !== "idle"} className="btn btn-primary w-full sm:w-auto sm:min-w-64">
+          <button type="button" onClick={login} disabled={state !== "idle"} className="btn btn-primary w-full">
             {state === "waiting" ? (
               <>
                 <Spinner /> 로그인 창에서 진행해 주세요
@@ -121,16 +121,11 @@ export function AdminLogin({ branch, local }: { branch: string; local: boolean }
             )}
           </button>
           {local && (
-            <button type="button" onClick={localLogin} className="btn btn-secondary w-full sm:w-auto sm:min-w-64">
+            <button type="button" onClick={localLogin} className="btn btn-secondary w-full">
               내 컴퓨터에서 편집(개발용)
             </button>
           )}
           {error && <Notice tone="error">{error}</Notice>}
-          <ul className="grid gap-2 text-[14px] leading-[1.7] text-ash">
-            <li>· 저장소에 초대된 계정만 편집할 수 있습니다.</li>
-            <li>· 로그인은 이 브라우저 탭에서만 유지되고, 탭을 닫으면 로그아웃됩니다.</li>
-            <li>· 저장하면 1~2분 뒤 사이트에 반영됩니다.</li>
-          </ul>
         </>
       )}
     </div>

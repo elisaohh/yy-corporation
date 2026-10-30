@@ -1,7 +1,7 @@
 import data from "../../content/products.json";
 
 /**
- * 제품 데이터 — content/products.json(관리 화면 /admin에서 고친다)을 읽어 화면용으로 바꾼다.
+ * 제품 데이터 — content/products.json(관리자 로그인 후 사이트에서 고친다)을 읽어 화면용으로 바꾼다.
  * - 화면에는 제품 코드만 쓴다. 제품명(내부 이름)은 절대 넣지 않는다 — 데이터에도 두지 않는다.
  * - 규격은 확인된 값만 넣는다. 비운 칸은 화면에 "—"로 나온다.
  * - 목록 순서 = 화면 순서. home이 켜진 제품만 홈 PRODUCT에 나온다(같은 순서).

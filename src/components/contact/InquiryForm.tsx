@@ -15,7 +15,7 @@ import { validateInquiry, type InquiryData, type InquiryErrors, type InquiryFiel
  * 선택: 관심 제품 · 예상 발주 수량   (문의 유형 · 파일 첨부는 첫 버전에서 제외)
  *
  * 보내기 → 방문자의 메일 앱이 열리고 받는 사람(회사 메일) · 제목 · 내용이 채워진다. 방문자가 메일 앱에서 보낸다.
- * 메일 앱이 없을 때를 위해 주소 · 내용 복사 버튼을 함께 보여 준다. 검사 규칙은 lib/inquiry.ts.
+ * 메일은 영업 담당자가 한눈에 훑어볼 수 있는 접수표 형식(composeMail). 검사 규칙은 lib/inquiry.ts.
  */
 
 type FieldName = InquiryField;
@@ -38,21 +38,34 @@ const validate = validateInquiry;
 
 const MAIL_TO = company.email ?? "";
 
-/** 메일 제목 · 본문 */
+const LINE = "───────────────────────────";
+
+/** 메일 제목 · 본문 — 접수표 형식 */
 function composeMail(data: InquiryData) {
-  const subject = `[홈페이지 문의] ${data.company.trim()} · ${data.name.trim()}${data.product.trim() ? ` · ${data.product.trim()}` : ""}`;
+  const company = data.company.trim();
+  const name = data.name.trim();
+  const product = data.product.trim();
+  const subject = `[견적 · 제품 문의] ${[company, name, product].filter(Boolean).join(" / ")}`;
+  const rows: [string, string][] = [
+    ["회사 · 브랜드", company],
+    ["담당자", name],
+    ["이메일", data.email.trim()],
+    ["연락처", data.phone.trim()],
+    ["관심 제품", product || "없음"],
+    ["예상 수량", data.quantity.trim() || "미정"],
+  ];
+  // 항목 이름 뒤 칸을 맞춘다(한글은 두 칸으로 셈)
+  const width = (t: string) => [...t].reduce((n, ch) => n + (/[\u3131-\uD79D]/.test(ch) ? 2 : 1), 0);
+  const pad = (t: string) => t + " ".repeat(Math.max(2, 16 - width(t)));
   const body = [
-    `회사명 · 브랜드명: ${data.company.trim()}`,
-    `담당자명: ${data.name.trim()}`,
-    `이메일: ${data.email.trim()}`,
-    `연락처: ${data.phone.trim()}`,
-    `관심 제품: ${data.product.trim() || "—"}`,
-    `예상 발주 수량: ${data.quantity.trim() || "—"}`,
+    "────────── 문의 접수 ──────────",
+    ...rows.map(([k, v]) => `${pad(k)}${v}`),
+    LINE,
     "",
-    "문의 내용:",
+    "[문의 내용]",
     data.message.trim(),
     "",
-    "개인정보 수집 · 이용 동의: 예",
+    LINE,
   ].join("\n");
   return { subject, body };
 }
@@ -63,10 +76,7 @@ export function InquiryForm() {
   const [data, setData] = useState<InquiryData>(EMPTY);
   const [errors, setErrors] = useState<Errors>({});
   const [touched, setTouched] = useState<Partial<Record<FieldName, boolean>>>({});
-  const [status, setStatus] = useState<"idle" | "opened">("idle");
-  const [copied, setCopied] = useState<"" | "address" | "body">("");
   const [prefilled, setPrefilled] = useState(false);
-  const resultRef = useRef<HTMLDivElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
 
   // PRODUCT 상세에서 넘어오면 제품 코드 자동 입력
@@ -79,17 +89,12 @@ export function InquiryForm() {
     }
   }, [params]);
 
-  useEffect(() => {
-    if (status === "opened") resultRef.current?.focus();
-  }, [status]);
-
   const fieldId = (name: FieldName) => `${uid}-${name}`;
 
   const update = (name: FieldName) => (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const value = name === "consent" ? (event.target as HTMLInputElement).checked : event.target.value;
     const next = { ...data, [name]: value } as InquiryData;
     setData(next);
-    if (status === "opened") setStatus("idle");
     if (touched[name] || errors[name]) setErrors((prev) => ({ ...prev, [name]: validate(next)[name] }));
   };
 
@@ -111,8 +116,6 @@ export function InquiryForm() {
     // 방문자의 메일 앱 열기 — 받는 사람 · 제목 · 내용 채움
     const { subject, body } = composeMail(data);
     window.location.href = `mailto:${MAIL_TO}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    setCopied("");
-    setStatus("opened");
   };
 
   const textField = (
@@ -162,15 +165,6 @@ export function InquiryForm() {
 
   const messageError = errors.message;
   const consentError = errors.consent;
-  const copy = async (what: "address" | "body") => {
-    const { subject, body } = composeMail(data);
-    try {
-      await navigator.clipboard.writeText(what === "address" ? MAIL_TO : `${subject}\n\n${body}`);
-      setCopied(what);
-    } catch {
-      setCopied("");
-    }
-  };
 
   return (
     <form ref={formRef} noValidate onSubmit={onSubmit} className="relative grid gap-6">
@@ -264,27 +258,6 @@ export function InquiryForm() {
         </button>
       </div>
 
-      <div role="status" aria-live="polite">
-        {status === "opened" && (
-          <div
-            ref={resultRef}
-            tabIndex={-1}
-            className="fade-in bg-mist px-5 py-4 text-[14px] leading-[1.7] shadow-[inset_3px_0_0_var(--color-charcoal)] outline-none"
-          >
-            <p className="font-medium">{contactCopy.openedTitle}</p>
-            <p className="mt-1 text-ash">{contactCopy.openedBody}</p>
-            <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1">
-              <span className="font-en">{MAIL_TO}</span>
-              <button type="button" onClick={() => copy("address")} className="min-h-11 underline underline-offset-4 hover:text-charcoal">
-                {copied === "address" ? "주소 복사됨" : "주소 복사"}
-              </button>
-              <button type="button" onClick={() => copy("body")} className="min-h-11 underline underline-offset-4 hover:text-charcoal">
-                {copied === "body" ? "내용 복사됨" : "문의 내용 복사"}
-              </button>
-            </div>
-          </div>
-        )}
-      </div>
     </form>
   );
 }

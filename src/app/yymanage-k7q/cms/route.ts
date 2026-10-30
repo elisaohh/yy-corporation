@@ -2,7 +2,7 @@ import { cmsConfig } from "@/lib/cms";
 import { env } from "@/lib/env";
 
 /**
- * 예비 관리 화면(/admin/cms) — Decap CMS. 평소에는 사이트 위 편집(/admin에서 로그인)을 쓴다.
+ * 예비 관리 화면(관리자 주소/cms) — Decap CMS. 평소에는 사이트 위 편집(관리자 로그인 주소 — src/lib/edit/path.ts)을 쓴다.
  * - 운영: GitHub 계정으로 로그인(저장소 쓰기 권한이 있는 사람만). 환경 변수 GITHUB_OAUTH_ID · GITHUB_OAUTH_SECRET 필요.
  * - 내 컴퓨터: npm run dev 와 npm run cms 를 함께 켜면 로그인 없이 파일에 바로 저장된다.
  */

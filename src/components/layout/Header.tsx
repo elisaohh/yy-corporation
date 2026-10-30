@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { ADMIN_PATH } from "@/lib/edit/path";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Logo } from "@/components/brand/Logo";
 import { HEADER_THEME_EVENT } from "@/components/layout/headerEvents";
@@ -100,6 +101,9 @@ export function Header() {
   useEffect(() => {
     document.documentElement.toggleAttribute("data-header-hidden", isHidden);
   }, [isHidden]);
+
+  // 관리자 로그인 화면은 사이트 메뉴 없이 로고 · 로그인 버튼만
+  if (pathname.startsWith(ADMIN_PATH)) return null;
 
   return (
     <>

@@ -5,7 +5,7 @@ import { cleanNewsletter, parseNewsletter } from "./newsletter-html";
 /**
  * STORY 뉴스레터 — 메일로 보낸 원본 HTML을 그대로 쓴다(빌드 시 서버에서만 실행).
  * 한 호 = content/story/vol-NN.json { vol: 호수, html: 원본 HTML 파일 경로, published: 공개 여부 }.
- * 관리 화면(/admin)에서 올리면 이 파일과 HTML(content/story/files/)이 함께 저장되고, 목록 · 상세가 자동으로 생긴다.
+ * 관리자 로그인 후 사이트에서 올리면 이 파일과 HTML(content/story/files/)이 함께 저장되고, 목록 · 상세가 자동으로 생긴다.
  * - 메일 하단(회사 정보 · 로고 · 홈페이지 · 수신거부 · 맺음말) 영역을 지운다.
  * - 링크는 사이트 창에서 열리도록 <base target="_top">을 넣는다.
  * - 카드용 정보는 HTML에서 읽는다: 제목(<title>에서 "(광고)" · "| …" 제외), 요약(메일 미리보기 문구),

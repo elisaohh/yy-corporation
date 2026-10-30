@@ -4,7 +4,7 @@
  *   사본:  public/assets/products/<코드>_<번호>.webp — 표시용 (원본 크기 유지, 확대하지 않음, 최대 1600px)
  *
  * 실행: node scripts/build-product-images.mjs
- * 관리 화면(/admin)에서 사진을 바로 올려도 된다. 이 스크립트는 여러 장을 한꺼번에 가볍게(webp) 바꿀 때 쓴다.
+ * 관리자 로그인 후 사이트에서 사진을 바로 올려도 된다. 이 스크립트는 여러 장을 한꺼번에 가볍게(webp) 바꿀 때 쓴다.
  * 만든 사진은 관리 화면의 제품 "사진" 칸에서 골라 넣는다.
  */
 import { mkdir, readdir } from "node:fs/promises";
