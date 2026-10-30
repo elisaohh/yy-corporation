@@ -10,15 +10,13 @@ import { inter, pretendard } from "@/lib/fonts";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  // 검색 사이트 소유 확인(네이버 서치어드바이저) — yycorp.co.kr, www.yycorp.co.kr
-  verification: { other: { "naver-site-verification": ["893574d475ba08549a5b2b24d7440fcd279bcac5", "8ac616e21392b0cfc5a1cd1aece353435f7f1b57"] } },
+  // 검색 사이트 소유 확인(네이버 서치어드바이저) — www는 Cloudflare에서 yycorp.co.kr로 이동
+  verification: { other: { "naver-site-verification": "893574d475ba08549a5b2b24d7440fcd279bcac5" } },
   title: {
     default: siteConfig.name,
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
-  // 프로토타입 단계: 검색 노출 차단
-  robots: { index: false, follow: false },
 };
 
 export const viewport: Viewport = {
