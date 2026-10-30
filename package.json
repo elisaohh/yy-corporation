@@ -8,8 +8,7 @@
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "cms": "npx --yes decap-server@3.11.3",
-    "export": "node scripts/export-static.mjs"
+    "cms": "npx --yes decap-server@3.11.3"
   },
   "engines": {
     "node": ">=20.9.0"
