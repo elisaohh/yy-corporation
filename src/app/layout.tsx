@@ -10,6 +10,8 @@ import { inter, pretendard } from "@/lib/fonts";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  // 검색 사이트 소유 확인(네이버 서치어드바이저)
+  verification: { other: { "naver-site-verification": "893574d475ba08549a5b2b24d7440fcd279bcac5" } },
   title: {
     default: siteConfig.name,
     template: `%s | ${siteConfig.name}`,
