@@ -148,7 +148,7 @@ export function HeroFloat() {
 
   return (
     <section ref={sectionRef} data-header-theme="light" aria-labelledby="hero-title" className="relative overflow-hidden bg-paper">
-      <div className="container-yy relative flex h-[100svh] min-h-[600px] flex-col pb-6 pt-[calc(var(--header-h)+12px)] md:pb-8 md:pt-[calc(var(--header-h)+16px)]">
+      <div className="container-yy relative flex h-[max(100svh,calc(var(--hero-photo-min)+400px))] [--hero-photo-min:max(220px,min(100vw,460px,calc(100svh-400px)))] flex-col pb-6 md:h-[100svh] md:min-h-[600px] pt-[calc(var(--header-h)+12px)] md:pb-8 md:pt-[calc(var(--header-h)+16px)]">
         {/* 윗줄: 분야 · 공식 문구 */}
         <div className="flex flex-wrap items-start justify-between gap-x-10 gap-y-3">
           <p data-fade className="label-en text-[11px] tracking-[0.32em] text-ash md:text-[12px]">
@@ -163,7 +163,7 @@ export function HeroFloat() {
         {/* 사진 — 병(바탕 층) + 떠 있는 물방울 */}
         <div
           aria-hidden="true"
-          className="relative z-10 mt-2 flex min-h-[min(100vw,460px)] flex-1 items-center justify-center [container-type:size] md:-mb-[1.4vw] md:min-h-[320px] md:-translate-y-[3svh]"
+          className="relative z-10 mt-2 flex min-h-[var(--hero-photo-min)] flex-1 items-center justify-center [container-type:size] md:-mb-[1.4vw] md:min-h-[320px] md:-translate-y-[3svh]"
         >
           {/* 남은 영역 안에서 사진 비율 그대로 최대 크기 (컨테이너 쿼리 단위) */}
           <div data-photo className="relative" style={{ aspectRatio: ASPECT, width: `min(100cqw, 112cqh * ${RATIO}, ${MAX_W}px)` }}>

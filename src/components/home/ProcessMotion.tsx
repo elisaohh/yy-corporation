@@ -37,8 +37,8 @@ export function ProcessMotion() {
   const sectionRef = useRef<HTMLElement>(null);
   /** 공정 이름을 누르면 해당 단계로 이동할 때 쓰는 타임라인 */
   const tlRef = useRef<gsap.core.Timeline | null>(null);
-  /** 모바일(1024px 미만): 스크롤 고정 대신 공정 이름을 누르면 그 장면으로 재생 */
-  const tapMode = useRef(false);
+  /** 모바일(1024px 미만): 모션 없이 공정 이름을 누르면 그 장면 사진으로 자연스럽게 바뀐다 */
+  const showStep = useRef<((i: number) => void) | null>(null);
 
   const steps = finishingProcesses;
 
@@ -91,7 +91,44 @@ export function ProcessMotion() {
 
 
 
-        if (context.conditions?.reduce || isStill()) {
+        const desktop = Boolean(context.conditions?.desktop);
+        const reduce = Boolean(context.conditions?.reduce) || isStill();
+
+        if (!desktop) {
+          // 모바일: 스크롤 고정 · 공정 모션 없이 장면 사진만 바꾼다(휴대폰의 '동작 줄이기 · 애니메이션 제거' 설정과 상관없이 같은 동작)
+          // 첫 화면 = 첫 공정. 누른 공정의 사진이 위에서 서서히 나타나고, 다 나타나면 아래 사진은 숨긴다.
+          const fade = reduce ? 0.2 : 0.5;
+          gsap.set(layers, { clipPath: "inset(0% 0% 0% 0%)", autoAlpha: 0, zIndex: 1 });
+          gsap.set([gate, pulse, ...gateTag], { autoAlpha: 0 });
+          gsap.set(drop, { yPercent: 0, autoAlpha: 0 });
+          // 스포이드(캡 · 피펫)는 늘 사진 위에
+          gsap.set([drop[0]?.parentElement, drop[1]].filter(Boolean), { zIndex: 3 });
+          gsap.set(bar, { transformOrigin: "top center" });
+          let current = -1;
+          const show = (i: number) => {
+            if (i === current) return;
+            const surface = Math.min(i, layers.length - 1);
+            layers.forEach((layer, k) => gsap.set(layer, { zIndex: k === surface ? 2 : 1 }));
+            gsap.to(layers[surface], {
+              autoAlpha: 1,
+              duration: current < 0 ? 0 : fade,
+              ease: "sine.out",
+              overwrite: true,
+              onComplete: () => layers.forEach((layer, k) => k !== surface && gsap.set(layer, { autoAlpha: 0 })),
+            });
+            gsap.to(drop, { autoAlpha: i >= steps.length ? 1 : 0, duration: fade, ease: "sine.out", overwrite: true });
+            items.forEach((el, k) => gsap.to(el, { color: k === i ? "var(--color-charcoal)" : "var(--color-ash)", duration: fade, overwrite: true }));
+            gsap.to(bar, { scaleY: (i + 1) / (steps.length + 1), duration: fade, ease: "sine.out", overwrite: true });
+            current = i;
+          };
+          show(0);
+          showStep.current = show;
+          return () => {
+            showStep.current = null;
+          };
+        }
+
+        if (reduce) {
 
           // 모션 줄이기 · ?still: 라벨 표면 + 체결된 스포이드, 목록만 정지 상태로(고정 없음)
 
@@ -104,8 +141,6 @@ export function ProcessMotion() {
           return;
 
         }
-
-        const desktop = Boolean(context.conditions?.desktop);
 
         gsap.set(layers, { clipPath: "inset(0% 100% 0% 0%)" });
 
@@ -130,14 +165,11 @@ export function ProcessMotion() {
 
         // 휠/터치 입력을 가로채지 않으므로 역스크롤도 자연스럽게 복원된다.
 
-        // 모바일: 고정 · 스크롤 연결 없이 멈춘 타임라인 — 공정 이름을 누르면 그 장면까지 재생(goTo)
-        tapMode.current = !desktop;
         const tl = gsap.timeline({
 
           defaults: { ease: "none" },
-          paused: !desktop,
 
-          scrollTrigger: !desktop ? undefined : {
+          scrollTrigger: {
 
             trigger: section,
 
@@ -243,15 +275,10 @@ export function ProcessMotion() {
         // MATCH 완료 후 잠깐 완성된 병을 보여주고 다음 PRODUCT로 연결.
         // 마지막 화면을 별도로 오래 붙잡지 않고, 스크롤을 되돌리면 역재생된다.
         tl.addLabel(`step${steps.length}`, match + 1.95);
-        if (desktop) {
-          const finish = match + 2.1;
-          tl.to(panel, { autoAlpha: 0, y: -12, duration: 0.55, ease: "sine.inOut" }, finish)
-            .to(stage, { autoAlpha: 0, y: -22, duration: 0.7, ease: "sine.inOut" }, finish + 0.1)
-            .addLabel("end");
-        } else {
-          // 모바일: 화면에 들어오면 첫 공정(COATING)까지 한 번 재생 — 이후는 누를 때마다
-          ScrollTrigger.create({ trigger: stage, start: "top 65%", once: true, onEnter: () => tl.tweenTo("step0", { duration: 1.6, ease: "power2.inOut" }) });
-        }
+        const finish = match + 2.1;
+        tl.to(panel, { autoAlpha: 0, y: -12, duration: 0.55, ease: "sine.inOut" }, finish)
+          .to(stage, { autoAlpha: 0, y: -22, duration: 0.7, ease: "sine.inOut" }, finish + 0.1)
+          .addLabel("end");
 
 
       },
@@ -266,14 +293,14 @@ export function ProcessMotion() {
     };
   }, []);
 
-  /** 공정 이름 클릭 → 데스크톱: 그 공정이 끝난 장면으로 스크롤 / 모바일: 그 장면까지 재생(앞 · 뒤 모두) */
+  /** 공정 이름 클릭 → 데스크톱: 그 공정이 끝난 장면으로 스크롤 / 모바일: 그 장면 사진으로 바꿈 */
   const goTo = (i: number) => {
-    const tl = tlRef.current;
-    if (!tl) return;
-    if (tapMode.current) {
-      tl.tweenTo(`step${i}`, { duration: 1.4, ease: "power2.inOut" });
+    if (showStep.current) {
+      showStep.current(i);
       return;
     }
+    const tl = tlRef.current;
+    if (!tl) return;
     const st = tl.scrollTrigger;
     if (st) window.scrollTo({ top: st.labelToScroll(`step${i}`), behavior: "smooth" });
   };
