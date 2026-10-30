@@ -6,7 +6,7 @@ import { Pending } from "@/components/ui/Pending";
 import { company, companyStatus } from "@/data/company";
 import { contactCopy } from "@/data/content";
 
-export const metadata: Metadata = { title: "Contact" };
+export const metadata: Metadata = { title: "견적 · 제품 문의", description: "와이와이코퍼레이션 견적 · 제품 문의 — 서울특별시 강서구 강서로 499 대하빌딩 4층 · 02-3665-0497 · sales@yycorp.co.kr" };
 
 /** 네이버 지도 — 확정된 회사 주소로 검색 결과를 연다(버튼) */
 const naverMapUrl = (address: string) => `https://map.naver.com/p/search/${encodeURIComponent(address)}`;

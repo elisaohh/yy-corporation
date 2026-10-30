@@ -27,7 +27,7 @@ export const companyStatus: CompanyStatus = "confirmed";
 export const companySource = "기존 사이트 푸터 캡처 (자료/04_회사정보/회사정보.png)";
 
 export const company: CompanyInfo = {
-  legalName: "와이와이 코퍼레이션",
+  legalName: "와이와이코퍼레이션",
   representative: "강말숙",
   businessNumber: "108-47-00497",
   address: "서울특별시 강서구 강서로 499 대하빌딩 4층",

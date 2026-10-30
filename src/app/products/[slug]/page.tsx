@@ -23,7 +23,10 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const product = getProduct(slug);
-  return { title: product ? product.name : "Product" };
+  if (!product) return { title: "제품" };
+  const kind = productCategories.find((c) => c.slug === product.category)?.labelKo;
+  const desc = [product.name, product.capacity, kind].filter(Boolean).join(" · ");
+  return { title: product.name, description: `${desc} — 와이와이코퍼레이션 화장품 용기 제품` };
 }
 
 export default async function ProductDetailPage({ params }: PageProps) {

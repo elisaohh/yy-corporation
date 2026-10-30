@@ -4,7 +4,7 @@ import { StoryBoard } from "@/components/story/StoryBoard";
 import { storyIntro } from "@/data/story";
 import { listNewsletters } from "@/lib/newsletter";
 
-export const metadata: Metadata = { title: "Story" };
+export const metadata: Metadata = { title: "스토리 · YY LETTER", description: "와이와이코퍼레이션이 전하는 뉴스레터 YY LETTER." };
 
 /** ABOUT › STORY — 뉴스레터 YY LETTER 목록(content/story/*.html에서 자동 생성) */
 export default async function AboutStoryPage() {

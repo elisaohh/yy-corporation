@@ -8,8 +8,13 @@ export type HeroMode = "float" | "poster" | "video" | "three";
 
 export const siteConfig = {
   name: "YY CORPORATION",
-  /** 메타 설명은 공식 문구 확정 전까지 사실만 담은 중립 문장으로 둔다. */
-  description: "YY CORPORATION 화장품 패키징 기업 웹사이트 프로토타입",
+  /** 검색에 쓰는 한글 회사명(붙여 쓰기) */
+  nameKo: "와이와이코퍼레이션",
+  /** 대표 주소 — www는 Cloudflare에서 이 주소로 넘어간다 */
+  url: "https://yycorp.co.kr",
+  /** 검색 결과 설명 — 회사 제공 문구(회사 소개 요약 · YY LETTER 서비스)만으로 구성 */
+  description:
+    "와이와이코퍼레이션(YY CORPORATION)은 화장품 용기 턴키 패키징 전문기업입니다. 프리몰드 유리 용기 소싱, 코팅 · 인쇄 후가공, 부자재 매칭, 발주 · 입출고 · 납품까지 함께합니다.",
   locale: "ko_KR",
 
   heroMode: "float" as HeroMode,

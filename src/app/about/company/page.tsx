@@ -4,7 +4,7 @@ import { ContactCta } from "@/components/home/ContactCta";
 import { PageIntro } from "@/components/layout/PageIntro";
 import { aboutIntro } from "@/data/about";
 
-export const metadata: Metadata = { title: "Company" };
+export const metadata: Metadata = { title: "회사 소개", description: "와이와이코퍼레이션 회사 소개 — 화장품 용기 턴키 패키징 전문기업으로 글로벌 생산 네트워크를 통한 가격 경쟁력과 품질을 제공합니다." };
 
 /**
  * ABOUT › COMPANY (/about/company) — 미스트 제목 영역 → Story · Vision · Business 세 파트 → CTA. 회사 정보는 푸터.

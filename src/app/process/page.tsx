@@ -13,7 +13,7 @@ import { processIntro } from "@/data/process";
 // 영상은 원본의 8초 이후 · 화면에 보이던 부분(1.25배 확대 구간)만 잘라 H.264로 줄인 것(7MB → 3.4MB)
 const INTRO_VIDEO = { src: "/assets/process/process-intro.mp4", focus: "50% 68%" };
 
-export const metadata: Metadata = { title: "Process" };
+export const metadata: Metadata = { title: "공정 · 후가공", description: "와이와이코퍼레이션의 진행 과정 — 프리몰드 소싱, 부식 · 코팅 · 인쇄 · 라벨 후가공, 부자재 매칭, 발주 · 입출고 · 납품." };
 
 export default function ProcessPage() {
   return (
