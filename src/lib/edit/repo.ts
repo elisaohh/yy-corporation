@@ -134,14 +134,29 @@ export async function commit(session: EditSession, message: string, build: () =>
   throw new RepoError("다른 사람이 동시에 저장하고 있습니다. 잠시 후 다시 시도해 주세요.");
 }
 
-/** 사이트 반영 상태 — Vercel이 커밋에 남기는 배포 상태를 읽는다 */
+/**
+ * 사이트 반영 상태 — 배포 서비스가 커밋에 남기는 기록을 읽는다.
+ * Vercel은 "상태(status)", Cloudflare Pages는 "검사(check run)"로 남긴다. 둘 다 보고, 하나라도 진행 중이면 기다린다.
+ */
 export async function deployState(session: EditSession, sha: string): Promise<"pending" | "success" | "failure" | "unknown"> {
   if (session.mode === "local") return "success";
-  const res = await gh(session)(`/repos/${REPO}/commits/${sha}/status`);
-  if (!res.ok) return "unknown";
-  const { state, statuses } = (await res.json()) as { state: string; statuses: unknown[] };
-  if (!statuses.length) return "pending";
-  return state === "success" ? "success" : state === "failure" || state === "error" ? "failure" : "pending";
+  const call = gh(session);
+  const [statusRes, checksRes] = await Promise.all([call(`/repos/${REPO}/commits/${sha}/status`), call(`/repos/${REPO}/commits/${sha}/check-runs`)]);
+  const results: ("pending" | "success" | "failure")[] = [];
+  if (statusRes.ok) {
+    const { statuses } = (await statusRes.json()) as { statuses: { state: string }[] };
+    for (const st of statuses) results.push(st.state === "success" ? "success" : st.state === "pending" ? "pending" : "failure");
+  }
+  if (checksRes.ok) {
+    const { check_runs } = (await checksRes.json()) as { check_runs: { status: string; conclusion: string | null }[] };
+    for (const run of check_runs) {
+      if (run.status !== "completed") results.push("pending");
+      else results.push(run.conclusion === "success" || run.conclusion === "neutral" || run.conclusion === "skipped" ? "success" : "failure");
+    }
+  }
+  if (!statusRes.ok && !checksRes.ok) return "unknown";
+  if (!results.length || results.includes("pending")) return "pending";
+  return results.includes("failure") ? "failure" : "success";
 }
 
 /** 브라우저에서 파일 → base64 */

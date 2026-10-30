@@ -18,7 +18,7 @@ export interface Newsletter {
   /** 발행 시기 — 예: "2026.10" */
   issue: string;
   summary: string;
-  /** 목록 카드 대표 사진 주소(/about/story/<slug>/cover) — 사진이 없으면 null */
+  /** 목록 카드 대표 사진 주소(/about/story/<slug>/cover.webp) — 사진이 없으면 null */
   cover: string | null;
 }
 
@@ -57,7 +57,7 @@ async function read(vol: number) {
 function meta(vol: number, html: string): Newsletter {
   const { title, issue, summary, hasImage } = parseNewsletter(html, vol);
   const slug = slugOf(vol);
-  return { slug, vol, title, issue, summary, cover: hasImage ? `/about/story/${slug}/cover` : null };
+  return { slug, vol, title, issue, summary, cover: hasImage ? `/about/story/${slug}/cover.webp` : null };
 }
 
 /** 모든 호 — 최신 호가 앞 */

@@ -160,6 +160,7 @@
 | 2026-10-28 | 공정 모션 장면 정렬 | 새 사진의 병 키가 1~2% 커서 장면 전환(투명→코팅, 인쇄→부식) 때 움찔함 → 기준병의 목 위 끝(394행) · 바닥 선(1362행)에 맞춰 세로 보정, 몸통 곧은 구간 폭 · 가운데도 맞춤(build-process-images.mjs FIT) |
 | 2026-10-29 | 문서 · 뉴스레터 정리 | 문의 메일 기능 · 관리 화면은 디자인 업체가 구현 → 관련 내용을 문서에서 뺌(docs/ADMIN.md · 웹사이트 안내서 PDF 삭제, 코드는 그대로). 뉴스레터 Vol.01 · 02를 새 원본(YY LETTER, 2026.11)으로 교체, 화면 표기 YY NOTES → YY LETTER, 상세 주소 yy-notes-vol-NN → yy-letter-vol-NN(예전 주소는 새 주소로 이동). CONTACT 문의 내용 아래 "참고 사진을 보내 주시면 대체 용기를 제안해 드립니다.", 버튼 "문의 보내기" |
 | 2026-10-29 | PRODUCT 종류 탭 | BOTTLE → GLASS(국문 '유리', 안내 "유리 제품 N개"), BLOW(국문 '브로우') 추가 — 제품이 없어도 탭 표시(`showWhenEmpty`). 주소 값 glass-bottle 유지, 새 종류 주소 값 blow |
+| 2026-10-30 | 호스팅 → Cloudflare Pages 준비 | Vercel 무료는 상업용 불가 → Cloudflare Pages(무료 · 상업용 가능). 정적 완성 파일(npm run build:cloudflare, out/) + 로그인 2곳만 Cloudflare 함수(functions/api/decap/). 편집 막대 반영 표시는 Vercel status · Cloudflare check run 모두 읽음. 뉴스레터 대표 사진 /cover.webp. 설정 안내 docs/CLOUDFLARE.md. 도메인: 후이즈 → DNS를 Cloudflare로 |
 
 ## 브랜드 색 기준 (잠정)
 

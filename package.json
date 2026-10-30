@@ -8,7 +8,8 @@
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "cms": "npx --yes decap-server@3.11.3"
+    "cms": "npx --yes decap-server@3.11.3",
+    "build:cloudflare": "node scripts/build-cloudflare.mjs"
   },
   "engines": {
     "node": ">=20.9.0"

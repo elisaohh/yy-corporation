@@ -55,3 +55,4 @@ docs/               HANDOFF(인수인계) · MOTION(모션 명세) · decisions(
 - 화면 · 모션 · 반응형(390px 모바일까지) · 콘텐츠 구조 완료. 뉴스레터 YY LETTER Vol.01 · 02 게시.
 - 개인정보 처리방침(`/privacy`) · 이용약관(`/terms`) 게시 — 푸터 · 문의 폼에서 연결. 사진 · 영상은 오른쪽 클릭 · 끌기 · 길게 눌러 저장 차단(화면 캡처는 막을 수 없음).
 - 콘텐츠 관리 · 문의 전송 · 정식 도메인은 디자인 업체가 구현 — `docs/HANDOFF.md` 12장 요청사항.
+- 호스팅 옮기기(Cloudflare Pages, 무료 · 상업용): `docs/CLOUDFLARE.md` — 빌드 명령 `npm run build:cloudflare`, 출력 `out`.

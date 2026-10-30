@@ -33,3 +33,7 @@ coverage/
 # 원본 자료(공장 사진 등 공개 권한 미확인 포함) — 저장소에 넣지 않는다. 웹용 사본만 public/에 커밋
 /자료/
 review-shots/
+
+# Cloudflare 로컬 시험용 비밀 값
+.dev.vars
+.wrangler/

@@ -13,7 +13,7 @@ export default function AdminPage() {
         <p className="mt-5 mb-10 max-w-[520px] text-[16px] leading-[1.75] text-ash">
           로그인하면 PRODUCT · 홈 · STORY 화면에 추가 · 수정 버튼이 생깁니다. 사이트를 보면서 바로 고치세요.
         </p>
-        <AdminLogin branch={process.env.VERCEL_GIT_COMMIT_REF || "main"} local={process.env.NODE_ENV === "development"} />
+        <AdminLogin branch={process.env.VERCEL_GIT_COMMIT_REF || process.env.CF_PAGES_BRANCH || "main"} local={process.env.NODE_ENV === "development"} />
       </div>
     </section>
   );
