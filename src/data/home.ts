@@ -48,17 +48,37 @@ export const servicesSource = "YY LETTER Vol.01 회사 소개";
 
 /* ── ③ 공정 모션 ── */
 export const processScene = {
-  /** 기준병 YS-SRRR30-04 · 30ml (스포이드 없는 상태) */
-  base: "procClear" as AssetId,
-  /** 표면 효과 — 코팅 · 인쇄(코팅 후 인쇄로 대체, 단독 이미지 미제공) · 부식 · 라벨 */
-  layers: ["procCoating", "procPrinting", "procEtching", "procLabel"] as AssetId[],
-  /** 위에서 수직으로 내려와 체결되는 스포이드 — 캡(불투명)과 피펫(유리, multiply) */
-  dropperCap: "dropperCap" as AssetId,
-  dropperPipette: "dropperPipette" as AssetId,
-  /** 라벨이 피펫을 가리는 구간(캔버스 높이 대비 %) — proc-label 실측 */
-  labelBand: { top: 43.7, bottom: 74.7 }, // proc-label(부식 후 라벨) 실측 699–1195행(2026-10-28 CALMING 라벨, 높이 맞춤 후) — 라벨 이미지를 바꾸면 다시 잰다
-  /** 체결 후 함께 등장하는 실제 제품 (기준병 양옆) */
-  expandTo: ["YS-SRRR15-01_02", "YS-SRRR30-02_01", "YS-SRRR30-04_01", "YS-SRRR50-02_01"] as AssetId[],
+  /** v2(2026-11-02): 공정마다 투명 병 + 그 공정 하나만 — 앞 공정을 덧입히지 않는다. 이전 버전은 git 태그 process-motion-v1 */
+  base: "procV2Clear" as AssetId,
+  /** 순서: 부식 → 코팅(3가지) → 인쇄 → 라벨. key는 data/process.ts의 공정 이름 · 설명을 가져올 때 쓴다 */
+  steps: [
+    { key: "etching", layers: ["procV2Etching"] },
+    { key: "coating", layers: ["procV2CoatingGradation", "procV2CoatingMatte", "procV2CoatingGlossy"] },
+    { key: "printing", layers: ["procV2Printing"] },
+    { key: "labeling", layers: ["procV2Label"] },
+  ] as { key: "etching" | "coating" | "printing" | "labeling"; layers: AssetId[] }[],
+  /** 코팅 3종 회전판 — 배경을 오려 낸 병(steps의 coating과 같은 순서) */
+  orbit: ["cutCoatingGradation", "cutCoatingMatte", "cutCoatingGlossy"] as AssetId[],
+  /** 회전판 아래에 보이는 코팅 이름(orbit과 같은 순서) */
+  orbitNames: [
+    { en: "GRADIENT", ko: "그라데이션" },
+    { en: "MATTE", ko: "무광" },
+    { en: "GLOSSY", ko: "유광" },
+  ],
+  /** 부자재 장면: 인쇄 병(왼쪽 · 스포이드)과 라벨 병(오른쪽 · 펌프) — 배경을 오려 낸 사진 */
+  duoBottles: ["cutPrinting", "cutLabel"] as AssetId[],
+  /** 부자재 병 아래 이름(왼쪽 · 오른쪽) */
+  duoNames: [
+    { en: "DROPPER", ko: "스포이드" },
+    { en: "PUMP", ko: "펌프" },
+  ],
+  /** 부자재 매칭 — 두 병에 동시에: 왼쪽 스포이드(캡 + 피펫) · 오른쪽 펌프(머리 + 빨대, 마지막에 투명 덮개) */
+  match: { name: "MATCH", line: "스포이드 · 펌프 체결" },
+  dropperCap: "dropperV2Cap" as AssetId,
+  dropperPipette: "dropperV2Pipette" as AssetId,
+  pumpHead: "pumpHead" as AssetId,
+  pumpTube: "pumpTube" as AssetId,
+  pumpOvercap: "pumpOvercap" as AssetId,
 };
 
 /* ── ⑥ 마지막 CTA — 문구 미확정 (기획서 부록 B5: 예시를 확정 카피로 취급하지 말 것) ── */
@@ -79,3 +99,4 @@ export const slogan = {
     source: "기획서 2.0 부록 B2 임시 초안",
   } as Copy,
 };
+
