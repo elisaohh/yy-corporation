@@ -11,7 +11,10 @@ import { processIntro } from "@/data/process";
  * 영상이 준비될 때까지는 차콜 바탕, 모션 줄이기에서는 8초 장면에서 멈춤.
  */
 // 영상은 원본의 8초 이후 · 화면에 보이던 부분(1.25배 확대 구간)만 잘라 H.264로 줄인 것(7MB → 3.4MB)
-const INTRO_VIDEO = { src: "/assets/process/process-intro.mp4", focus: "50% 68%" };
+// 2026-11-02 새 영상: 원본(자료/09_PROCESS/process-intro-2-원본.mp4, H.265)에서 아래 유리병 줄만 잘라(왼쪽 벤치 제외) H.264로 변환
+// ffmpeg -i 원본.mp4 -an -vf "crop=1100:620:340:460,colorspace=all=bt709:iall=bt709:iprimaries=smpte432:format=yuv420p,hqdn3d=1.5:1.5:4:4" -c:v libx264 -preset slower -crf 25 -tune film -movflags +faststart process-intro-2.mp4
+const INTRO_VIDEO = { src: "/assets/process/process-intro-2.mp4", focus: "50% 12%" };
+// 이전: { src: "/assets/process/process-intro.mp4", focus: "50% 68%" }
 
 export const metadata: Metadata = { title: "공정 · 후가공", description: "와이와이코퍼레이션의 진행 과정 — 프리몰드 소싱, 부식 · 코팅 · 인쇄 · 라벨 후가공, 부자재 매칭, 발주 · 입출고 · 납품." };
 

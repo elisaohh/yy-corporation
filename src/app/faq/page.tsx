@@ -22,7 +22,7 @@ export default function FaqPage() {
   const email = company.email ?? "sales@yycorp.co.kr";
   return (
     <>
-      <PageIntro title={faqIntro.title} backdrop="a" gapAfter boldTitle intro={faqIntro.lead} />
+      <PageIntro title={faqIntro.title} backdrop="a" gapAfter intro={faqIntro.lead} />
       <FaqList groups={faqGroups} />
 
       {/* 찾는 답이 없을 때 — 메일로 바로 문의 · 문의 양식 */}
