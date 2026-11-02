@@ -57,9 +57,9 @@ const sections: Section[] = [
     // 사진: 자료/02_후가공/작업사진/{etching,coating,printing,labeling}-01.jpg — 화면 순서: 부식 → 코팅 → 인쇄 → 라벨
     kind: "track",
     items: [
-      { en: "ETCHING", ko: "부식", src: `${BASE}/etching-01.webp`, alt: "부식 처리된 유리 용기가 컨베이어를 따라 설비에서 나오는 모습" },
+      { en: "ETCHING", ko: "부식", src: `${BASE}/etching-01.webp?v=20261102`, alt: "부식 처리된 유리 용기가 컨베이어를 따라 설비에서 나오는 모습" },
       { en: "COATING", ko: "코팅", src: `${BASE}/coating-01.webp`, alt: "스프레이 건으로 유리병에 코팅을 뿌리는 설비" },
-      { en: "PRINTING", ko: "인쇄", src: `${BASE}/printing-01.webp`, alt: "초록색 실크인쇄 설비에 인쇄 판을 맞추는 손" },
+      { en: "PRINTING", ko: "인쇄", src: `${BASE}/printing-01.webp?v=20261102`, alt: "초록색 실크인쇄 설비에 인쇄 판을 맞추는 손" },
       { en: "LABELING", ko: "라벨", src: `${BASE}/labeling-01.webp`, alt: "갈색 유리병에 라벨을 붙이는 설비" },
     ],
   },
@@ -71,10 +71,10 @@ const sections: Section[] = [
     // 스포이드 · 유리관: 현장 사진을 바탕으로 편집(dropper-01 · tube-01). 펌프 · 스프레이: 생성 이미지(pump-01 · spray-01)
     kind: "track",
     items: [
-      { en: "DROPPER", ko: "스포이드", src: `${BASE}/dropper-01.webp`, alt: "회전 설비에서 스포이드를 조립하는 손" },
-      { en: "GLASS TUBE", ko: "유리관", src: `${BASE}/tube-01.webp`, alt: "불꽃으로 유리관을 가열하는 성형 설비" },
+      { en: "DROPPER", ko: "스포이드", src: `${BASE}/dropper-01.webp?v=20261102`, alt: "회전 설비에서 스포이드를 조립하는 손" },
+      { en: "GLASS TUBE", ko: "유리관", src: `${BASE}/tube-01.webp?v=20261102`, alt: "불꽃으로 유리관을 가열하는 성형 설비" },
       { en: "PUMP", ko: "펌프", src: `${BASE}/pump-01.webp`, alt: "작업대에 줄지어 세워 둔 펌프 부자재와 작업자" },
-      { en: "SPRAY", ko: "스프레이", src: `${BASE}/spray-01.webp`, alt: "상자에 가득 담긴 스프레이 부자재와 작업자" },
+      { en: "SPRAY", ko: "스프레이", src: `${BASE}/spray-01.webp?v=20261102`, alt: "상자에 가득 담긴 스프레이 부자재와 작업자" },
     ],
   },
   {

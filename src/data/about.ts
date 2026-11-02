@@ -93,7 +93,7 @@ export const aboutVisuals = {
   storySub: { src: "/assets/about/01b-story-sub.webp", alt: "빛을 받은 투명 유리병의 어깨와 목 부분 클로즈업", width: 1536, height: 1024, position: "72% 50%" },
   business: {
     "01": { src: "/assets/about/02-glass-packaging.webp", alt: "다양한 형태의 투명 유리 화장품 용기", width: 1536, height: 1024, position: "50% 50%" },
-    "02": { src: "/assets/about/03-component-sourcing.webp", alt: "스포이드 · 펌프 · 캡 등 화장품 용기 부자재", width: 1536, height: 1024, position: "50% 50%" },
+    "02": { src: "/assets/about/03-component-sourcing-2.webp", alt: "스포이드 · 펌프 · 캡 등 화장품 용기 부자재", width: 1536, height: 1024, position: "50% 50%" },
     "03": { src: "/assets/about/04-decoration.webp", alt: "같은 형태의 유리병에 투명 · 유광 · 무광 마감을 적용한 비교", width: 1536, height: 1024, position: "50% 55%" },
     "04": { src: "/assets/about/05-global-sourcing.webp", alt: "정돈된 패키징 물류 창고", width: 1536, height: 1024, position: "45% 50%" },
   } as Record<string, AboutVisual>,
