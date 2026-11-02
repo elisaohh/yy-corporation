@@ -85,3 +85,6 @@ export function productInquiryLabel(product: Product): string {
 
 /** 목록 한 번에 보여 줄 개수 — 초과 시 LOAD MORE (기획서 부록 D) */
 export const PRODUCTS_PAGE_SIZE = 12;
+
+/** 최소 주문 수량 — 전 제품 공통(2026-11-02 회사 확인). 제품 상세 규격 표에 표시 */
+export const productMoq = "3,000개";

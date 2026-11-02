@@ -21,6 +21,7 @@ export const mainNav: NavItem[] = [
   },
   { label: "PRODUCT", href: "/products", description: "제품" },
   { label: "PROCESS", href: "/process", description: "후가공 공정" },
+  { label: "FAQ", href: "/faq", description: "자주 묻는 질문" },
   { label: "CONTACT", href: "/contact", description: "문의" },
 ];
 

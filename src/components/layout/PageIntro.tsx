@@ -23,10 +23,12 @@ interface PageIntroProps {
   graphic?: ReactNode;
   /** 바로 아래가 여백 없는 목록일 때 머리 영역 아래 간격 */
   gapAfter?: boolean;
+  /** 큰 영문 타이틀을 굵게(FAQ) — 기본은 가는 글씨 */
+  boldTitle?: boolean;
 }
 
 /** 서브페이지 공통 머리 영역: 큰 영문 타이틀 + 짧은 한글 소개 (기획서 2.0 부록 E·F) */
-export function PageIntro({ title, intro, backdrop = "none", motionImage, motionVideo, motionTone = "dark", graphic, gapAfter = false }: PageIntroProps) {
+export function PageIntro({ title, intro, backdrop = "none", motionImage, motionVideo, motionTone = "dark", graphic, gapAfter = false, boldTitle = false }: PageIntroProps) {
   const lightMotion = backdrop === "d" && motionTone === "light";
   const dark = backdrop === "b" || (backdrop === "d" && !lightMotion);
   const filled = backdrop !== "none";
@@ -72,7 +74,7 @@ export function PageIntro({ title, intro, backdrop = "none", motionImage, motion
       )}
 
       <div className={`container-yy relative ${filled ? "w-full pb-16 pt-[calc(var(--header-h)+64px)] md:pb-0 md:pt-[var(--header-h)]" : "pb-16 pt-[calc(var(--header-h)+72px)] md:pb-24 md:pt-[calc(var(--header-h)+120px)]"}`}>
-        <h1 className="font-en text-[clamp(36px,4.6vw,64px)] leading-[1.05] font-light tracking-[0.06em] uppercase">{title}</h1>
+        <h1 className={`font-en text-[clamp(36px,4.6vw,64px)] leading-[1.05] uppercase ${boldTitle ? "font-extrabold tracking-[-0.03em]" : "font-light tracking-[0.06em]"}`}>{title}</h1>
         <div className={`mt-6 max-w-[48ch] text-[clamp(16px,1.3vw,18px)] leading-[1.75] ${dark ? "text-on-dark-sub" : "text-ash"}`}>{intro}</div>
       </div>
     </section>

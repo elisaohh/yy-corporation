@@ -1,8 +1,8 @@
 import { Pending } from "@/components/ui/Pending";
-import type { Product } from "@/data/products";
+import { productMoq, type Product } from "@/data/products";
 
 /**
- * 규격 표 — 제품 코드 · 용량 · 사이즈 · 재질 (기획서 2.0 §4.3). MOQ는 표시하지 않는다(데이터는 products.ts에 유지).
+ * 규격 표 — 제품 코드 · 용량 · 사이즈 · 재질 · MOQ(전 제품 공통 3,000개, data/products.ts productMoq).
  * 병목 규격은 값이 있을 때만 표시한다. 값이 없으면 "—"로 두고 임의 값을 넣지 않는다.
  */
 export function ProductSpecs({ product }: { product: Product }) {
@@ -13,6 +13,7 @@ export function ProductSpecs({ product }: { product: Product }) {
     { label: "재질", value: product.material },
   ];
   if (product.neck) rows.push({ label: "병목 규격", value: product.neck });
+  rows.push({ label: "MOQ", value: productMoq });
 
   const hasMissing = rows.some((row) => !row.value);
 
