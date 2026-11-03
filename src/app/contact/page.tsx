@@ -8,8 +8,8 @@ import { contactCopy } from "@/data/content";
 
 export const metadata: Metadata = { title: "견적 · 제품 문의", description: "와이와이코퍼레이션 견적 · 제품 문의 — 서울특별시 강서구 강서로 499 대하빌딩 4층 · 02-3665-0497 · sales@yycorp.co.kr" };
 
-/** 네이버 지도 — 확정된 회사 주소로 검색 결과를 연다(버튼) */
-const naverMapUrl = (address: string) => `https://map.naver.com/p/search/${encodeURIComponent(address)}`;
+/** 네이버 지도 — 회사 이름(와이와이코퍼레이션)으로 검색해 네이버 플레이스 업체 정보를 연다(버튼) */
+const naverMapUrl = (query: string) => `https://map.naver.com/p/search/${encodeURIComponent(query)}`;
 /** 화면에 보이는 지도 — 구글 지도 퍼가기(API 키 불필요). 네이버 지도 퍼가기는 API 키가 필요하다 */
 const mapEmbedUrl = (address: string) => `https://maps.google.com/maps?q=${encodeURIComponent(address)}&z=16&hl=ko&output=embed`;
 
@@ -69,7 +69,7 @@ export default function ContactPage() {
                       <span className="mt-2 block text-[15px] leading-snug">{company.address}</span>
                     </span>
                     <a
-                      href={naverMapUrl(company.address)}
+                      href={naverMapUrl(company.legalName ?? company.address)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex min-h-11 shrink-0 items-center gap-1.5 rounded-full bg-charcoal px-4 text-[13px] font-medium text-paper transition-colors hover:bg-point-1225 hover:text-charcoal"
