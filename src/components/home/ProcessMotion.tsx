@@ -150,22 +150,11 @@ export function ProcessMotion() {
           gsap.set(bar, { transformOrigin: "top center" });
           let current = -1;
           let orbitIndex = 0;
-          let orbitTarget = 0; // 회전판 목표 각도(120° 단위, 계속 커지거나 작아질 수 있음)
-          const hint = q("[data-orbit-hint]")[0];
-          const showName = (idx: number) => names.forEach((el, v) => gsap.to(el, { autoAlpha: v === idx ? 1 : 0, duration: 0.3, overwrite: true }));
-          /** 회전판을 step칸 돌린다(+1 다음 · -1 이전) */
-          const turn = (step: number, duration = 0.8) => {
-            orbitTarget += step * 120;
-            orbitIndex = (((Math.round(orbitTarget / 120) % orbit.length) + orbit.length) % orbit.length);
-            gsap.to(orbitState, { angle: orbitTarget, duration, ease: "power2.out", onUpdate: renderOrbit, overwrite: true });
-            showName(orbitIndex);
-          };
+          // 휴대폰: 코팅 세 병을 돌리지 않고 세 이름을 한 번에 — 이름을 각 병 아래 자리로
+          if (!desktop) names.forEach((el, k) => gsap.set(el, { xPercent: Math.sin((k * 120 * Math.PI) / 180) * ORBIT.x }));
           const show = (i: number) => {
-            // 코팅을 다시 누르면 다음 병으로
-            if (i === ORBIT_STEP && current === ORBIT_STEP) {
-              turn(1, 1.0);
-              return;
-            }
+            // 모션 줄이기(데스크톱)에서만 코팅을 다시 누르면 다음 병으로
+            if (desktop && i === ORBIT_STEP && current === ORBIT_STEP) orbitIndex = (orbitIndex + 1) % orbit.length;
             const surface = i === MATCH || i === ORBIT_STEP ? -1 : layerIndex(i, 0);
             const d = current < 0 ? 0 : fade;
             layers.forEach((layer, k) => {
@@ -176,11 +165,10 @@ export function ProcessMotion() {
             // 코팅: 회전판
             gsap.to(orbitWrap, { autoAlpha: i === ORBIT_STEP ? 1 : 0, duration: d, ease: "sine.out", overwrite: true });
             if (i === ORBIT_STEP) {
-              gsap.set(orbitState, { angle: orbitTarget, spread: 1 });
+              gsap.to(orbitState, { angle: orbitIndex * 120, spread: 1, duration: current === ORBIT_STEP ? 1.4 : 0, ease: "power2.inOut", onUpdate: renderOrbit, overwrite: true });
               renderOrbit();
             }
-            names.forEach((el, v) => gsap.to(el, { autoAlpha: i === ORBIT_STEP && v === orbitIndex ? 1 : 0, duration: d, overwrite: true }));
-            if (hint) gsap.to(hint, { autoAlpha: i === ORBIT_STEP && !swiped ? 1 : 0, duration: d, overwrite: true });
+            names.forEach((el, v) => gsap.to(el, { autoAlpha: i === ORBIT_STEP && (!desktop || v === orbitIndex) ? 1 : 0, duration: d, overwrite: true }));
             // MATCH: 투명 병 두 개 + 부자재 체결된 모습
             duoState.split = 1;
             renderDuo();
@@ -190,58 +178,10 @@ export function ProcessMotion() {
             gsap.to(bar, { scaleY: (i + 1) / total, duration: d, ease: "sine.out", overwrite: true });
             current = i;
           };
-          // 휴대폰: 코팅 장면에서 손가락으로 옆으로 밀면 병이 따라 돌고, 놓으면 가까운 병에 멈춘다(세로 스크롤은 그대로)
-          let swiped = false;
-          const stageEl = stage as HTMLElement;
-          let drag: { x0: number; y0: number; a0: number; moved: boolean } | null = null;
-          const perPx = () => 120 / Math.max(160, stageEl.clientWidth * 0.55); // 화면 폭 절반쯤 밀면 한 칸
-          const onDown = (e: PointerEvent) => {
-            if (current !== ORBIT_STEP) return;
-            gsap.killTweensOf(orbitState);
-            drag = { x0: e.clientX, y0: e.clientY, a0: orbitState.angle, moved: false };
-          };
-          const onMove = (e: PointerEvent) => {
-            if (!drag) return;
-            const dx = e.clientX - drag.x0;
-            if (!drag.moved && Math.abs(dx) < 6) return;
-            if (!drag.moved && Math.abs(e.clientY - drag.y0) > Math.abs(dx)) {
-              drag = null; // 세로로 미는 중 — 스크롤에 맡긴다
-              return;
-            }
-            drag.moved = true;
-            orbitState.angle = drag.a0 - dx * perPx();
-            renderOrbit();
-          };
-          const onUp = () => {
-            if (!drag) return;
-            const wasMoved = drag.moved;
-            drag = null;
-            if (!wasMoved) return;
-            // 가장 가까운 병으로 맞춤
-            orbitTarget = Math.round(orbitState.angle / 120) * 120;
-            turn(0, 0.45);
-            if (!swiped && hint) {
-              swiped = true;
-              gsap.to(hint, { autoAlpha: 0, duration: 0.3 });
-            }
-          };
-          if (!desktop) {
-            stageEl.style.touchAction = "pan-y";
-            stageEl.addEventListener("pointerdown", onDown);
-            window.addEventListener("pointermove", onMove);
-            window.addEventListener("pointerup", onUp);
-            window.addEventListener("pointercancel", onUp);
-          }
-
           // 모션 줄이기(데스크톱): 완성된 부자재 장면을 보여 준다
           show(desktop ? MATCH : 0);
           showStep.current = show;
           return () => {
-            stageEl.style.touchAction = "";
-            stageEl.removeEventListener("pointerdown", onDown);
-            window.removeEventListener("pointermove", onMove);
-            window.removeEventListener("pointerup", onUp);
-            window.removeEventListener("pointercancel", onUp);
             showStep.current = null;
           };
         }
@@ -412,17 +352,14 @@ export function ProcessMotion() {
                 <AssetImage key={id} id={id} data-orbit="" decorative className={fill} />
               ))}
             </div>
-            {/* 코팅 이름 — 앞에 선 병 아래. 휴대폰은 처음 한 번 '옆으로 밀어 보기' 안내 */}
-            <p className="pointer-events-none absolute inset-x-0 bottom-[1%] z-[4] h-11 text-center lg:bottom-[2%] lg:h-6" aria-live="polite">
+            {/* 코팅 이름 — PC: 앞에 선 병 아래 하나씩 바뀜 / 휴대폰: 세 병 아래 세 이름을 한 번에(영문 위 · 한글 아래) */}
+            <p className="pointer-events-none absolute inset-x-0 bottom-[1%] z-[4] h-10 text-center lg:bottom-[2%] lg:h-6" aria-live="polite">
               {processScene.orbitNames.map((n) => (
                 <span key={n.en} data-orbit-name="" className="absolute inset-x-0 top-0 whitespace-nowrap" style={{ opacity: 0 }}>
-                  <span className="font-en text-[13px] font-semibold tracking-[0.16em] text-charcoal">{n.en}</span>
-                  <span className="ml-2 text-[13px] text-ash">{n.ko}</span>
+                  <span className="block font-en text-[11px] font-semibold tracking-[0.14em] text-charcoal lg:inline lg:text-[13px] lg:tracking-[0.16em]">{n.en}</span>
+                  <span className="mt-0.5 block text-[11px] text-ash lg:ml-2 lg:mt-0 lg:inline lg:text-[13px]">{n.ko}</span>
                 </span>
               ))}
-              <span data-orbit-hint="" className="absolute inset-x-0 top-6 text-[11px] text-ash lg:hidden" style={{ opacity: 0 }}>
-                ← 옆으로 밀어 다른 코팅 보기 →
-              </span>
             </p>
 
             {/* 부자재 이름 — 병 두 개 아래(병과 같은 거리만큼 좌우로) */}
