@@ -143,6 +143,22 @@
         "/assets/products/YS-SRSSS50-03_mvhlhz6b2.webp",
         "/assets/products/YS-SRSSS50-03_mvhlhz6b3.webp"
       ]
+    },
+    {
+      "code": "SL-SSSS30-01",
+      "category": "glass-bottle",
+      "capacity": "30ml",
+      "dimensions": "35.4 × 83.4",
+      "material": "유리",
+      "neck": "Ø18",
+      "description": "",
+      "home": false,
+      "images": [
+        "/assets/products/SL-SSSS30-01_mw02vx3h0.webp",
+        "/assets/products/SL-SSSS30-01_mw02vx3h1.webp",
+        "/assets/products/SL-SSSS30-01_mw02vx3h2.webp",
+        "/assets/products/SL-SSSS30-01_mw02vx3h3.webp"
+      ]
     }
   ]
 }
