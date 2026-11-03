@@ -302,7 +302,6 @@ export function InquiryForm() {
                 </div>
               );
             })}
-            <p className="mt-0.5 text-[12px] text-ash">선택 항목은 동의하지 않아도 문의할 수 있습니다.</p>
           </div>
         </div>
         {consentError && (

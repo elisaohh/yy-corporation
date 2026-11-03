@@ -75,6 +75,32 @@ function Mark({ text, marks }: { text: string; marks: [string, MarkKind][] }) {
   );
 }
 
+/**
+ * 긴 문장을 의미 단위로 끊어 보여 준다 — PC(md 이상)에서는 끊은 곳마다 줄을 바꾸고, 휴대폰에서는 자연스럽게 이어진다.
+ * breaks: 이 글자들 바로 뒤에서 줄을 바꾼다(문장 자체는 바꾸지 않는다).
+ */
+function Lines({ text, breaks, marks }: { text: string; breaks: string[]; marks: [string, "bold" | "marker"][] }) {
+  const parts: string[] = [];
+  let rest = text;
+  for (const b of breaks) {
+    const i = rest.indexOf(b);
+    if (i < 0) continue;
+    parts.push(rest.slice(0, i + b.length).trimEnd());
+    rest = rest.slice(i + b.length);
+  }
+  parts.push(rest);
+  return (
+    <>
+      {parts.map((part, i) => (
+        <span key={i} className="md:block">
+          <Mark text={part} marks={marks} />
+          {i < parts.length - 1 ? " " : null}
+        </span>
+      ))}
+    </>
+  );
+}
+
 /* ── 01 Story ── */
 function Story() {
   const [first, highlight, last] = story.sentences;
@@ -89,10 +115,11 @@ function Story() {
         </div>
 
         <div>
-          <p data-rise className="max-w-[30ch] text-[clamp(22px,2.2vw,32px)] leading-[1.5] font-medium tracking-[-0.03em] text-charcoal/80">
-            <Mark text={highlight} marks={[["맑고 투명한 감성", "bold"], ["변치 않는 보존성", "bold"]]} />
+          {/* 오른쪽 칸을 끝까지 쓴다(예전엔 글 · 사진 폭을 따로 묶어 오른쪽이 비었다) */}
+          <p data-rise className="text-[clamp(22px,2.2vw,32px)] leading-[1.5] font-medium tracking-[-0.03em] text-charcoal/80">
+            <Lines text={highlight} breaks={["대체할 수 있는 ", "감성, "]} marks={[["맑고 투명한 감성", "bold"], ["변치 않는 보존성", "bold"]]} />
           </p>
-          <div data-fade className="mt-10 grid max-w-[64ch] gap-5 md:mt-12 md:grid-cols-2 md:gap-10">
+          <div data-fade className="mt-10 grid gap-5 md:mt-12 md:grid-cols-2 md:gap-12">
             <p className="text-[16px] leading-[1.85] text-charcoal/75">
               <Mark text={first} marks={[["‘지속 가능한 아름다움’", "bold"]]} />
             </p>
@@ -101,10 +128,10 @@ function Story() {
             </p>
           </div>
 
-          {/* 큰 이미지 + 보조 이미지(구도 · 크기 다르게) — 본문 폭보다 작게 */}
-          <div className="mt-14 grid max-w-[640px] grid-cols-12 items-end gap-4 md:mt-20 md:gap-5">
-            <Visual v={aboutVisuals.storyMain} className="col-span-12 aspect-[3/2] md:col-span-8" sizes="(min-width: 768px) 420px, 100vw" />
-            <Visual v={aboutVisuals.storySub} className="col-span-6 col-start-7 aspect-[4/5] md:col-span-4 md:col-start-auto" sizes="(min-width: 768px) 210px, 50vw" />
+          {/* 큰 이미지 + 보조 이미지(구도 · 크기 다르게) — 본문과 같은 폭으로 칸을 채운다 */}
+          <div className="mt-14 grid grid-cols-12 items-end gap-4 md:mt-20 md:gap-6">
+            <Visual v={aboutVisuals.storyMain} className="col-span-12 aspect-[3/2] md:col-span-8" sizes="(min-width: 1024px) 560px, (min-width: 768px) 66vw, 100vw" />
+            <Visual v={aboutVisuals.storySub} className="col-span-6 col-start-7 aspect-[4/5] md:col-span-4 md:col-start-auto" sizes="(min-width: 1024px) 280px, (min-width: 768px) 33vw, 50vw" />
           </div>
         </div>
       </div>
@@ -148,8 +175,12 @@ function Vision() {
             })}
           </dl>
 
-          <p data-fade className="mt-14 max-w-[36ch] text-[clamp(20px,1.9vw,28px)] leading-[1.6] font-medium tracking-[-0.025em] text-charcoal/80 md:mt-20">
-            <Mark text={vision.quote} marks={[["친환경 유리의 아름다운 감성", "bold"], ["무결점 턴키 프로세스", "bold"]]} />
+          <p data-fade className="mt-14 text-[clamp(20px,1.9vw,28px)] leading-[1.6] font-medium tracking-[-0.025em] text-charcoal/80 md:mt-20">
+            <Lines
+              text={vision.quote}
+              breaks={["아름다운 감성과 ", "뷰티 브랜드가 "]}
+              marks={[["친환경 유리의 아름다운 감성", "bold"], ["무결점 턴키 프로세스", "bold"]]}
+            />
           </p>
         </div>
       </div>
