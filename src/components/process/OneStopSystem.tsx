@@ -57,7 +57,7 @@ const sections: Section[] = [
     // 사진: 자료/02_후가공/작업사진/{etching,coating,printing,labeling}-01.jpg — 화면 순서: 부식 → 코팅 → 인쇄 → 라벨
     kind: "track",
     items: [
-      { en: "ETCHING", ko: "부식", src: `${BASE}/etching-01.webp?v=20261102b`, alt: "부식 설비 컨베이어에 거꾸로 꽂힌 유리병" },
+      { en: "ETCHING", ko: "부식", src: `${BASE}/etching-01.webp?v=20261104`, alt: "부식 설비 컨베이어에 거꾸로 꽂힌 유리병" },
       { en: "COATING", ko: "코팅", src: `${BASE}/coating-01.webp`, alt: "스프레이 건으로 유리병에 코팅을 뿌리는 설비" },
       { en: "PRINTING", ko: "인쇄", src: `${BASE}/printing-01.webp?v=20261102`, alt: "초록색 실크인쇄 설비에 인쇄 판을 맞추는 손" },
       { en: "LABELING", ko: "라벨", src: `${BASE}/labeling-01.webp`, alt: "갈색 유리병에 라벨을 붙이는 설비" },
