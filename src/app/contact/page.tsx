@@ -10,8 +10,8 @@ export const metadata: Metadata = { title: "견적 · 제품 문의", descriptio
 
 /** 네이버 지도 — 회사 이름(와이와이코퍼레이션)으로 검색해 네이버 플레이스 업체 정보를 연다(버튼) */
 const naverMapUrl = (query: string) => `https://map.naver.com/p/search/${encodeURIComponent(query)}`;
-/** 화면에 보이는 지도 — 구글 지도 퍼가기(API 키 불필요). 네이버 지도 퍼가기는 API 키가 필요하다 */
-const mapEmbedUrl = (address: string) => `https://maps.google.com/maps?q=${encodeURIComponent(address)}&z=16&hl=ko&output=embed`;
+/** 화면에 보이는 지도 — 회사 제공 Google Maps 링크의 업체 식별번호(CID)로 정확한 업체 위치 표시 */
+const mapEmbedUrl = "https://maps.google.com/maps?cid=17176374960287887256&hl=ko&z=16&output=embed";
 
 /**
  * CONTACT — 큰 영문 타이틀 + 짧은 한글 소개 → PC: 왼쪽 오시는 길 · 회사 정보 / 오른쪽 문의 폼. 모바일: 폼 먼저 (기획서 2.0 부록 G).
@@ -57,8 +57,8 @@ export default function ContactPage() {
               {company.address && (
                 <figure className="overflow-hidden border border-stone bg-mist">
                   <iframe
-                    title={`지도 — ${company.address}`}
-                    src={mapEmbedUrl(company.address)}
+                    title="구글 지도 — 와이와이코퍼레이션"
+                    src={mapEmbedUrl}
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
                     className="block aspect-[4/3] w-full border-0 grayscale-[35%]"
