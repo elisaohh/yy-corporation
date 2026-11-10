@@ -4,6 +4,7 @@ import { EditProvider } from "@/components/edit/EditContext";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { ImageGuard } from "@/components/layout/ImageGuard";
+import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import { TopButton } from "@/components/layout/TopButton";
 import { siteConfig } from "@/config/site";
 import { company } from "@/data/company";
@@ -84,6 +85,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <Footer />
           <TopButton />
           <ImageGuard />
+          <SmoothScroll />
         </EditProvider>
       </body>
     </html>
