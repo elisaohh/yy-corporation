@@ -104,7 +104,7 @@
       "material": "유리",
       "neck": "Ø18",
       "description": "",
-      "home": true,
+      "home": false,
       "images": [
         "/assets/products/YS-SRRR30-02_01.webp",
         "/assets/products/YS-SRRR30-02_02.webp",
