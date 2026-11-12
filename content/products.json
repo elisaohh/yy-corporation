@@ -208,6 +208,25 @@
         "/assets/products/QY-SRSS30-03_mwcvx0112.webp",
         "/assets/products/QY-SRSS30-03_mwcvx0113.webp"
       ]
+    },
+    {
+      "code": "QY-PRSS30-02",
+      "category": "glass-bottle",
+      "capacity": "30ml",
+      "dimensions": "50.3 x 46.5",
+      "material": "유리",
+      "neck": "",
+      "type": "perfume",
+      "moq": "10000",
+      "imported": true,
+      "description": "",
+      "home": false,
+      "images": [
+        "/assets/products/QY-PRSS30-02_mwcy41750.webp",
+        "/assets/products/QY-PRSS30-02_mwcy41751.webp",
+        "/assets/products/QY-PRSS30-02_mwcy41752.webp",
+        "/assets/products/QY-PRSS30-02_mwcy41753.webp"
+      ]
     }
   ]
 }
