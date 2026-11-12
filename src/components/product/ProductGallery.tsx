@@ -2,10 +2,13 @@
 
 import { useEffect, useRef, useState, type KeyboardEvent, type MouseEvent, type TouchEvent } from "react";
 import { AssetImage, isPlaceholderAsset } from "@/components/media/AssetImage";
+import { ImportBadge } from "./ImportBadge";
 import { Pending } from "@/components/ui/Pending";
 import { getAsset, type AssetId } from "@/data/assets";
 
 interface ProductGalleryProps {
+  /** 수입 제품 — 사진 오른쪽 위에 '수입' 표시 */
+  imported?: boolean;
   images: AssetId[];
   productName: string;
 }
@@ -19,7 +22,7 @@ const SWIPE_THRESHOLD = 40;
  * - 모바일: 한 손가락 스와이프로 넘기기, 두 손가락 핀치는 브라우저 기본 확대를 그대로 허용
  * - 키보드: 이미지 영역에 포커스 후 ← → 로 이동
  */
-export function ProductGallery({ images, productName }: ProductGalleryProps) {
+export function ProductGallery({ images, productName, imported = false }: ProductGalleryProps) {
   const [index, setIndex] = useState(0);
   const [zoomed, setZoomed] = useState(false);
   const [origin, setOrigin] = useState({ x: 50, y: 50 });
@@ -101,6 +104,7 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
       >
+        {imported && <ImportBadge className="right-4 top-4" />}
         <AssetImage
           key={current}
           id={current}

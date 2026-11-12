@@ -3,11 +3,14 @@ import { EditButton } from "@/components/edit/EditContext";
 import { AssetImage } from "@/components/media/AssetImage";
 import { Pending } from "@/components/ui/Pending";
 import type { Product } from "@/data/products";
+import { ImportBadge } from "./ImportBadge";
 
 interface ProductCardProps {
   product: Product;
   /** 상세에서 돌아올 카테고리 탭 (ALL이면 생략) */
   fromCategory?: string;
+  /** 상세에서 돌아올 GLASS 세부 종류 */
+  fromType?: string;
   /** 상세에서 돌아올 용량 필터 */
   fromMl?: string;
   /** LOAD MORE 후 첫 새 카드로 포커스를 옮길 때 사용 */
@@ -19,10 +22,11 @@ interface ProductCardProps {
  * 호버 시 두 번째 사진으로 크로스페이드 + 미세 확대 (기획서 2.0 부록 D).
  * 흰 배경 제품 사진은 multiply 혼합으로 카드 바탕에 자연스럽게 섞는다(원본 파일은 그대로).
  */
-export function ProductCard({ product, fromCategory, fromMl, linkRef }: ProductCardProps) {
+export function ProductCard({ product, fromCategory, fromType, fromMl, linkRef }: ProductCardProps) {
   const [primary, secondary] = product.images;
   const from = new URLSearchParams();
   if (fromCategory) from.set("from", fromCategory);
+  if (fromType) from.set("type", fromType);
   if (fromMl) from.set("ml", fromMl);
   const href = `/products/${product.slug}${from.size ? `?${from}` : ""}`;
 
@@ -46,6 +50,7 @@ export function ProductCard({ product, fromCategory, fromMl, linkRef }: ProductC
               className="absolute inset-[8%] size-[84%] scale-[1.02] object-contain mix-blend-multiply opacity-0 transition-[opacity,transform] duration-500 ease-[var(--ease-yy-out)] group-hover:scale-100 group-hover:opacity-100"
             />
           )}
+          {product.imported && <ImportBadge />}
           {product.isPlaceholder && (
             <span className="absolute left-3 top-3">
               <Pending kind="temporary" label="기능 검증용" />

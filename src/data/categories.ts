@@ -34,3 +34,20 @@ export type ProductCategorySlug = (typeof productCategories)[number]["slug"];
 
 /** 전체 탭 */
 export const allCategory = { slug: "all", label: "ALL", labelKo: "전체" } as const;
+
+/**
+ * GLASS(유리) 안의 세부 종류 — 제품 목록에서 용량 버튼 위에 버튼으로 나온다(2026-11-12).
+ * 항목만 추가하면 버튼 · 관리자 화면 선택지에 함께 나온다. 기존 제품은 따로 고르지 않으면 BOTTLE.
+ */
+export interface GlassType {
+  slug: string;
+  label: string;
+  labelKo: string;
+}
+export const glassTypes: GlassType[] = [
+  { slug: "bottle", label: "BOTTLE", labelKo: "병" },
+  { slug: "perfume", label: "PERFUME", labelKo: "향수병" },
+  { slug: "jar", label: "JAR", labelKo: "단지" },
+];
+export const GLASS_CATEGORY = "glass-bottle";
+export const DEFAULT_GLASS_TYPE = "bottle";

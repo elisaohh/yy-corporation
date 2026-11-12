@@ -2,7 +2,7 @@
 
 import { ArrowLeft, ArrowRight, ImagePlus, Trash2 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { productCategories } from "@/data/categories";
+import { GLASS_CATEGORY, glassTypes, productCategories } from "@/data/categories";
 import { deleteProduct, EditError, loadProducts, saveProduct, type NewImage, type ProductEntry } from "@/lib/edit/content";
 import { toWebp } from "@/lib/edit/image";
 import { fileToBase64 } from "@/lib/edit/repo";
@@ -16,6 +16,9 @@ const EMPTY: ProductEntry = {
   dimensions: "",
   material: "유리",
   neck: "",
+  type: "bottle",
+  moq: "",
+  imported: false,
   description: "",
   home: false,
   images: [],
@@ -106,7 +109,7 @@ export function ProductEditor({
     if (!form || codeError || imageError) return;
     setBusy("save");
     setError("");
-    const clean = { ...form, code: form.code.trim(), capacity: form.capacity.trim(), dimensions: form.dimensions.trim(), material: form.material.trim(), neck: form.neck.trim(), description: form.description.trim() };
+    const clean = { ...form, code: form.code.trim(), capacity: form.capacity.trim(), dimensions: form.dimensions.trim(), material: form.material.trim(), neck: form.neck.trim(), moq: form.moq.trim(), description: form.description.trim() };
     try {
       const sha = await saveProduct(session, clean, code, uploads);
       onSaved(sha, code ? `${clean.code} 저장했습니다.` : `${clean.code} 추가했습니다.`, `/products/${clean.code.toLowerCase()}`);
@@ -180,6 +183,20 @@ export function ProductEditor({
             )}
           </Field>
 
+          {form.category === GLASS_CATEGORY && (
+            <Field label="유리 세부 종류" hint="제품 목록에서 용량 버튼 위 버튼으로 나뉩니다.">
+              {(p) => (
+                <select id={p.id} aria-describedby={p.describedBy} className={p.className} value={form.type} onChange={(e) => set("type", e.target.value)}>
+                  {glassTypes.map((t) => (
+                    <option key={t.slug} value={t.slug}>
+                      {t.label} ({t.labelKo})
+                    </option>
+                  ))}
+                </select>
+              )}
+            </Field>
+          )}
+
           <div className="grid gap-6 sm:grid-cols-2">
             <Field label="용량" hint="예: 30ml">
               {(p) => <input id={p.id} aria-describedby={p.describedBy} className={p.className} value={form.capacity} onChange={(e) => set("capacity", e.target.value)} />}
@@ -193,7 +210,12 @@ export function ProductEditor({
             <Field label="병목 규격" hint="예: Ø18 — 비우면 나오지 않습니다.">
               {(p) => <input id={p.id} aria-describedby={p.describedBy} className={p.className} value={form.neck} onChange={(e) => set("neck", e.target.value)} />}
             </Field>
+            <Field label="MOQ (최소 주문 수량)" hint="예: 5,000개 — 비우면 3,000개로 나옵니다.">
+              {(p) => <input id={p.id} aria-describedby={p.describedBy} className={p.className} value={form.moq} onChange={(e) => set("moq", e.target.value)} placeholder="3,000개" />}
+            </Field>
           </div>
+
+          <Toggle checked={form.imported} onChange={(v) => set("imported", v)} label="수입 제품" hint="중국 등 수입 제품 — 사진 오른쪽 위에 '수입' 표시가 붙습니다." />
 
           <Field label="설명" hint="제품 상세의 제목 아래 문단. 비워도 됩니다.">
             {(p) => <textarea id={p.id} aria-describedby={p.describedBy} rows={3} className={`${p.className} resize-y leading-[1.7]`} value={form.description} onChange={(e) => set("description", e.target.value)} />}

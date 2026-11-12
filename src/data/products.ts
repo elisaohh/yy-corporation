@@ -1,4 +1,5 @@
 import data from "../../content/products.json";
+import { DEFAULT_GLASS_TYPE, GLASS_CATEGORY } from "./categories";
 
 /**
  * 제품 데이터 — content/products.json(관리자 로그인 후 사이트에서 고친다)을 읽어 화면용으로 바꾼다.
@@ -21,6 +22,12 @@ export interface Product {
   material: string | null;
   /** 병목(Neck) 규격 — 값이 있을 때만 표시 */
   neck?: string | null;
+  /** GLASS 안의 세부 종류(data/categories.ts glassTypes) — GLASS가 아니면 null */
+  type: string | null;
+  /** 최소 주문 수량 — 비우면 공통값(productMoq) */
+  moq: string;
+  /** 수입(중국) 제품 — 사진 오른쪽 위에 '수입' 표시 */
+  imported: boolean;
   description?: string | null;
   /** 홈 PRODUCT에 보일지 */
   home: boolean;
@@ -35,10 +42,16 @@ interface ProductEntry {
   dimensions?: string;
   material?: string;
   neck?: string;
+  type?: string;
+  moq?: string;
+  imported?: boolean;
   description?: string;
   home?: boolean;
   images?: string[];
 }
+
+/** 최소 주문 수량 기본값 — 제품마다 따로 적지 않으면 이 값(2026-11-02 회사 확인) */
+export const productMoq = "3,000개";
 
 const text = (value?: string) => (value && value.trim() ? value.trim() : null);
 
@@ -49,13 +62,16 @@ export const products: Product[] = (data.items as ProductEntry[]).map((item) => 
     id: slug,
     slug,
     name: code,
-    category: item.category || "glass-bottle",
+    category: item.category || GLASS_CATEGORY,
     images: (item.images ?? []).filter(Boolean),
     code,
     capacity: text(item.capacity),
     dimensions: text(item.dimensions),
     material: text(item.material),
     neck: text(item.neck),
+    type: (item.category || GLASS_CATEGORY) === GLASS_CATEGORY ? item.type || DEFAULT_GLASS_TYPE : null,
+    moq: text(item.moq) ?? productMoq,
+    imported: item.imported ?? false,
     description: text(item.description),
     home: item.home ?? false,
     isPlaceholder: false,
@@ -85,6 +101,3 @@ export function productInquiryLabel(product: Product): string {
 
 /** 목록 한 번에 보여 줄 개수 — 초과 시 LOAD MORE (기획서 부록 D) */
 export const PRODUCTS_PAGE_SIZE = 12;
-
-/** 최소 주문 수량 — 전 제품 공통(2026-11-02 회사 확인). 제품 상세 규격 표에 표시 */
-export const productMoq = "3,000개";

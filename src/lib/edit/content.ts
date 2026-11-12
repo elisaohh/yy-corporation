@@ -18,6 +18,12 @@ export interface ProductEntry {
   dimensions: string;
   material: string;
   neck: string;
+  /** GLASS 세부 종류(bottle · perfume · jar …) */
+  type: string;
+  /** 최소 주문 수량 — 비우면 화면에 3,000개 */
+  moq: string;
+  /** 수입(중국) 제품 — 사진에 '수입' 표시 */
+  imported: boolean;
   description: string;
   home: boolean;
   /** 화면 경로 — /assets/products/파일 */
@@ -50,6 +56,9 @@ export async function loadProducts(session: EditSession): Promise<ProductEntry[]
     dimensions: item.dimensions ?? "",
     material: item.material ?? "",
     neck: item.neck ?? "",
+    type: item.type || "bottle",
+    moq: item.moq ?? "",
+    imported: Boolean(item.imported),
     description: item.description ?? "",
     home: Boolean(item.home),
     images: (item.images ?? []).filter(Boolean),

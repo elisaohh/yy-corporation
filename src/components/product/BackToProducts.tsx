@@ -2,19 +2,21 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { productCategories } from "@/data/categories";
+import { glassTypes, productCategories } from "@/data/categories";
 import { hasProducts } from "@/data/products";
 
 /**
- * 뒤로가기 화살표 — 떠나온 종류 탭 · 용량 필터의 제품 목록으로 돌아간다.
+ * 뒤로가기 화살표 — 떠나온 종류 탭 · 세부 종류 · 용량 필터의 제품 목록으로 돌아간다.
  * (글자 없이 화살표만. 화면 낭독기는 aria-label로 안내)
  */
 export function BackToProducts() {
   const params = useSearchParams();
   const from = params.get("from");
   const ml = params.get("ml");
+  const type = params.get("type");
   const query = new URLSearchParams();
   if (from && productCategories.some((category) => category.slug === from) && hasProducts(from)) query.set("category", from);
+  if (type && query.has("category") && glassTypes.some((t) => t.slug === type)) query.set("type", type);
   if (ml && /^\d+(\.\d+)?$/.test(ml)) query.set("ml", ml);
   return <BackArrow href={`/products${query.size ? `?${query}` : ""}`} />;
 }

@@ -44,7 +44,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
 
       <div className="mt-6 grid gap-10 md:mt-8 lg:grid-cols-12 lg:gap-8">
         <div className="lg:col-span-6 lg:col-start-1">
-          <ProductGallery images={product.images} productName={product.name} />
+          <ProductGallery images={product.images} productName={product.name} imported={product.imported} />
         </div>
 
         <div className="lg:sticky lg:top-[calc(var(--header-h)+32px)] lg:col-span-5 lg:col-start-8 lg:self-start">

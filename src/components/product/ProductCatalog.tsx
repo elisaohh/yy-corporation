@@ -4,7 +4,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
 import { ProductCard } from "@/components/product/ProductCard";
 import { siteConfig } from "@/config/site";
-import { allCategory, productCategories } from "@/data/categories";
+import { allCategory, GLASS_CATEGORY, glassTypes, productCategories } from "@/data/categories";
 import { PRODUCTS_PAGE_SIZE, hasProducts, products, type Product } from "@/data/products";
 
 /** 제품이 한 개라도 있는 카테고리만 탭으로 보인다 — 제품이 추가되면 자동으로 나타난다 */
@@ -20,30 +20,35 @@ const STAGGER_MAX = 8;
 /** 용량 숫자(ml) — "30ml" → "30". 용량이 없거나 ml가 아니면 null */
 const mlOf = (product: Product) => product.capacity?.match(/(\d+(?:\.\d+)?)\s*ml/i)?.[1] ?? null;
 
-function inCategory(slug: string) {
-  return slug === allCategory.slug ? products : products.filter((p) => p.category === slug);
+/** GLASS 세부 종류 값이 맞는지 */
+const validTypes = new Set(glassTypes.map((t) => t.slug));
+
+/** 종류(탭) + GLASS 세부 종류(type, GLASS일 때만) */
+function inCategory(slug: string, type: string | null = null) {
+  const list = slug === allCategory.slug ? products : products.filter((p) => p.category === slug);
+  return slug === GLASS_CATEGORY && type ? list.filter((p) => p.type === type) : list;
 }
 
 /** 그 종류 제품에 있는 용량만 — 작은 것부터 */
-function mlChoicesOf(slug: string) {
-  return [...new Set(inCategory(slug).map(mlOf).filter((ml): ml is string => ml !== null))].sort((a, b) => Number(a) - Number(b));
+function mlChoicesOf(slug: string, type: string | null = null) {
+  return [...new Set(inCategory(slug, type).map(mlOf).filter((ml): ml is string => ml !== null))].sort((a, b) => Number(a) - Number(b));
 }
 
-/** 목록 상태 = 종류 + 용량(없으면 전체) */
-const keyOf = (category: string, ml: string | null) => `${category}|${ml ?? ""}`;
+/** 목록 상태 = 종류 + 세부 종류 + 용량(없으면 전체) */
+const keyOf = (category: string, type: string | null, ml: string | null) => `${category}|${type ?? ""}|${ml ?? ""}`;
 const parseKey = (key: string) => {
-  const [category, ml] = key.split("|");
-  return { category, ml: ml || null };
+  const [category, type, ml] = key.split("|");
+  return { category, type: type || null, ml: ml || null };
 };
 
 function filterBy(key: string) {
-  const { category, ml } = parseKey(key);
-  return inCategory(category).filter((p) => !ml || mlOf(p) === ml);
+  const { category, type, ml } = parseKey(key);
+  return inCategory(category, type).filter((p) => !ml || mlOf(p) === ml);
 }
 
 /**
- * PRODUCT 목록 — 종류(카테고리) 탭 + 용량(ml) 필터 + 그리드 + LOAD MORE + 빈 카테고리 안내.
- * 선택은 URL(?category= · ?ml=)에 저장해 상세에서 돌아와도 유지된다. 용량 버튼은 그 종류 제품에 있는 용량만 나온다.
+ * PRODUCT 목록 — 종류(카테고리) 탭 + (GLASS일 때) 세부 종류 버튼 + 용량(ml) 필터 + 그리드 + LOAD MORE + 빈 카테고리 안내.
+ * 선택은 URL(?category= · ?type= · ?ml=)에 저장해 상세에서 돌아와도 유지된다. 용량 버튼은 고른 종류 제품에 있는 용량만 나온다.
  *
  * 탭 전환: 탭 표시는 즉시 바뀌고, 목록은 0.2초 동안 흐려진 뒤
  * 새 카드가 살짝 아래에서 떠오르며 순서대로 나타난다. 전환 중에는 높이를 고정해 화면이 출렁이지 않게 한다.
@@ -54,10 +59,13 @@ export function ProductCatalog() {
   const params = useSearchParams();
   const requested = params.get("category") ?? allCategory.slug;
   const activeCategory = validSlugs.has(requested) ? requested : allCategory.slug;
-  const mlChoices = mlChoicesOf(activeCategory);
+  const showTypes = activeCategory === GLASS_CATEGORY;
+  const requestedType = params.get("type");
+  const activeType = showTypes && requestedType && validTypes.has(requestedType) ? requestedType : null;
+  const mlChoices = mlChoicesOf(activeCategory, activeType);
   const requestedMl = params.get("ml");
   const activeMl = requestedMl && mlChoices.includes(requestedMl) ? requestedMl : null;
-  const active = keyOf(activeCategory, activeMl);
+  const active = keyOf(activeCategory, activeType, activeMl);
 
   const [displayed, setDisplayed] = useState(active);
   const [fadingOut, setFadingOut] = useState(false);
@@ -105,7 +113,7 @@ export function ProductCatalog() {
     const row = mlRowRef.current;
     const on = row?.querySelector<HTMLElement>('[aria-pressed="true"]');
     if (row && on) row.scrollLeft = Math.max(0, on.offsetLeft - row.clientWidth + on.offsetWidth + 16);
-  }, [activeMl, activeCategory]);
+  }, [activeMl, activeCategory, activeType]);
 
   // LOAD MORE 후 새로 나타난 첫 카드로 포커스 이동(키보드 사용자)
   useEffect(() => {
@@ -116,9 +124,10 @@ export function ProductCatalog() {
   }, [visibleCount]);
 
   const go = useCallback(
-    (category: string, ml: string | null) => {
+    (category: string, type: string | null, ml: string | null) => {
       const query = new URLSearchParams();
       if (category !== allCategory.slug) query.set("category", category);
+      if (type && category === GLASS_CATEGORY) query.set("type", type);
       if (ml) query.set("ml", ml);
       const qs = query.toString();
       router.replace(`${pathname}${qs ? `?${qs}` : ""}`, { scroll: false });
@@ -126,7 +135,11 @@ export function ProductCatalog() {
     [pathname, router],
   );
   /** 종류를 바꾸면 고른 용량은 그 종류에도 있을 때만 유지 */
-  const selectTab = (slug: string) => go(slug, activeMl && mlChoicesOf(slug).includes(activeMl) ? activeMl : null);
+  const selectTab = (slug: string) => go(slug, null, activeMl && mlChoicesOf(slug).includes(activeMl) ? activeMl : null);
+  /** 세부 종류를 바꾸면 고른 용량은 그 세부 종류에도 있을 때만 유지 */
+  const selectType = (type: string | null) =>
+    go(activeCategory, type, activeMl && mlChoicesOf(activeCategory, type).includes(activeMl) ? activeMl : null);
+  const activeTypeLabel = glassTypes.find((t) => t.slug === activeType);
 
   const loadMore = () => {
     focusIndex.current = visibleCount;
@@ -174,16 +187,45 @@ export function ProductCatalog() {
         </div>
         <p className="pb-3 text-[13px] text-ash" aria-live="polite">
           {activeLabel?.labelKo}
+          {activeTypeLabel ? ` · ${activeTypeLabel.labelKo}` : ""}
           {activeMl ? ` · ${activeMl}ml` : ""} 제품 {activeCount}개
         </p>
       </div>
+
+      {/* GLASS 세부 종류 — 용량 버튼 위 */}
+      {showTypes && (
+        <div
+          role="group"
+          aria-label="유리 세부 종류"
+          className="-mx-[var(--gutter)] mt-5 flex items-center gap-1.5 overflow-x-auto px-[var(--gutter)] [scrollbar-width:none] md:mx-0 md:gap-2 md:px-0"
+        >
+          <span className="mr-1.5 shrink-0 text-[13px] text-ash md:mr-2">종류</span>
+          {[null, ...glassTypes.map((t) => t.slug)].map((type) => {
+            const on = type === activeType;
+            const label = type ? glassTypes.find((t) => t.slug === type)?.label : "ALL";
+            return (
+              <button
+                key={type ?? "all"}
+                type="button"
+                aria-pressed={on}
+                onClick={() => selectType(type)}
+                className={`inline-flex h-9 shrink-0 items-center rounded-full border px-3 font-en text-[13px] tracking-[0.04em] transition-colors duration-200 md:px-4 ${
+                  on ? "border-charcoal bg-charcoal text-paper" : "border-stone text-ash hover:border-charcoal hover:text-charcoal"
+                }`}
+              >
+                {label}
+              </button>
+            );
+          })}
+        </div>
+      )}
 
       {mlChoices.length > 1 && (
         <div
           role="group"
           aria-label="용량"
           ref={mlRowRef}
-          className="-mx-[var(--gutter)] mt-5 flex items-center gap-1.5 overflow-x-auto px-[var(--gutter)] [scrollbar-width:none] md:mx-0 md:gap-2 md:px-0"
+          className={`-mx-[var(--gutter)] flex items-center gap-1.5 overflow-x-auto px-[var(--gutter)] [scrollbar-width:none] md:mx-0 md:gap-2 md:px-0 ${showTypes ? "mt-3" : "mt-5"}`}
         >
           <span className="mr-1.5 shrink-0 text-[13px] text-ash md:mr-2">용량</span>
           {[null, ...mlChoices].map((ml) => {
@@ -193,7 +235,7 @@ export function ProductCatalog() {
                 key={ml ?? "all"}
                 type="button"
                 aria-pressed={on}
-                onClick={() => go(activeCategory, ml)}
+                onClick={() => go(activeCategory, activeType, ml)}
                 className={`inline-flex h-9 shrink-0 items-center rounded-full border px-3 font-en md:px-4 text-[13px] tabular-nums transition-colors duration-200 ${
                   on ? "border-charcoal bg-charcoal text-paper" : "border-stone text-ash hover:border-charcoal hover:text-charcoal"
                 }`}
@@ -215,7 +257,9 @@ export function ProductCatalog() {
             key={`empty-${swapKey}`}
             className={`grid justify-items-start gap-3 border border-dashed border-stone px-6 py-12 md:px-10 ${animateFrom !== null ? "card-in" : ""}`}
           >
-            <p className="text-[18px] font-medium tracking-[-0.015em]">이 카테고리에 등록된 제품이 아직 없습니다.</p>
+            <p className="text-[18px] font-medium tracking-[-0.015em]">
+              {shownFrom.type ? "이 종류에 등록된 제품이 아직 없습니다." : "이 카테고리에 등록된 제품이 아직 없습니다."}
+            </p>
             <p className="text-ash">다른 카테고리를 보거나 전체 제품에서 찾아보세요.</p>
             <button type="button" onClick={() => selectTab(allCategory.slug)} className="link-en mt-2">
               VIEW ALL PRODUCTS →
@@ -234,6 +278,7 @@ export function ProductCatalog() {
                     <ProductCard
                       product={product}
                       fromCategory={shownFrom.category === allCategory.slug ? undefined : shownFrom.category}
+                      fromType={shownFrom.type ?? undefined}
                       fromMl={shownFrom.ml ?? undefined}
                       linkRef={(el) => {
                         cardRefs.current[index] = el;
