@@ -115,25 +115,6 @@
       ]
     },
     {
-      "code": "QY-PRSS30-02",
-      "category": "glass-bottle",
-      "capacity": "30ml",
-      "dimensions": "50.3 x 46.5",
-      "material": "유리",
-      "neck": "",
-      "type": "perfume",
-      "moq": "10000",
-      "imported": true,
-      "description": "",
-      "home": true,
-      "images": [
-        "/assets/products/QY-PRSS30-02_mwcy41750.webp",
-        "/assets/products/QY-PRSS30-02_mwcy41751.webp",
-        "/assets/products/QY-PRSS30-02_mwcy41752.webp",
-        "/assets/products/QY-PRSS30-02_mwcy41753.webp"
-      ]
-    },
-    {
       "code": "SL-SSSS30-01",
       "category": "glass-bottle",
       "capacity": "30ml",
@@ -226,6 +207,25 @@
         "/assets/products/YS-SRSSS50-03_mvhlhz6b1.webp",
         "/assets/products/YS-SRSSS50-03_mvhlhz6b2.webp",
         "/assets/products/YS-SRSSS50-03_mvhlhz6b3.webp"
+      ]
+    },
+    {
+      "code": "QY-PRSS30-02",
+      "category": "glass-bottle",
+      "capacity": "30ml",
+      "dimensions": "50.3 x 46.5",
+      "material": "유리",
+      "neck": "",
+      "type": "perfume",
+      "moq": "10000",
+      "imported": true,
+      "description": "",
+      "home": true,
+      "images": [
+        "/assets/products/QY-PRSS30-02_mwcy41750.webp",
+        "/assets/products/QY-PRSS30-02_mwcy41751.webp",
+        "/assets/products/QY-PRSS30-02_mwcy41752.webp",
+        "/assets/products/QY-PRSS30-02_mwcy41753.webp"
       ]
     }
   ]
