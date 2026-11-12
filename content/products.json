@@ -159,6 +159,22 @@
         "/assets/products/YS-SRSSS50-03_mvhlhz6b2.webp",
         "/assets/products/YS-SRSSS50-03_mvhlhz6b3.webp"
       ]
+    },
+    {
+      "code": "QY-SRSS30-03",
+      "category": "glass-bottle",
+      "capacity": "30ml",
+      "dimensions": "45.0 x 65.7",
+      "material": "유리",
+      "neck": "Ø18",
+      "description": "",
+      "home": true,
+      "images": [
+        "/assets/products/QY-SRSS30-03_mwcvvfx00.webp",
+        "/assets/products/QY-SRSS30-03_mwcvvfx01.webp",
+        "/assets/products/QY-SRSS30-03_mwcvvfx02.webp",
+        "/assets/products/QY-SRSS30-03_mwcvvfx03.webp"
+      ]
     }
   ]
 }
