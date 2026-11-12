@@ -7,6 +7,9 @@
       "dimensions": "31.5 × 64.0",
       "material": "유리",
       "neck": "Ø18",
+      "type": "bottle",
+      "moq": "",
+      "imported": false,
       "description": "",
       "home": false,
       "images": [
@@ -23,6 +26,9 @@
       "dimensions": "33.7 × 68.7",
       "material": "유리",
       "neck": "Ø18",
+      "type": "bottle",
+      "moq": "",
+      "imported": false,
       "description": "",
       "home": false,
       "images": [
@@ -39,6 +45,9 @@
       "dimensions": "38.0 × 74.4",
       "material": "유리",
       "neck": "Ø18",
+      "type": "bottle",
+      "moq": "",
+      "imported": false,
       "description": "",
       "home": true,
       "images": [
@@ -55,6 +64,9 @@
       "dimensions": "39.5 × 73.0",
       "material": "유리",
       "neck": "Ø18",
+      "type": "bottle",
+      "moq": "",
+      "imported": false,
       "description": "",
       "home": true,
       "images": [
@@ -71,6 +83,9 @@
       "dimensions": "44.3 × 86.6",
       "material": "유리",
       "neck": "Ø20",
+      "type": "bottle",
+      "moq": "",
+      "imported": false,
       "description": "",
       "home": true,
       "images": [
@@ -87,6 +102,9 @@
       "dimensions": "35.4 × 83.4",
       "material": "유리",
       "neck": "Ø18",
+      "type": "bottle",
+      "moq": "",
+      "imported": false,
       "description": "",
       "home": false,
       "images": [
@@ -103,6 +121,9 @@
       "dimensions": "38.0 × 71.3",
       "material": "유리",
       "neck": "Ø18",
+      "type": "bottle",
+      "moq": "",
+      "imported": false,
       "description": "",
       "home": false,
       "images": [
@@ -119,6 +140,9 @@
       "dimensions": "38.0 × 99.2",
       "material": "유리",
       "neck": "Ø18",
+      "type": "bottle",
+      "moq": "",
+      "imported": false,
       "description": "",
       "home": false,
       "images": [
@@ -135,6 +159,9 @@
       "dimensions": "47.0 x 58.0",
       "material": "유리",
       "neck": "Ø18",
+      "type": "bottle",
+      "moq": "",
+      "imported": false,
       "description": "",
       "home": true,
       "images": [
@@ -151,6 +178,9 @@
       "dimensions": "50.0 x 72.3",
       "material": "유리",
       "neck": "Ø18",
+      "type": "bottle",
+      "moq": "",
+      "imported": false,
       "description": "",
       "home": false,
       "images": [
@@ -167,6 +197,9 @@
       "dimensions": "45.0 x 65.7",
       "material": "유리",
       "neck": "Ø18",
+      "type": "bottle",
+      "moq": "10000",
+      "imported": true,
       "description": "",
       "home": true,
       "images": [
