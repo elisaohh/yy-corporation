@@ -192,58 +192,66 @@ export function ProductCatalog() {
         </p>
       </div>
 
-      {/* GLASS 세부 종류 — 용량 버튼 위 */}
-      {showTypes && (
-        <div
-          role="group"
-          aria-label="유리 세부 종류"
-          className="-mx-[var(--gutter)] mt-5 flex items-center gap-1.5 overflow-x-auto px-[var(--gutter)] [scrollbar-width:none] md:mx-0 md:gap-2 md:px-0"
-        >
-          <span className="mr-1.5 shrink-0 text-[13px] text-ash md:mr-2">종류</span>
-          {[null, ...glassTypes.map((t) => t.slug)].map((type) => {
-            const on = type === activeType;
-            const label = type ? glassTypes.find((t) => t.slug === type)?.label : "ALL";
-            return (
-              <button
-                key={type ?? "all"}
-                type="button"
-                aria-pressed={on}
-                onClick={() => selectType(type)}
-                className={`inline-flex h-9 shrink-0 items-center rounded-full border px-3 font-en text-[13px] tracking-[0.04em] transition-colors duration-200 md:px-4 ${
-                  on ? "border-charcoal bg-charcoal text-paper" : "border-stone text-ash hover:border-charcoal hover:text-charcoal"
-                }`}
-              >
-                {label}
-              </button>
-            );
-          })}
-        </div>
-      )}
+      {/* 필터 한 줄(A안) — 왼쪽: GLASS 세부 종류(회색 바탕 묶음 버튼) · 세로선 · 오른쪽: 용량(작은 글자 버튼). 휴대폰은 두 줄로 */}
+      {(showTypes || mlChoices.length > 1) && (
+        <div className="flex flex-col gap-3 border-b border-stone py-4 md:flex-row md:items-center md:gap-0 md:py-5">
+          {showTypes && (
+            <div
+              role="group"
+              aria-label="유리 세부 종류"
+              className="-mx-[var(--gutter)] overflow-x-auto px-[var(--gutter)] [scrollbar-width:none] md:mx-0 md:px-0"
+            >
+              <div className="inline-flex shrink-0 rounded-full bg-card p-1">
+                {[null, ...glassTypes.map((t) => t.slug)].map((type) => {
+                  const on = type === activeType;
+                  const label = type ? glassTypes.find((t) => t.slug === type)?.label : "ALL";
+                  return (
+                    <button
+                      key={type ?? "all"}
+                      type="button"
+                      aria-pressed={on}
+                      onClick={() => selectType(type)}
+                      className={`h-8 shrink-0 rounded-full px-4 font-en text-[12px] font-semibold tracking-[0.08em] transition-[background-color,color,box-shadow] duration-200 md:h-9 md:px-5 ${
+                        on ? "bg-paper text-charcoal shadow-[0_1px_3px_rgba(0,0,0,0.08)]" : "text-ash hover:text-charcoal"
+                      }`}
+                    >
+                      {label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
 
-      {mlChoices.length > 1 && (
-        <div
-          role="group"
-          aria-label="용량"
-          ref={mlRowRef}
-          className={`-mx-[var(--gutter)] flex items-center gap-1.5 overflow-x-auto px-[var(--gutter)] [scrollbar-width:none] md:mx-0 md:gap-2 md:px-0 ${showTypes ? "mt-3" : "mt-5"}`}
-        >
-          <span className="mr-1.5 shrink-0 text-[13px] text-ash md:mr-2">용량</span>
-          {[null, ...mlChoices].map((ml) => {
-            const on = ml === activeMl;
-            return (
-              <button
-                key={ml ?? "all"}
-                type="button"
-                aria-pressed={on}
-                onClick={() => go(activeCategory, activeType, ml)}
-                className={`inline-flex h-9 shrink-0 items-center rounded-full border px-3 font-en md:px-4 text-[13px] tabular-nums transition-colors duration-200 ${
-                  on ? "border-charcoal bg-charcoal text-paper" : "border-stone text-ash hover:border-charcoal hover:text-charcoal"
-                }`}
-              >
-                {ml ? `${ml}ml` : "ALL"}
-              </button>
-            );
-          })}
+          {showTypes && mlChoices.length > 0 && <span aria-hidden="true" className="mx-5 hidden h-6 w-px bg-stone md:block" />}
+
+          {/* 용량 — GLASS는 세부 종류마다 용량이 하나뿐이어도 보인다(어떤 용량이 있는지 알 수 있게) */}
+          {(mlChoices.length > 1 || (showTypes && mlChoices.length > 0)) && (
+            <div
+              role="group"
+              aria-label="용량"
+              ref={mlRowRef}
+              className="-mx-[var(--gutter)] flex items-center gap-1 overflow-x-auto px-[var(--gutter)] [scrollbar-width:none] md:mx-0 md:px-0"
+            >
+              {[null, ...mlChoices].map((ml) => {
+                const on = ml === activeMl;
+                return (
+                  <button
+                    key={ml ?? "all"}
+                    type="button"
+                    aria-pressed={on}
+                    aria-label={ml ? `${ml}ml` : "모든 용량"}
+                    onClick={() => go(activeCategory, activeType, ml)}
+                    className={`h-8 shrink-0 rounded-md px-3 font-en text-[13px] tabular-nums transition-colors duration-200 ${
+                      on ? "bg-card font-semibold text-charcoal" : "text-ash hover:text-charcoal"
+                    }`}
+                  >
+                    {ml ? `${ml}ml` : "ALL"}
+                  </button>
+                );
+              })}
+            </div>
+          )}
         </div>
       )}
 
