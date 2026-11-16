@@ -227,6 +227,24 @@
         "/assets/products/QY-PRSS30-02_mwcy41752.webp",
         "/assets/products/QY-PRSS30-02_mwcy41753.webp"
       ]
+    },
+    {
+      "code": "QY-SSSS30-01",
+      "category": "glass-bottle",
+      "capacity": "30ml",
+      "dimensions": "46.0 x 77.0",
+      "material": "유리",
+      "neck": "Ø18",
+      "type": "bottle",
+      "moq": "10000",
+      "imported": true,
+      "description": "",
+      "home": false,
+      "images": [
+        "/assets/products/QY-SSSS30-01_mwikna340.webp",
+        "/assets/products/QY-SSSS30-01_mwikna341.webp",
+        "/assets/products/QY-SSSS30-01_mwikna342.webp"
+      ]
     }
   ]
 }
