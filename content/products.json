@@ -245,6 +245,24 @@
         "/assets/products/QY-SSSS30-01_mwikna341.webp",
         "/assets/products/QY-SSSS30-01_mwikna342.webp"
       ]
+    },
+    {
+      "code": "SL-SRSS50-04",
+      "category": "glass-bottle",
+      "capacity": "50ml",
+      "dimensions": "40.0 x 88.0",
+      "material": "유리",
+      "neck": "Ø18",
+      "type": "bottle",
+      "moq": "3000",
+      "imported": false,
+      "description": "",
+      "home": false,
+      "images": [
+        "/assets/products/SL-SRSS50-04_mwini0rk0.webp",
+        "/assets/products/SL-SRSS50-04_mwini0rk1.webp",
+        "/assets/products/SL-SRSS50-04_mwini0rk2.webp"
+      ]
     }
   ]
 }
