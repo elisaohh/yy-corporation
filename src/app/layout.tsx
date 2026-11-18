@@ -27,7 +27,8 @@ export const metadata: Metadata = {
     type: "website",
     locale: "ko_KR",
     url: "./",
-    siteName: `${siteConfig.nameKo} ${siteConfig.name}`,
+    // 구글 검색 결과의 '사이트 이름'과 같은 값으로 맞춘다(구조화 데이터 WebSite.name과 일치)
+    siteName: siteConfig.nameKo,
   },
 };
 
