@@ -281,6 +281,24 @@
         "/assets/products/SL-SRRR30-01_mwok23qm1.webp",
         "/assets/products/SL-SRRR30-01_mwok23qm2.webp"
       ]
+    },
+    {
+      "code": "SL-SRRR50-01",
+      "category": "glass-bottle",
+      "capacity": "50ml",
+      "dimensions": "40.3 x 91.2",
+      "material": "유리",
+      "neck": "Ø18",
+      "type": "bottle",
+      "moq": "5000",
+      "imported": false,
+      "description": "",
+      "home": false,
+      "images": [
+        "/assets/products/SL-SRRR50-01_mwok3uyo0.webp",
+        "/assets/products/SL-SRRR50-01_mwok3uyo1.webp",
+        "/assets/products/SL-SRRR50-01_mwok3uyo2.webp"
+      ]
     }
   ]
 }
