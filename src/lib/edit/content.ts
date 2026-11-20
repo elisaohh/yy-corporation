@@ -18,6 +18,8 @@ export interface ProductEntry {
   dimensions: string;
   material: string;
   neck: string;
+  /** 같은 모양 묶음 — 같은 값을 적은 제품끼리 '용량만 다른 같은 모양'으로 이어진다(화면에는 나오지 않음) */
+  family: string;
   /** GLASS 세부 종류(bottle · perfume · jar …) */
   type: string;
   /** 최소 주문 수량 — 비우면 화면에 3,000개 */
@@ -56,6 +58,7 @@ export async function loadProducts(session: EditSession): Promise<ProductEntry[]
     dimensions: item.dimensions ?? "",
     material: item.material ?? "",
     neck: item.neck ?? "",
+    family: item.family ?? "",
     type: item.type || "bottle",
     moq: item.moq ?? "",
     imported: Boolean(item.imported),

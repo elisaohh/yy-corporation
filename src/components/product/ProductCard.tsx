@@ -2,7 +2,7 @@ import Link from "next/link";
 import { EditButton } from "@/components/edit/EditContext";
 import { AssetImage } from "@/components/media/AssetImage";
 import { Pending } from "@/components/ui/Pending";
-import type { Product } from "@/data/products";
+import { sameShape, type Product } from "@/data/products";
 import { ImportBadge } from "./ImportBadge";
 
 interface ProductCardProps {
@@ -24,6 +24,7 @@ interface ProductCardProps {
  */
 export function ProductCard({ product, fromCategory, fromType, fromMl, linkRef }: ProductCardProps) {
   const [primary, secondary] = product.images;
+  const sizes = sameShape(product).length;
   const from = new URLSearchParams();
   if (fromCategory) from.set("from", fromCategory);
   if (fromType) from.set("type", fromType);
@@ -62,6 +63,7 @@ export function ProductCard({ product, fromCategory, fromType, fromMl, linkRef }
           <p className="font-en text-[13px] tabular-nums text-ash">
             <span className="sr-only">용량 </span>
             {product.capacity ?? "—"}
+            {sizes > 1 && <span className="text-ash/80"> · 용량 {sizes}종</span>}
           </p>
         </div>
       </Link>

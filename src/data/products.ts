@@ -22,6 +22,8 @@ export interface Product {
   material: string | null;
   /** 병목(Neck) 규격 — 값이 있을 때만 표시 */
   neck?: string | null;
+  /** 같은 모양 묶음(관리자 화면에서 적음) — 같은 값끼리 용량만 다른 같은 모양. 화면에 이 값은 나오지 않는다 */
+  family: string | null;
   /** GLASS 안의 세부 종류(data/categories.ts glassTypes) — GLASS가 아니면 null */
   type: string | null;
   /** 최소 주문 수량 — 비우면 공통값(productMoq) */
@@ -42,6 +44,7 @@ interface ProductEntry {
   dimensions?: string;
   material?: string;
   neck?: string;
+  family?: string;
   type?: string;
   moq?: string;
   imported?: boolean;
@@ -69,6 +72,7 @@ export const products: Product[] = (data.items as ProductEntry[]).map((item) => 
     dimensions: text(item.dimensions),
     material: text(item.material),
     neck: text(item.neck),
+    family: text(item.family),
     type: (item.category || GLASS_CATEGORY) === GLASS_CATEGORY ? item.type || DEFAULT_GLASS_TYPE : null,
     moq: text(item.moq) ?? productMoq,
     imported: item.imported ?? false,
@@ -89,6 +93,15 @@ export function getProductById(id: string): Product | undefined {
   return products.find((product) => product.id === id);
 }
 
+const mlNumber = (product: Product) => Number(product.capacity?.match(/(\d+(?:\.\d+)?)\s*ml/i)?.[1] ?? Infinity);
+
+/** 같은 모양 묶음의 제품들(자기 자신 포함) — 작은 용량부터. 묶음이 없거나 혼자면 빈 목록 */
+export function sameShape(product: Product): Product[] {
+  if (!product.family) return [];
+  const list = products.filter((p) => p.family === product.family).sort((a, b) => mlNumber(a) - mlNumber(b));
+  return list.length > 1 ? list : [];
+}
+
 /** 제품이 한 개라도 있는 카테고리인지 */
 export function hasProducts(categorySlug: string): boolean {
   return products.some((product) => product.category === categorySlug);
@@ -100,4 +113,4 @@ export function productInquiryLabel(product: Product): string {
 }
 
 /** 목록 한 번에 보여 줄 개수 — 초과 시 LOAD MORE (기획서 부록 D) */
-export const PRODUCTS_PAGE_SIZE = 12;
+export const PRODUCTS_PAGE_SIZE = 60;

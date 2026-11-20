@@ -8,7 +8,7 @@ import { ProductSpecs } from "@/components/product/ProductSpecs";
 import { Pending } from "@/components/ui/Pending";
 import { productCategories } from "@/data/categories";
 import { EditButton, EditToolbar } from "@/components/edit/EditContext";
-import { getProduct, products } from "@/data/products";
+import { getProduct, products, sameShape } from "@/data/products";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -35,6 +35,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
   if (!product) notFound();
 
   const category = productCategories.find((item) => item.slug === product.category);
+  const sizes = sameShape(product);
 
   return (
     <section data-header-theme="light" className="container-yy pb-32 pt-[calc(var(--header-h)+24px)] md:pt-[calc(var(--header-h)+40px)]">
@@ -64,6 +65,35 @@ export default async function ProductDetailPage({ params }: PageProps) {
             </p>
           )}
           {product.description && <p className="mt-6 text-[16px] leading-[1.75] text-ash">{product.description}</p>}
+
+          {/* 같은 모양 · 다른 용량 — 누르면 그 용량 제품으로 */}
+          {sizes.length > 0 && (
+            <nav aria-label="같은 모양 다른 용량" className="mt-8">
+              <p className="label-en text-ash">Capacity</p>
+              <ul className="mt-3 flex flex-wrap gap-2">
+                {sizes.map((item) => {
+                  const on = item.slug === product.slug;
+                  return (
+                    <li key={item.slug}>
+                      {on ? (
+                        <span aria-current="page" className="inline-flex h-10 min-w-16 items-center justify-center rounded-md border border-charcoal bg-charcoal px-4 font-en text-[14px] font-semibold tabular-nums text-paper">
+                          {item.capacity}
+                        </span>
+                      ) : (
+                        <Link
+                          href={`/products/${item.slug}`}
+                          aria-label={`${item.capacity} — ${item.code}`}
+                          className="inline-flex h-10 min-w-16 items-center justify-center rounded-md border border-stone px-4 font-en text-[14px] tabular-nums text-charcoal transition-colors duration-200 hover:border-charcoal"
+                        >
+                          {item.capacity}
+                        </Link>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            </nav>
+          )}
 
           <div className="mt-10">
             <ProductSpecs product={product} />

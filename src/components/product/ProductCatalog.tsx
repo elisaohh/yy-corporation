@@ -277,7 +277,7 @@ export function ProductCatalog() {
           <>
             <ul
               key={swapKey}
-              className={`grid ${mobileCols} gap-x-4 gap-y-10 md:grid-cols-3 md:gap-x-6 md:gap-y-14 lg:mx-auto lg:max-w-[1000px] lg:gap-x-8`}
+              className={`grid ${mobileCols} gap-x-3 gap-y-8 md:grid-cols-4 md:gap-x-5 md:gap-y-10 xl:grid-cols-5`}
             >
               {shown.map((product, index) => {
                 const enter = enterStyle(index);

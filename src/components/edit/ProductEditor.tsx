@@ -3,6 +3,7 @@
 import { ArrowLeft, ArrowRight, ImagePlus, Trash2 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { GLASS_CATEGORY, glassTypes, productCategories } from "@/data/categories";
+import { products } from "@/data/products";
 import { deleteProduct, EditError, loadProducts, saveProduct, type NewImage, type ProductEntry } from "@/lib/edit/content";
 import { toWebp } from "@/lib/edit/image";
 import { fileToBase64 } from "@/lib/edit/repo";
@@ -16,6 +17,7 @@ const EMPTY: ProductEntry = {
   dimensions: "",
   material: "유리",
   neck: "",
+  family: "",
   type: "bottle",
   moq: "",
   imported: false,
@@ -109,7 +111,7 @@ export function ProductEditor({
     if (!form || codeError || imageError) return;
     setBusy("save");
     setError("");
-    const clean = { ...form, code: form.code.trim(), capacity: form.capacity.trim(), dimensions: form.dimensions.trim(), material: form.material.trim(), neck: form.neck.trim(), moq: form.moq.trim(), description: form.description.trim() };
+    const clean = { ...form, code: form.code.trim(), capacity: form.capacity.trim(), dimensions: form.dimensions.trim(), material: form.material.trim(), neck: form.neck.trim(), family: form.family.trim(), moq: form.moq.trim(), description: form.description.trim() };
     try {
       const sha = await saveProduct(session, clean, code, uploads);
       onSaved(sha, code ? `${clean.code} 저장했습니다.` : `${clean.code} 추가했습니다.`, `/products/${clean.code.toLowerCase()}`);
@@ -214,6 +216,19 @@ export function ProductEditor({
               {(p) => <input id={p.id} aria-describedby={p.describedBy} className={p.className} value={form.moq} onChange={(e) => set("moq", e.target.value)} placeholder="3,000개" />}
             </Field>
           </div>
+
+          <Field label="같은 모양 묶음" hint="모양은 같고 용량만 다른 제품끼리 같은 이름을 적으세요(예: YS-SRRR-1). 상세에 다른 용량 버튼이 생기고, 목록에 '용량 N종'이 붙습니다. 화면에 이 이름은 나오지 않습니다. 없으면 비워 두세요.">
+            {(p) => (
+              <>
+                <input id={p.id} aria-describedby={p.describedBy} list="family-list" className={p.className} value={form.family} onChange={(e) => set("family", e.target.value)} />
+                <datalist id="family-list">
+                  {[...new Set(products.map((x) => x.family).filter(Boolean))].map((f) => (
+                    <option key={f} value={f!} />
+                  ))}
+                </datalist>
+              </>
+            )}
+          </Field>
 
           <Toggle checked={form.imported} onChange={(v) => set("imported", v)} label="수입 제품" hint="중국 등 수입 제품 — 사진 오른쪽 위에 '수입' 표시가 붙습니다." />
 

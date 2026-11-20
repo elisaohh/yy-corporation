@@ -66,6 +66,7 @@ export function cmsConfig({ branch, baseUrl, local }: { branch: string; baseUrl:
                   { name: "dimensions", label: "사이즈", widget: "string", required: false, hint: "예: 38.0 × 74.4" },
                   { name: "material", label: "재질", widget: "string", required: false, default: "유리" },
                   { name: "neck", label: "병목 규격", widget: "string", required: false, hint: "예: Ø18 — 비우면 화면에 나오지 않습니다." },
+                  { name: "family", label: "같은 모양 묶음", widget: "string", required: false, hint: "모양은 같고 용량만 다른 제품끼리 같은 이름(예: YS-SRRR-1). 화면에는 나오지 않습니다." },
                   { name: "description", label: "설명", widget: "text", required: false, hint: "제품 상세의 제목 아래 문단. 비워도 됩니다." },
                   { name: "home", label: "홈에 보이기", widget: "boolean", default: false, required: false },
                   {
