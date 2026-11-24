@@ -1,6 +1,6 @@
 import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
-import { cleanNewsletter, parseNewsletter } from "./newsletter-html";
+import { cleanNewsletter, firstImageSrc, parseNewsletter } from "./newsletter-html";
 
 /**
  * STORY 뉴스레터 — 메일로 보낸 원본 HTML을 그대로 쓴다(빌드 시 서버에서만 실행).
@@ -92,6 +92,23 @@ export async function newsletterCover(slug: string): Promise<{ type: string; dat
   } catch {
     return null;
   }
-  const m = html.match(/<img src="data:(image\/[a-z]+);base64,([^"]+)"/i);
-  return m ? { type: m[1], data: Buffer.from(m[2], "base64") } : null;
+  const src = firstImageSrc(html);
+  if (!src) return null;
+  const inline = src.match(/^data:(image\/[a-z+]+);base64,(.+)$/i);
+  if (inline) return { type: inline[1], data: Buffer.from(inline[2], "base64") };
+  // 우리 사이트 사진(https://yycorp.co.kr/…)은 빌드 중인 public/ 파일에서 바로 읽는다(아직 올라가기 전 사진도 됨)
+  const url = new URL(src);
+  if (/(^|\.)yycorp\.co\.kr$/i.test(url.hostname)) {
+    const rel = decodeURIComponent(url.pathname).replace(/^\/+/, "");
+    if (!rel.split("/").includes("..")) {
+      try {
+        return { type: "image/*", data: await readFile(path.join(process.cwd(), "public", rel)) };
+      } catch {}
+    }
+  }
+  try {
+    const res = await fetch(src);
+    if (res.ok) return { type: res.headers.get("content-type") ?? "image/*", data: Buffer.from(await res.arrayBuffer()) };
+  } catch {}
+  return null;
 }
