@@ -28,9 +28,13 @@ export default function ProductsPage() {
         intro={
           <>
             <p>{productIntro}</p>
-            <a href={CATALOG.href} download className="btn mt-8 text-charcoal">
+            {/* 눈에 띄게 주 버튼(차콜 면, 호버 시 노랑) + 다운로드 아이콘 */}
+            <a href={CATALOG.href} download className="btn btn-primary group mt-8">
+              <svg aria-hidden="true" viewBox="0 0 20 20" className="size-[18px]" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M10 3v10m0 0-4-4m4 4 4-4M4 16h12" />
+              </svg>
               카탈로그 다운로드
-              <span className="font-en text-[12px] tracking-[0.06em] text-ash">PDF · {CATALOG.size}</span>
+              <span className="font-en text-[12px] tracking-[0.06em] opacity-70">PDF · {CATALOG.size}</span>
             </a>
           </>
         }
