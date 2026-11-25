@@ -315,6 +315,26 @@
         "/assets/products/SL-SRRR50-01_mwskmo4u1.webp",
         "/assets/products/SL-SRRR50-01_mwskmo4u2.webp"
       ]
+    },
+    {
+      "code": "QY-SSSS15-01",
+      "category": "glass-bottle",
+      "capacity": "15ml",
+      "dimensions": "32.0 x 58.0",
+      "material": "유리",
+      "neck": "Ø18",
+      "family": "",
+      "type": "bottle",
+      "moq": "10000",
+      "imported": true,
+      "description": "",
+      "home": false,
+      "images": [
+        "/assets/products/QY-SSSS15-01_mwveecb10.webp",
+        "/assets/products/QY-SSSS15-01_mwveecb11.webp",
+        "/assets/products/QY-SSSS15-01_mwveecb12.webp",
+        "/assets/products/QY-SSSS15-01_mwveecb13.webp"
+      ]
     }
   ]
 }
