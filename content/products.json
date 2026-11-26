@@ -414,6 +414,25 @@
         "/assets/products/QY-PRRS30-01_01_mwx39pe82.webp",
         "/assets/products/QY-PRRS30-01_01_mwx39pe83.webp"
       ]
+    },
+    {
+      "code": "QY-SRSS50-01",
+      "category": "glass-bottle",
+      "capacity": "50ml",
+      "dimensions": "52.0 x 76.0",
+      "material": "유리",
+      "neck": "Ø18",
+      "family": "QY-SRSS30-03",
+      "type": "bottle",
+      "moq": "10000",
+      "imported": true,
+      "description": "",
+      "home": false,
+      "images": [
+        "/assets/products/QY-SRSS50-01_mwx3uwe80.webp",
+        "/assets/products/QY-SRSS50-01_mwx3uwe81.webp",
+        "/assets/products/QY-SRSS50-01_mwx3uwe82.webp"
+      ]
     }
   ]
 }
