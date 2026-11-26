@@ -335,6 +335,26 @@
         "/assets/products/SL-SRRR50-01_mwskmo4u1.webp",
         "/assets/products/SL-SRRR50-01_mwskmo4u2.webp"
       ]
+    },
+    {
+      "code": "SL-SRRS30-03",
+      "category": "glass-bottle",
+      "capacity": "30ml",
+      "dimensions": "40.2 x 71.9",
+      "material": "유리",
+      "neck": "Ø18",
+      "family": "",
+      "type": "bottle",
+      "moq": "5000",
+      "imported": false,
+      "description": "",
+      "home": false,
+      "images": [
+        "/assets/products/SL-SRRS30-03_mwwuk2vb0.webp",
+        "/assets/products/SL-SRRS30-03_mwwuk2vb1.webp",
+        "/assets/products/SL-SRRS30-03_mwwuk2vb2.webp",
+        "/assets/products/SL-SRRS30-03_mwwuk2vb3.webp"
+      ]
     }
   ]
 }
