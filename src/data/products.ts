@@ -95,10 +95,32 @@ export function getProductById(id: string): Product | undefined {
 
 const mlNumber = (product: Product) => Number(product.capacity?.match(/(\d+(?:\.\d+)?)\s*ml/i)?.[1] ?? Infinity);
 
-/** 같은 모양 묶음의 제품들(자기 자신 포함) — 작은 용량부터. 묶음이 없거나 혼자면 빈 목록 */
+const familyKey = (value?: string | null) => value?.trim().toUpperCase() || "";
+
+/** 두 제품이 같은 모양으로 이어지는지 — 묶음 값이 같거나, 한쪽 묶음 칸에 다른 쪽 제품 코드를 적은 경우 */
+function linked(a: Product, b: Product): boolean {
+  const fa = familyKey(a.family);
+  const fb = familyKey(b.family);
+  if (fa && fa === fb) return true;
+  return (!!fa && fa === familyKey(b.code)) || (!!fb && fb === familyKey(a.code));
+}
+
+/**
+ * 같은 모양 묶음의 제품들(자기 자신 포함) — 작은 용량부터. 묶음이 없거나 혼자면 빈 목록.
+ * 같은 이름을 적은 제품끼리 묶고, 묶음 칸에 상대 제품 코드를 적어도 이어진다(2026-11-26).
+ */
 export function sameShape(product: Product): Product[] {
-  if (!product.family) return [];
-  const list = products.filter((p) => p.family === product.family).sort((a, b) => mlNumber(a) - mlNumber(b));
+  const group = new Set<Product>([product]);
+  for (let grew = true; grew; ) {
+    grew = false;
+    for (const p of products) {
+      if (!group.has(p) && [...group].some((g) => linked(g, p))) {
+        group.add(p);
+        grew = true;
+      }
+    }
+  }
+  const list = [...group].sort((a, b) => mlNumber(a) - mlNumber(b));
   return list.length > 1 ? list : [];
 }
 
